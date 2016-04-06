@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   post '/team/create' => 'team#create'
   post '/task/wansungdo_update' => 'task#wansungdo_update'
   put '/whiteboard/update' => 'whiteboard#update'
+  put '/whiteboard/update2' => 'whiteboard#update2'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

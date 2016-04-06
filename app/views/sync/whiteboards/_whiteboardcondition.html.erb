@@ -1,0 +1,9 @@
+<% if whiteboard.edit == true && whiteboard.user == current_user %>
+  <button id="whiteboardsend">Submit</button>
+
+<% elsif whiteboard.edit == true %>
+  <button id="whiteboardblock" disabled>It is being edited</button>
+
+<% else %>
+  <button id="whiteboardchange">EDIT</button>
+<% end %>

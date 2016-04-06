@@ -31,16 +31,19 @@
         </div>
       </div>
       <%= f.hidden_field :chat_id, :value => @chat.id %>
-      <button style="visibility: hidden;" name="commit" value="말하기" id="messagesend">
-      <!--<input name="commit" type="submit" value="말하기" id="messagesend" style="visibility: hidden;"/>-->
 
     <%end%>
 
+
     <script>
       $(document).ready(function(){
-        $("#messagesend").click(function(){
-            $("#messageform").submit();
-            $("#inputGroupSuccess1").val('');
+        $("#inputGroupSuccess1").keydown(function(event){
+            if(event.keyCode == 13){
+              $("#messageform").submit();
+
+              $('#inputGroupSuccess1').val('');
+              return false;
+            }
 
         });
       });
@@ -58,11 +61,19 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li><button id="whiteboardsend">EDIT</button></li>
+          <li><%=sync partial: 'whiteboardcondition', resource: @whiteboard, scope: @chat%></li>
+          <form action="/whiteboard/update2" method="put" id="whiteboardchangeform" data-remote="true">
+            <input type="hidden" name="whiteboardid" value=<%=@whiteboard.id%>>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          </form>
           <script>
             $(document).ready(function(){
               $("#whiteboardsend").click(function(){
                 $("#whiteboardform").submit();
+              });
+
+              $("#whiteboardchange").click(function(){
+                $("#whiteboardchangeform").submit();
               });
             });
           </script>
