@@ -54,6 +54,7 @@
          <%= form_for :resume,:url => {:action => "create"}, html: { multipart: true } do |f| %>
            <%= f.file_field :attachment %>
            <%= f.hidden_field :name %>
+           
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>

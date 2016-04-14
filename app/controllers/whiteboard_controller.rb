@@ -6,7 +6,7 @@ class WhiteboardController < ApplicationController
     @whiteboard.edit = false
     if @whiteboard.save
       @message = Message.new(:content => "Whiteboard has been Changed")
-      @message.user = current_user
+      @message.sender_id = current_user.id
       @message.chat = @whiteboard.chat
       @message.save
       sync_new @message, scope: @chat, partial: 'newmessages'

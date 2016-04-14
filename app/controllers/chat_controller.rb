@@ -15,7 +15,7 @@ class ChatController < ApplicationController
   end
   def show
     @team = Team.find(params[:team])
-    @chat = @team.chats
+    @chat = current_user.chats.where(:team_id => params[:team])
   end
 
 end

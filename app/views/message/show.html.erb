@@ -8,14 +8,19 @@
   <div class="col-sm-6">
     <div style="text-align:center"></div>
     <div style="overflow:auto; width:auto; height:400px;" id="chatbox">
+
       <% @chat.messages.each do |message| %>
+
         <div class="row">
           <div class="col-sm-1">
             <img src="/favicon.ico" alt="..." class="img-rounded" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
           </div>
           <div class="col-sm-11">
-            <strong><%=message.user.first_name%></strong><br>
-            <%=message.content%><br>
+            <div id="message<%=message.id%>">
+              <strong><%=User.find(message.sender_id).first_name%></strong><br>
+              <%=message.content%><br>
+            </div>
+
           </div>
         </div>
       <% end %>
@@ -87,8 +92,24 @@
     </div>
   </div>
 </div>
+<div id="messagelook"></div>
+<% if @chat.messages.count != 0 %>
+  <form action="/message/update" method="put" data-remote=true id="messagelookall">
+    <input type="hidden" name="messageid" value=<%=@chat.messages.last.id%>>
+  </form>
+<% end %>
 
 <script>
-  var ta = document.getElementById('chatbox');
-  ta.scrollTop = ta.scrollHeight;
+  //var ta = document.getElementById('chatbox');
+  //ta.scrollTop = ta.scrollHeight;
+  $(document).ready(function(){
+    <%if @message %>
+
+      $('#chatbox').animate({ scrollTop: $('#message<%=@message.id-3%>').offset().top });
+      $("#message<%=@message.id%>").append("<p>--------여기까지 읽으셨습니다------------</p>")
+    <% end %>
+  });
+  $(document).ready(function(){
+    $('#messagelookall').submit();
+  });
 </script>

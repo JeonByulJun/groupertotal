@@ -2,11 +2,14 @@ class MessageController < ApplicationController
   def show
     @chat = Chat.find(params[:chat])
     @whiteboard = @chat.whiteboard
+    @message = current_user.messages.where(:chat_id => @chat.id).last
+
+
   end
 
   def create
     @message = Message.new(message_params)
-    @message.user = current_user
+    @message.sender_id = current_user.id
     @message.chat = Chat.find(params[:message][:chat_id])
     @chat = @message.chat
     if @message.save
@@ -16,7 +19,12 @@ class MessageController < ApplicationController
       end
     end
   end
+  def update
+    @message = Message.find(params[:messageid])
+    @message.users << current_user
+    @message.save
 
+  end
   private
   def message_params
     params.require(:message).permit(:content, :chat_id)

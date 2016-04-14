@@ -3,12 +3,21 @@
     <img src="/favicon.ico" alt="..." class="img-rounded" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
   </div>
   <div class="col-sm-11">
-    <strong><%=message.user.first_name%></strong><br>
+    <strong><%=User.find(message.sender_id).first_name%></strong><br>
     <%=message.content%><br>
 
   </div>
 </div>
+
+
 <script>
-  var ta = document.getElementById('chatbox');
-  ta.scrollTop = ta.scrollHeight;
+  <%if message.sender_id == current_user.id%>
+      var ta = document.getElementById('chatbox');
+
+      ta.scrollTop = ta.scrollHeight;
+  <%end%>
 </script>
+
+<form action="/message/update" method="put" data-remote=true id="messagelook">
+  <input type="hidden" name="messageid" value=<%=message.id%>>
+</form>
