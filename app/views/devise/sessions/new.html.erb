@@ -25,7 +25,7 @@ background-size: cover;
           누구나 효율적인 팀플을 원합니다. 여기 실시간 의사결정과 파일을 공유할 수 있는 서비스가 있습니다. 팀 이름을 적고 바로 이용해보세요!
           <br>
           <button type="button" class="btn btn-link" data-toggle="modal" data-target="#login">로그인</button>
-          <button type="button" class="btn btn-link" data-toggle="modal" data-target="#signup">회원가입</button>
+          <a class="btn btn-link" href="/users/sign_up" role="button">가입하기</a>
         </div>
       </div>
     </div>
@@ -60,50 +60,6 @@ background-size: cover;
         </div>
         <% end %>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <h2>가입하기</h2>
-
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
-
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true %>
-        </div>
-
-        <div class="field">
-          <%= f.label :first_name %><br />
-          <%= f.text_field :first_name, autofocus: true %>
-        </div>
-
-        <div class="field">
-          <%= f.label :last_name %><br />
-          <%= f.text_field :last_name, autofocus: true %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password %>
-          <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <% end %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password_confirmation %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "off" %>
-        </div>
-
-        <div class="actions">
-          <%= f.submit "Sign up" %>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

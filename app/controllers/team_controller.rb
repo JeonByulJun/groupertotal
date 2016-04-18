@@ -4,6 +4,9 @@ class TeamController < ApplicationController
   def index
     @team = current_user.teams
     @user = User.all
+    if !current_user.teams.first
+      redirect_to "/team/newteam"
+    end
   end
   def create
     team = Team.new(:teamname => params[:teamname])
@@ -12,5 +15,9 @@ class TeamController < ApplicationController
     if team.save
       redirect_to :root
     end
+  end
+  def newteam
+    @team = current_user.teams
+    @user = User.all
   end
 end
