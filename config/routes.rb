@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get '/task/show' => 'task#show'
   post '/team/create' => 'team#create'
   post '/task/wansungdo_update' => 'task#wansungdo_update'
+  post '/test/index' => 'test#index'
+  get '/test/index' => 'test#index'
   put '/whiteboard/update' => 'whiteboard#update'
   put '/whiteboard/update2' => 'whiteboard#update2'
   put '/message/update' => 'message#update'

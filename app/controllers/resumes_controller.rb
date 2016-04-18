@@ -1,7 +1,8 @@
 class ResumesController < ApplicationController
    def index
-      @resumes = Resume.all
+      @resumes = Resume.where(:team_id => params[:team])
       @resumenew = Resume.new
+      @team = params[:team]
    end
 
    def new
@@ -12,22 +13,23 @@ class ResumesController < ApplicationController
       @resume = Resume.new(resume_params)
       @resume.name="noname"
       if @resume.save
-         redirect_to resumes_path, notice: "#{@resume.attachment.file.filename} 가 업로드 되었습니다."
+         redirect_to action: 'index', team: params[:resume][:team_id]#, notice: "#{@resume.attachment.file.filename} 가 업로드 되었습니다."
       else
-         redirect_to :root, notice: "파일을 올려주세요."
+         redirect_to :root, team: params[:resume][:team_id]#, notice: "파일을 올려주세요."
       end
 
    end
 
    def destroy
       @resume = Resume.find(params[:id])
+      team = @resume.team_id
       @resume.destroy
-      redirect_to resumes_path, notice:  "#{@resume.attachment.file.filename} 가 삭제 되었습니다."
+      redirect_to action: 'index', team: team#, notice:  "#{@resume.attachment.file.filename} 가 삭제 되었습니다."
    end
 
    private
       def resume_params
-          params.require(:resume).permit(:name, :attachment)
+          params.require(:resume).permit(:name, :attachment, :team_id)
 
       end
 

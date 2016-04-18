@@ -1,12 +1,10 @@
-
-
 <div style="text-align:center">
   <h3><%=@chat.title %></h3>
 </div>
 
 <div class="row">
   <div class="col-sm-6">
-    <div style="text-align:center"></div>
+    <div style="text-align:center">채팅창</div>
     <div style="overflow:auto; width:auto; height:400px;" id="chatbox">
 
       <% @chat.messages.each do |message| %>

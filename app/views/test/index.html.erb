@@ -1,0 +1,65 @@
+<div style="text-align:center">
+  <h3>그루퍼에 온 것을 환영합니다.</h3>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div style="text-align:center">채팅창</div>
+    <div style="overflow:auto; width:auto; height:400px;" id="chatbox">
+        <p id = "test"></p>
+    </div>
+    <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
+      <div class="form-group has-success has-feedback">
+        <div class="input-group">
+          <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required>
+          <span class="input-group-addon">+</span>
+        </div>
+      </div>
+
+    <%end%>
+  </div>
+  <div class="col-sm-6">
+    <div style="text-align:center">
+      화이트 보드
+      <textarea class="form-control" rows="20"></textarea>
+      <nav>
+        <ul class="pagination pagination-sm">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li><button id="whiteboardsend">EDIT</button></li>
+          <script>
+            $(document).ready(function(){
+              $("#whiteboardsend").click(function(){
+                $("#whiteboardform").submit();
+              });
+            });
+          </script>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script>
+  var ta = document.getElementById('chatbox');
+  ta.scrollTop = ta.scrollHeight;
+</script>
+
+<script>
+$(document).ready(function(){
+    $("#btn1").click(function(){
+        $("p").append(" <b>Appended text</b>.");
+    });
+    $("#btn2").click(function(){
+        $("ol").append("<li>Appended item</li>");
+    });
+});
+</script>
