@@ -100,15 +100,15 @@
 <% end %>
 
 <script>
-  //var ta = document.getElementById('chatbox');
-  //ta.scrollTop = ta.scrollHeight;
+
   $(document).ready(function(){
     <%if @message %>
 
-      $('#chatbox').animate({ scrollTop: $('#message<%=@message.id-3%>').offset().top });
+      $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top });
       $("#message<%=@message.id%>").append("<p>--------여기까지 읽으셨습니다------------</p>")
     <% end %>
   });
+
   $(document).ready(function(){
     $('#messagelookall').submit();
   });
