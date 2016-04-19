@@ -142,7 +142,12 @@
           <% else %>
           <li><%= link_to "클라우드", action: "index", controller: "resumes", team: @team.id %></li>
           <% end %>
-          <li><a href="#">워크맵</a></li>
+          <% if current_page?(:controller => '/task', :action => 'show')%>
+          <li class="active"><a href="">워크맵</a></li>
+          <% else %>
+          <li><a href="">워크맵</a></li>
+          <% end %>
+          
         </ul>
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
