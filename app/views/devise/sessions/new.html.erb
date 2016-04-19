@@ -40,11 +40,11 @@ background-size: cover;
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="form-group">
           <div class="field">
-            <input class="form-control" id="user_email" name="user[email]" type="email" placeholder="Email" autofocus/>
+            <input class="form-control" id="user_email" name="user[email]" type="email" placeholder="이메일" autofocus/>
           </div>
 
           <div class="field">
-            <input class="form-control" id="user_password" name="user[password]" type="password" placeholder="Password" autocomplete="off"/>
+            <input class="form-control" id="user_password" name="user[password]" type="password" placeholder="비밀번호" autocomplete="off"/>
           </div>
 
           <% if devise_mapping.rememberable? -%>
