@@ -24,41 +24,38 @@ background-size: cover;
           <br>
           누구나 효율적인 팀플을 원합니다. 여기 실시간 의사결정과 파일을 공유할 수 있는 서비스가 있습니다. 팀 이름을 적고 바로 이용해보세요!
           <br>
-          <button type="button" class="btn btn-link" data-toggle="modal" data-target="#login">로그인</button>
           <a class="btn btn-link" href="/users/sign_up" role="button">가입하기</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div style="text-align:center">
-        <h2>로그인</h2>
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="form-group">
-          <div class="field">
-            <input class="form-control" id="user_email" name="user[email]" type="email" placeholder="이메일" autofocus/>
-          </div>
-
-          <div class="field">
-            <input class="form-control" id="user_password" name="user[password]" type="password" placeholder="비밀번호" autocomplete="off"/>
-          </div>
-
-          <% if devise_mapping.rememberable? -%>
-            <div class="field">
-              <%= f.check_box :remember_me %>
-              <%= f.label :remember_me %>
+          <a class="btn btn-link" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            로그인
+          </a>
+          <div class="collapse" id="collapseExample">
+            <div style="text-align:center">
+              <h2>로그인</h2>
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <div class="form-group">
+                <div class="field">
+                  <input class="form-control" id="user_email" name="user[email]" type="email" placeholder="이메일" autofocus/>
+                </div>
+      
+                <div class="field">
+                  <input class="form-control" id="user_password" name="user[password]" type="password" placeholder="비밀번호" autocomplete="off"/>
+                </div>
+      
+                <% if devise_mapping.rememberable? -%>
+                  <div class="field">
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me %>
+                  </div>
+                <% end -%>
+      
+                <div class="fdas">
+                  <button type="submit" class="btn btn-default">로그인</button>
+                </div>
+              </div>
+              <% end %>
             </div>
-          <% end -%>
-
-          <div class="fdas">
-            <button type="submit" class="btn btn-success">로그인</button>
           </div>
         </div>
-        <% end %>
       </div>
     </div>
   </div>
