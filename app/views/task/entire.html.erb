@@ -38,7 +38,7 @@
 					line-height: 30px;
 				}
 				.bar-innerday {
-					background-color: #00B0F0; /*slight deep blue*/
+					/*background-color: #00B0F0;*/ /*slight deep blue*/
 					width: 0%;
 					/*height: 100%;*/
 					height: 30px;
@@ -72,7 +72,7 @@
 				<% if a > 0 %>
 					<div class="bar2">
 						<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
-				  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+				  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
 					</div>
 				<% end %>
 			<% end %>
@@ -96,47 +96,6 @@
 	  		</script>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="taskindiv">
-			<style>
-				.bar2 {
-				    background-color: #F3F3F3; /*gray*/
-				    width: 70%;
-				    /*height: 30px;*/
-				    height: 40px;
-				    /*border-left-style: dotted;
-				    border-left-color: black;
-				    border-left-width: thin;
-				    border-top-style: dotted;
-				    border-top-color: black;
-				    border-top-width: thin;*/
-				}
-				.bar2-innertask:after{
-				    position: absolute;
-					right: 20%;
-					color: #0C0C0C;
-					content: attr(data-task);
-					font-size: 18px;
-					font-weight: 700;
-					line-height: 30px;
-				}
-				.bar-innerday {
-					background-color: #00B0F0; /*slight deep blue*/
-					width: 0%;
-					/*height: 100%;*/
-					height: 30px;
-					top: 5px;
-					position: relative;
-					transition: width 1250ms linear;
-				}
-				.bar-innerday:after {
-					position: absolute;
-					right: 5.5%;
-					color: #fff; /*white*/
-					content: attr(data-display);
-					font-size: 18px;
-					font-weight: 700;
-					line-height: 30px;
-				}
-			</style>
 			<!-- gantt head -->
 			<div class="bar2">
 				<%for i in 0..11 %>
@@ -157,10 +116,21 @@
 						<% end %>
 						<% a = (b.duedate - (Date.today)).to_i %>
 						<% if a > 0 %>
+							
 							<div class="bar2">
 								<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
-						  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+						  		<div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
 							</div>
+							<!-- random color js, has problem -->
+							<script>
+								function ran_col(){
+									var color = "#";
+									var letters = {"4eb72a","00B0F0"};
+									color += letters[Math.floor(Math.random() * letters.length)];
+									document.getelementById('<%=i%>th-gantt-each-<%=idx%>').style.backgroundColor = color;
+								}
+								ran_col();
+							</script>
 						<% end %>
 				  	<% end %>
 				<% end %>
@@ -192,6 +162,5 @@
 		<li> <%=t.taskname%> <%=t.duedate%></li>
 	<% end %>
 	<br>
-	
 	
 </body>
