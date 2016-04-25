@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# bootstrap 3 datetimepicker
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 # Last seenable, displayed as few seconds ago
 gem 'devise_lastseenable'
 # Chart.js

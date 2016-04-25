@@ -1,5 +1,4 @@
 <style>
-	
 	.homebody{
 		width: 82%;
 	}
@@ -430,6 +429,7 @@
 						    </p>
 						    <p>due = <%=taskdo.duedate%></p>
 						    <form action="/task/wansungdo_update" method="post">
+						    	
 						    	<input type="hidden" name="task_id" value="<%=taskdo.id%>">
 						    	<input type="hidden" name="team_id" value="<%=taskdo.team_id%>">
 								<a>comment</a><textarea type="text" name="comment" placeholder="comment for details"></textarea>
@@ -438,12 +438,13 @@
 								<script>
 								var slider = new Slider("#sl<%=slideridx%>", {
 								    ticks: [0,10, 20,30, 40,50, 60,70, 80,90, 100],
-								    ticks_labels: ['0%','', '20%','', '40%','', '60%','', '80%','', '100%'],
+								    //ticks_labels: ['0%','', '20%','', '40%','', '60%','', '80%','', '100%'],
 								    ticks_snap_bounds: 30
 								});
 								</script>
 						    	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-						
+								
+								<a><%=taskdo.wansungdo%>%</a>
 						    	<input type="submit" value="수정">
 						    </form>
 						</li>
