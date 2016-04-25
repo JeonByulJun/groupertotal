@@ -11,7 +11,7 @@
 
         <div class="row">
           <div class="col-sm-1">
-            <img src="/favicon.ico" alt="..." class="img-rounded" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
+            <img src="/favicon.ico" alt="..." class="img-rounded" onmouseover="bigImg(this)" onmouseout="normalImg(this)" onclick="alert('<%=message.content%>');" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
           </div>
           <div class="col-sm-11">
             <div id="message<%=message.id%>">
@@ -98,7 +98,6 @@
 <% end %>
 
 <script>
-
   $(document).ready(function(){
     <%if @message %>
 
@@ -110,4 +109,15 @@
   $(document).ready(function(){
     $('#messagelookall').submit();
   });
+</script>
+<script>
+function bigImg(x) {
+    x.style.height = "56px";
+    x.style.width = "56px";
+}
+
+function normalImg(x) {
+    x.style.height = "36px";
+    x.style.width = "36px";
+}
 </script>
