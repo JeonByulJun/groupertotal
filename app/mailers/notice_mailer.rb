@@ -7,7 +7,6 @@ class NoticeMailer < ApplicationMailer
   #
   def invitation(user)
     @user=user
-    mail(to: user.email,
-    subject: 'Happy')
+    mail(to: user.email, subject: 'Happy')
   end
 end
