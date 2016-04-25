@@ -22,4 +22,13 @@ class TeamController < ApplicationController
     @team = current_user.teams
     @user = User.all
   end
+  def addmember
+    @team = Team.find(params[:team])
+    @user = User.all
+  end
+  def adding
+    @team = Team.find(params[:team])
+    @team.users << User.where(:id => params[:user_ids])
+    redirect_to :root
+  end
 end

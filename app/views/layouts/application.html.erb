@@ -132,6 +132,8 @@
               <li><a href="/team/newteam">새로운 팀 만들기</a></li>
             </ul>
           </li>
+          <li class="active"><%= link_to "팀원 추가", action: 'addmember', controller: 'team', team: @team.id%></li>
+          
           <% if current_page?(:controller => '/message', :action => 'show')%>
           <li class="active"><a href="#">화이트보드</a></li>
           <% else %>

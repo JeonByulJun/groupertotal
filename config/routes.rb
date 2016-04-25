@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'team#index'
   get '/team/newteam' => 'team#newteam'
+  get '/team/addmember' => 'team#addmember'
+  post '/team/adding' => 'team#adding'
   get '/chat/show' => 'chat#show'
   post '/chat/create' => 'chat#create'
   get '/message/show' => 'message#show'

@@ -27,16 +27,41 @@
 
 
 <p> Give Tasks </p>
+
+
+
 <form action="/task/create" method="post">
   <p>taskname</p><input type="text" name="taskname">
+  
+  <div class="container">
+      <div class="row">
+          <div class='col-sm-6'>
+              <div class="form-group">
+                  <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" name="duedate"/>
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <script type="text/javascript">
+              $(function () {
+                  $('#datetimepicker1').datetimepicker({
+                    format : 'YYYY-MM-DD'
+                  });
+              });
+          </script>
+      </div>
+  </div>
+  
   <% @team.users.each do |p| %>
       <%= p.email %> = <%= check_box_tag('user_ids[]', p.id) %><br />
-   
   <% end %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-  <p>duedate</p><input type="text" name="duedate">
   <input type="hidden" name="team" value=<%=@team.id%>>
   <input type="submit" value="send">
 </form>
+
 
 <%= link_to "SHOW TASKS", action: 'show', controller: 'task', team: @team.id%>
