@@ -26,11 +26,38 @@
 	<section class="sidebar">
 		<% temp.each_with_index do |t,idx| %>
 		  	<li role="presentation" class="active" id="<%=idx%>" data-toggle="modal" data-target="#<%=idx%>info">
-		  		<aside>
+		  		<aside style="padding-left: 12px;">
 			    	<img class="img-rounded" alt="profile" src="<%=t.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
-				    <h5> <%=t.first_name%> <br>
-				    	 <%=t.email%></h5>
-				    	 <%=(Time.now - t.last_seen)%> seconds ago
+			    	<% if (Time.now - t.last_seen) <= 300 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 접속중</h5>
+					<% elsif (Time.now - t.last_seen) <= 600 %>
+					<h5 style="color: white;"><%=t.first_name%><br>
+				    	 5분 전</h5>
+				    <% elsif (Time.now - t.last_seen) <= 1800 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 10분 전</h5>
+				    <% elsif (Time.now - t.last_seen) <= 3600 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 30분 전</h5>
+				    <% elsif (Time.now - t.last_seen) <= 10800 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 1시간 전</h5>
+				    <% elsif (Time.now - t.last_seen) <= 21600 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 3시간 전</h5>
+				    <% elsif (Time.now - t.last_seen) <= 43200 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 4시간 전</h5>
+				    <% elsif (Time.now - t.last_seen) <= 86400 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 12시간 전</h5>
+					<% elsif (Time.now - t.last_seen) <= 172800 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 1일 전</h5>
+				    <% else %>
+				    <h5 style="color: white;"><%=t.first_name%></h5>
+				    <% end %>
 		    	</aside>
 		  	</li>
 		<% end %>
