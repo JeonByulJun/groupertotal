@@ -16,7 +16,15 @@
 	}
 </style>
 <head>
-	<h2> <%=current_user.first_name%><%=current_user.last_name%> <%=current_user.email%> </h2>
+	<div>
+		<aside style="padding-left: 12px;">
+			<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 8px;">
+		</aside>
+		<div style="margin-left: 15px;">
+			<h2> <%=current_user.first_name%><%=current_user.last_name%></h2>
+			<h2> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=current_user.email%> </h2>
+		</div>
+	</div>
 	<%= link_to "ENTIRE", action: 'entire', controller: 'task', team: @team.id%>
 </head>
 
