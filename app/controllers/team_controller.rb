@@ -35,7 +35,12 @@ class TeamController < ApplicationController
     @team = current_user.teams
   end
   def profileupdate
-    current_user.image=params[:image]
+    if(params[:image])
+      current_user.image=params[:image]
+    end
+    if(params[:name]!="" and params[:name]!=nil)
+      current_user.first_name=params[:name]
+    end
     current_user.save
     redirect_to "/team/profile"
   end
