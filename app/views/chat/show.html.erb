@@ -1,4 +1,3 @@
-<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 
 <h3>List of Chats</h3>
 <% if @chat %>
@@ -28,14 +27,12 @@
 
 <p> Give Tasks </p>
 
-
-
 <form action="/task/create" method="post">
   <p>taskname</p><input type="text" name="taskname">
   
   <div class="container">
       <div class="row">
-          <div class='col-sm-6'>
+          <div class='col-sm-3'>
               <div class="form-group">
                   <div class='input-group date' id='datetimepicker1'>
                     <input type='text' class="form-control" name="duedate"/>
