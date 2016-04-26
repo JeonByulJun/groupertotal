@@ -47,3 +47,50 @@
 			<% end %>
 		</tbody>
 	</table>
+	
+	<% @tasklist.each_with_index do |taskdo,slideridx| %>
+			<% if taskdo.wansungdo < 100 %>
+  			  	<div class="row">
+					<div class="col-md-3">
+				    	<%sender = User.find(taskdo.sender)%>
+					    <aside>
+					    	<img class="img-rounded" alt="profile" src="<%=sender.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+						    <h5> <%=sender.first_name%> <br>
+						    	<%=sender.email%></h5>
+				    	</aside>
+				    </div>
+				    <div class="col-md-1">
+					    <h5><%=taskdo.taskname%></h5>
+			 		</div>
+					<div class="col-md-1">
+					    <h5><%=taskdo.duedate%></h5>
+					</div>
+					<div class="col-md-4">
+						<div class="bar">
+						  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
+						</div>
+						<script> horild(); </script>
+					</div>
+					<div class="col-md-2">
+						<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						   Revise Completion
+						</a>
+						<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						  Button with data-target
+						</button>
+						<div class="collapse" id="collapseExample">
+							<div class="well">
+								
+							</div>
+						</div>
+					    
+				    </div>
+					<div class="col-md-3">
+						<% @commentdo = Comment.where(:task_id => taskdo.id) %>
+						<% @commentdo.each do |commentdo| %>
+							<li><%=commentdo.wansungdo_log%>% : <%=commentdo.comment_log%></li>
+						<% end %>
+					</div>
+				</div>
+			<% end %>
+		<% end %>

@@ -20,23 +20,26 @@
 	<%= link_to "ENTIRE", action: 'entire', controller: 'task', team: @team.id%>
 </head>
 
-
-
 <body data-no-turbolink="true">
 	<% temp = [] %>
-<% temp += @team.users %>
-<section class="sidebar">
+	<% temp += @team.users %>
+	<section class="sidebar">
+		<% temp.each_with_index do |t,idx| %>
+		  	<li role="presentation" class="active" id="<%=idx%>" data-toggle="modal" data-target="#<%=idx%>info">
+		  		<aside>
+			    	<img class="img-rounded" alt="profile" src="<%=t.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+				    <h5> <%=t.first_name%> <br>
+				    	 <%=t.email%></h5>
+				    	 <%=(Time.now - t.last_seen)%> seconds ago
+		    	</aside>
+		  	</li>
+		<% end %>
+	</section>
 	<% temp.each_with_index do |t,idx| %>
-	  	<li role="presentation" class="active" id="<%=idx%>" data-toggle="modal" data-target="#<%=idx%>info">
-	  		<a><%=t.last_name%><%=t.first_name%> <%=t.email%> <br><%=(Time.now - t.last_seen)%> seconds ago</a>
-	  	</li>
-	<% end %>
-</section>
-<% temp.each_with_index do |t,idx| %>
-	<div class="modal fade" id="<%=idx%>info" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	    	<style>
+		<div class="modal fade" id="<%=idx%>info" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-sm">
+		    <div class="modal-content">
+		    	<style>
 					.bar2 {
 					    background-color: #F3F3F3; /*gray*/
 					    width: 70%;
@@ -120,7 +123,8 @@
 	    </div>
 	  </div>
 	</div>
-<% end %>
+	<% end %>
+	
 <div class="homebody">
 	
 	
@@ -133,7 +137,7 @@
 	<!-- Tab panes -->
   	<div class="tab-content">
   	<!--tab-content contribution starts-->
-	    <div role="tabpanel" class="tab-pane active" id="contribution">
+	<div role="tabpanel" class="tab-pane active" id="contribution">
 	    	<div class="row">
 			<!--Average Completion-->
 				<div class="col-md-4">
@@ -376,82 +380,106 @@
 	    </div>
     <!--tab-content contribution ends-->
     
+	<style>
+		.bar {
+		    background-color: #f2f2f1;
+		    width: 80%;
+		    height: 30px;
+		    margin: 30px;
+		}
+		.bar-inner {
+		  background-color: #2ecc71;
+		  width: 0%;
+		  height: 100%;
+		  position: relative;
+		  transition: width 1250ms linear;
+		}
+		
+		.bar-inner:after {
+		  position: absolute;
+		  right: 5.5%;
+		  content: attr(data-percent);
+		  color: #fff;
+		  font-size: 18px;
+		  font-weight: 700;
+		  line-height: 30px;
+		}
+	</style>
+    
     <!--tab-content tasks starts-->
-	    <div role="tabpanel" class="tab-pane" id="tasks">
-	    	<div class="row">
-			<div class="col-md-6">
-				<style>
-					.bar {
-					    background-color: #f2f2f1;
-					    width: 30%;
-					    height: 30px;
-					    margin: 30px;
-					}
-					.bar-inner {
-					  background-color: #2ecc71;
-					  width: 0%;
-					  height: 100%;
-					  position: relative;
-					  transition: width 1250ms linear;
-					}
-					
-					.bar-inner:after {
-					  position: absolute;
-					  right: 5.5%;
-					  content: attr(data-percent);
-					  color: #fff;
-					  font-size: 18px;
-					  font-weight: 700;
-					  line-height: 30px;
-					}
-				</style>
-				<h4> Completion </h4>
-				<% @tasklist.each do |t| %>
-					<% if t.wansungdo < 100 %>
-						<li> <%=t.taskname%> </li>
-						<div class="bar">
-						  	<div class="bar-inner bar-<%=(t.wansungdo).to_i %>" data-percent="<%=(t.wansungdo).to_i %>%"></div>
-						</div>
-					<% end %>
-				<% end %>
-				<script> horild(); </script>
-			</div>
-			<div class="col-md-6">
-				<h4>너가 할 일</h4>
-				<% @taskdo.each_with_index do |taskdo,slideridx| %>
-					<% if taskdo.wansungdo < 100 %>
-						<li>
-						    <p>name = <%=taskdo.taskname%></p>
-						    <p>
-						    	시킨놈 =
+    <div role="tabpanel" class="tab-pane" id="tasks">
+	
+	<h3>To do list</h3>
+		
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<% @tasklist.each_with_index do |taskdo,slideridx| %>
+		    <% if taskdo.wansungdo < 100 %>
+				<div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="headingOne">
+		  			  	<div class="row">
+							<div class="col-md-3">
 						    	<%sender = User.find(taskdo.sender)%>
-						    	<%=sender.email%>
-						    </p>
-						    <p>due = <%=taskdo.duedate%></p>
-						    <form action="/task/wansungdo_update" method="post">
-						    	
+							    <aside>
+							    	<img class="img-rounded" alt="profile" src="<%=sender.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+								    <h5> <%=sender.first_name%> <br>
+								    	<%=sender.email%></h5>
+						    	</aside>
+						    </div>
+						    <div class="col-md-3">
+							    <div class="col-md-6">
+								    <h5><%=taskdo.taskname%></h5>
+						 		</div>
+								<div class="col-md-6">
+								    <h5><%=taskdo.duedate%></h5>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="bar">
+								  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
+								</div>
+								<script> horild(); </script>
+							</div>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=slideridx%>" aria-expanded="true" aria-controls="collapseOne">
+									<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+								</button>
+						    </div>
+						</div>
+				    </div>
+				    
+				    <div id="collapse<%=slideridx%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				    	<div class="panel-body">
+				    		<div class="col-md-3">
+								<% @commentdo = Comment.where(:task_id => taskdo.id) %>
+								<% @commentdo.each do |commentdo| %>
+									<li><%=commentdo.wansungdo_log%>% : <%=commentdo.comment_log%></li>
+								<% end %>
+							</div>
+					        <form action="/task/wansungdo_update" method="post">
 						    	<input type="hidden" name="task_id" value="<%=taskdo.id%>">
 						    	<input type="hidden" name="team_id" value="<%=taskdo.team_id%>">
 								<a>comment</a><textarea type="text" name="comment" placeholder="comment for details"></textarea>
-								<br><br>
 						       	<input id="sl<%=slideridx%>" name="wansungdo" type="text" data-slider-value="<%= taskdo.wansungdo %>" data-slider-ticks="[0,10, 20,30, 40,50, 60,70, 80,90, 100]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='['0%','', '20%','', '40%','', '60%','', '80%','', '100%']'/>
 								<script>
-								var slider = new Slider("#sl<%=slideridx%>", {
-								    ticks: [0,10, 20,30, 40,50, 60,70, 80,90, 100],
-								    //ticks_labels: ['0%','', '20%','', '40%','', '60%','', '80%','', '100%'],
-								    ticks_snap_bounds: 30
-								});
+									var slider = new Slider("#sl<%=slideridx%>", {
+									    ticks: [0,10, 20,30, 40,50, 60,70, 80,90, 100],
+									    //ticks_labels: ['0%','', '20%','', '40%','', '60%','', '80%','', '100%'],
+									    ticks_snap_bounds: 30
+									});
 								</script>
 						    	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 								
 								<a><%=taskdo.wansungdo%>%</a>
 						    	<input type="submit" value="수정">
 						    </form>
-						</li>
-					<% end %>
-				<% end %>
-			</div>
-		</div>
+				    	</div>
+				    </div>
+				</div>
+			<% end %>
+		<% end %>
+	</div>
+			
+			
 	<!--tab-content tasks ends-->
 	
 		<br>
@@ -466,40 +494,7 @@
 			  </li>
 			<% end %>
 		<% end %>
-		
+	
     </div>
     <!-- Tab ends -->
-</div>
-
-	<br>
-	
-	<script>
-		// request permission on page load
-		document.addEventListener('DOMContentLoaded', function () {
-		  if (Notification.permission !== "granted")
-		    Notification.requestPermission();
-		});
-		
-		function notifyMe() {
-		  if (!Notification) {
-		    alert('Desktop notifications not available in your browser. Try Chromium.'); 
-		    return;
-		  }
-		
-		  if (Notification.permission !== "granted")
-		    Notification.requestPermission();
-		  else {
-		    var notification = new Notification('Notification title', {
-		      icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-		      body: "Hey there! You've been notified!",
-		    });
-		
-		    notification.onclick = function () {
-		      window.open("http://stackoverflow.com/a/13328397/1269037");      
-		    };
-		  }
-		}
-	</script>
-	<button onclick="notifyMe()">Notify me!</button>
-</div>	
 </body>
