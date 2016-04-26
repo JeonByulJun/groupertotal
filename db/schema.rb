@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419065250) do
+ActiveRecord::Schema.define(version: 20160425134907) do
 
   create_table "chats", force: :cascade do |t|
     t.text     "title"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20160419065250) do
     t.string   "first_name"
     t.string   "last_name"
     t.datetime "last_seen"
+    t.string   "image"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -31,4 +31,12 @@ class TeamController < ApplicationController
     @team.users << User.where(:id => params[:user_ids])
     redirect_to :root
   end
+  def profile
+    @team = current_user.teams
+  end
+  def profileupdate
+    current_user.image=params[:image]
+    current_user.save
+    redirect_to "/team/profile"
+  end
 end

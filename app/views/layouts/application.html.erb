@@ -118,7 +118,7 @@
       </div>
       <% if current_user%>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') %>
+        <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') and !current_page?(:controller => '/team', :action => 'profile') %>
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">팀 바꾸기 <span class="caret"></span></a>
@@ -132,7 +132,6 @@
               <li><a href="/team/newteam">새로운 팀 만들기</a></li>
             </ul>
           </li>
-          <li class="active"><%= link_to "팀원 추가", action: 'addmember', controller: 'team', team: @team.id%></li>
           
           <% if current_page?(:controller => '/message', :action => 'show')%>
           <li class="active"><a href="#">화이트보드</a></li>
@@ -160,10 +159,13 @@
         <% end %>
         <a class="nav navbar-text navbar-left" href="https://open.kakao.com/o/sbpof8i">그루퍼에 의견 보내기!</a>
         <ul class="nav navbar-nav navbar-right">
+          <a class="navbar-brand" href="#">
+            <img class="img-rounded" alt="profile" src="<%= current_user.image.url %>" width="20px" height="20px">
+          </a>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=current_user.first_name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">프로필 바꾸기</a></li>
+              <li><a href="/team/profile">프로필 바꾸기</a></li>
               <li><a href="#">설정</a></li>
               <li><a href="https://open.kakao.com/o/sbpof8i">그루퍼에 의견 보내기!</a></li>
               <li role="separator" class="divider"></li>

@@ -1,0 +1,28 @@
+<style>
+body
+{
+background-image:url('/bgmoomin.jpg');
+background-repeat:no-repeat;
+background-size: cover;
+}
+</style>
+
+
+<div style="text-align:center">
+  <div class="row">
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="col-sm-4 col-sm-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h1><%=current_user.first_name%></h1>
+          <img class="img-rounded" src="<%= current_user.image.url %>" alt="<%=current_user.first_name%>" width="100px" height="100px">
+          <form class="form-inline" action="/team/profileupdate" method="post" enctype="multipart/form-data">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+            <input type="file" name="image">
+            <button type="submit" class="btn btn-default">프사 바꾸기</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

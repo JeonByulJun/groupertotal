@@ -1,6 +1,7 @@
 <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 
 <h3>List of Chats</h3>
+<%= link_to "팀원 추가", action: 'addmember', controller: 'team', team: @team.id%>
 <% if @chat %>
   <% @chat.each do |chat| %>
     <li>
