@@ -134,19 +134,21 @@
           </li>
           
           <% if current_page?(:controller => '/message', :action => 'show')%>
-          <li class="active"><a href="#">화이트보드</a></li>
+          <li class="active"><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
           <% else %>
-          <li><a href="#">화이트보드</a></li>
+          <li><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
           <% end %>
           <% if current_page?(:controller => '/resumes')%>
-          <li class="active"><a href="">클라우드</a></li>
+          <li class="active"><a href="">클라우드<span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></li>
           <% else %>
-          <li><%= link_to "클라우드", action: "index", controller: "resumes", team: @team.id %></li>
+          <% @str = "클라우드<span class='glyphicon glyphicon-cloud-download' aria-hidden='true'></span>" %>
+          <li><%= link_to @str.html_safe, action: "index", controller: "resumes", team: @team.id %></li>
           <% end %>
           <% if current_page?(:controller => '/task', :action => 'show')%>
-          <li class="active"><a href="">워크맵</a></li>
+          <li class="active"><a href="">워크맵<span class="glyphicon glyphicon-stats" aria-hidden="true"></span></a></li>
           <% else %>
-          <li><a href="">워크맵</a></li>
+          <% @str = "워크맵<span class='glyphicon glyphicon-stats' aria-hidden='true'></span>" %>
+          <li><%= link_to @str.html_safe, action: "show", controller: "task", team: @team %></li>
           <% end %>
           
         </ul>
