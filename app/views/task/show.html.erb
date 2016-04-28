@@ -279,7 +279,7 @@
 						      
 						      //Lets add the text
 						      ctx.fillStyle = color;
-						      ctx.font = "50px bebas";//"50px arial"
+						      ctx.font = "50px arial";//"50px arial"
 						      text = Math.floor(degrees/360*100)+ '%';
 						      //Lets center the text
 						      //deducting half of text width from postion x
@@ -288,7 +288,7 @@
 						      //be measured easily. there are hacks but we will keep it manual
 						      //ctx.fillText(the_text, x, y)
 						      ctx.fillText(text, W/2-text_width/2, H/2 + 15);
-						      ctx.font = "20px bebas";
+						      ctx.font = "20px arial";
 						      text = 'Average Completion';
 						      text_width = ctx.measureText(text).width;
 						      ctx.fillText(text, W/2-text_width/2, 0.3*H/2);
@@ -583,7 +583,7 @@
 	
     </div>
     
-    <div role="tabpanel" class="tab-pane" id="sends">
+    <div role="tabpanel" class="tab-pane" id="sends" style="padding-left: 12px;">
 		<h3>Tasks you gave</h3>
 		<% @tasksend.each_with_index do |taskdo,idx| %>
 			<% if taskdo.wansungdo < 100 %>
