@@ -65,21 +65,11 @@
             </a>
           </li>
           <li><%=sync partial: 'whiteboardcondition', resource: @whiteboard, scope: @chat%></li>
-          <form action="/whiteboard/update2" method="put" id="whiteboardchangeform" data-remote="true">
+          <form action="/whiteboard/update2" method="post" id="whiteboardchangeform">
             <input type="hidden" name="whiteboardid" value=<%=@whiteboard.id%>>
             <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
           </form>
-          <script>
-            $(document).ready(function(){
-              $("#whiteboardsend").click(function(){
-                $("#whiteboardform").submit();
-              });
 
-              $("#whiteboardchange").click(function(){
-                $("#whiteboardchangeform").submit();
-              });
-            });
-          </script>
           <li>
             <a href="#" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
@@ -104,6 +94,20 @@
       $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top-200 });
       $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
     <% end %>
+    <% if current_user == @whiteboard.user && @whiteboard.edit == true %>
+      $("#whiteboardblock").removeAttr('disabled');
+      $("#whiteboardblock span").text("submit");
+      $("#whiteboardblock").attr('id', 'whiteboardsend');
+      $("#whiteboardarea").removeAttr('readonly');
+    <% end %>
+
+    $("#whiteboardsend").click(function(){
+      $("#whiteboardform").submit();
+    });
+
+    $("#whiteboardchange").click(function(){
+      $("#whiteboardchangeform").submit();
+    });
   });
 
   $(document).ready(function(){

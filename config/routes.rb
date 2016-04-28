@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   post '/team/profileupdate' => 'team#profileupdate'
   get '/test/index' => 'test#index'
   put '/whiteboard/update' => 'whiteboard#update'
-  put '/whiteboard/update2' => 'whiteboard#update2'
+  post '/whiteboard/update2' => 'whiteboard#update2'
   put '/message/update' => 'message#update'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
