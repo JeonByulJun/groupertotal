@@ -96,7 +96,7 @@
     <% end %>
     <% if current_user == @whiteboard.user && @whiteboard.edit == true %>
       $("#whiteboardblock").removeAttr('disabled');
-      $("#whiteboardblock span").text("submit");
+      $("#whiteboardblock span").text("완료");
       $("#whiteboardblock").attr('id', 'whiteboardsend');
       $("#whiteboardarea").removeAttr('readonly');
     <% end %>
