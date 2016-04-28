@@ -10,7 +10,7 @@
 	    z-index: 1;
 	    top: 51px;
 	    right: 0;
-	    background-color: #111;
+	    background-color: #50D4C8;
 	    overflow-x: hidden;
 	    margin-left: 3px;
 	}
@@ -23,74 +23,93 @@
 	#task_name{
 		padding-top: 3px;
 	}
+	#sidebar_name{
+		padding-top: 8px;
+		color: white;
+	}
+	#sidebar_status{
+		padding-top: 8px;
+		color: white;
+	}
 </style>
 <head>
-	<div>
+	<div class="row" style="padding-left: 20px;">
 		<aside style="padding-left: 12px;">
-			<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 8px;">
+			<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 8px; margin-top: 5px;">
 		</aside>
 		<div style="margin-left: 15px;">
 			<h2> <%=current_user.first_name%><%=current_user.last_name%></h2>
-			<h2> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=current_user.email%> </h2>
+			<h4 style="color: gray;"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=current_user.email%> </h4>
 		</div>
 	</div>
-	<%= link_to "ENTIRE", action: 'entire', controller: 'task', team: @team.id%>
+	<br>
+	<!--</%= link_to "ENTIRE", action: 'entire', controller: 'task', team: @team.id%>-->
 </head>
 
 <body data-no-turbolink="true">
 	<% temp = [] %>
 	<% temp += @team.users %>
 	<section class="sidebar">
+		<br>
 		<% temp.each_with_index do |t,idx| %>
-		  	<li role="presentation" class="active" id="<%=idx%>" data-toggle="modal" data-target="#<%=idx%>info">
-		  		<aside style="padding-left: 12px;">
-			    	<img class="img-rounded" alt="profile" src="<%=t.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
-			    	<% if (Time.now - t.last_seen) <= 300 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 접속중</h5>
-					<% elsif (Time.now - t.last_seen) <= 600 %>
-					<h5 style="color: white;"><%=t.first_name%><br>
-				    	 5분 전</h5>
-				    <% elsif (Time.now - t.last_seen) <= 1800 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 10분 전</h5>
-				    <% elsif (Time.now - t.last_seen) <= 3600 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 30분 전</h5>
-				    <% elsif (Time.now - t.last_seen) <= 10800 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 1시간 전</h5>
-				    <% elsif (Time.now - t.last_seen) <= 21600 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 3시간 전</h5>
-				    <% elsif (Time.now - t.last_seen) <= 43200 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 4시간 전</h5>
-				    <% elsif (Time.now - t.last_seen) <= 86400 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 12시간 전</h5>
-					<% elsif (Time.now - t.last_seen) <= 172800 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 1일 전</h5>
-				    <% elsif (Time.now - t.last_seen) <= 343600 %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    	 2일 전</h5>
-				    <% else %>
-				    <h5 style="color: white;"><%=t.first_name%><br>
-				    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
-				    <% end %>
-		    	</aside>
-		  	</li>
+		  	<div role="presentation" class="active" id="<%=idx%>" data-toggle="modal" data-target="#<%=idx%>info">
+			    <div class="row" style="margin-top: 5px;">
+			    	<div class="col-md-12">
+				  		<aside>
+				  			<div class="col-md-3">
+					    		<img class="img-rounded" alt="profile" src="<%=t.image%>" width="40px" height="40px" style="float: left;">
+					    	</div>
+					    	<% if (Time.now - t.last_seen) <= 300 %>
+					    	<div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>접속중</c></div>
+							<% elsif (Time.now - t.last_seen) <= 600 %>
+							<div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>5분 전</c></div>
+						    <% elsif (Time.now - t.last_seen) <= 1800 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>10분 전</c></div>
+						    <% elsif (Time.now - t.last_seen) <= 3600 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>30분 전</c></div>
+						    <% elsif (Time.now - t.last_seen) <= 10800 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>1시간 전</c></div>
+						    <% elsif (Time.now - t.last_seen) <= 21600 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>3시간 전</c></div>
+						    <% elsif (Time.now - t.last_seen) <= 43200 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>6시간 전</c></div>
+						    <% elsif (Time.now - t.last_seen) <= 86400 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>12시간 전</c></div>
+							<% elsif (Time.now - t.last_seen) <= 172800 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>1일 전</c></div>
+						    <% elsif (Time.now - t.last_seen) <= 343600 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>2일 전</c></div>
+					    	<% elsif (Time.now - t.last_seen) <= 687200 %>
+						    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
+					    	<div class="col-md-4" id="sidebar_status"><c>4일 전</c></div>
+						    <% else %>
+						    <h5 style="color: white;"><%=t.first_name%><br>
+						    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
+						    <% end %>
+				    	</aside>
+			    	</div>
+				</div>
+		  	</div>
 		<% end %>
 	</section>
 	<% temp.each_with_index do |t,idx| %>
 		<div class="modal fade" id="<%=idx%>info" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-		  <div class="modal-dialog modal-sm">
+		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		    	<style>
 					.bar2 {
 					    background-color: #F3F3F3; /*gray*/
-					    width: 70%;
+					    width: 90%;
 					    /*height: 30px;*/
 					    height: 40px;
 					    /*border-left-style: dotted;
@@ -456,7 +475,7 @@
 	</style>
     
     <!--tab-content tasks starts-->
-    <div role="tabpanel" class="tab-pane" id="tasks">
+    <div role="tabpanel" class="tab-pane" id="tasks" style="padding-left: 12px;">
 	
 	<h3>To do list</h3>
 		
@@ -511,7 +530,7 @@
 				    		<div class="col-md-3">
 								<% @commentdo = Comment.where(:task_id => taskdo.id) %>
 								<% @commentdo.each do |commentdo| %>
-									<li><%=commentdo.wansungdo_log%>% : <%=commentdo.comment_log%></li>
+									<li><%=commentdo.wansungdo_log%>% : <%=commentdo.comment_log%> <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <%=commentdo.created_at.strftime("%Y.%m.%d")%></li>
 								<% end %>
 							</div>
 							<div class="col-md-6"></div>
