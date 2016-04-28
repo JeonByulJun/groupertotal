@@ -1,108 +1,209 @@
-<div id="test">ggg</div>
-<h3>List of Chats</h3>
+<style>
+  .sidetab{
+    left: 0;
+    float: left;
+    width: 75px;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 52px;
+    background-color: #52D5CC;
+    overflow-x: hidden;
+    border: 1px solid #4CCFC5;
+  }
+  .sidebar{
+	    height: 100%;
+	    width: 35%;
+	    max-width: 440px;
+	    position: absolute;
+	    z-index: 1;
+	    top: 52px;
+	    left: 75px;
+	    background-color: #52D5CC;
+	    overflow-x: hidden;
+	    border: 1px solid #4CCFC5;
+	}
+	.homebody{
+		width: 55%;
+		float: right;
+	}
+	#chat-icon-box{
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -90px;
+	  left: 50%;
+	  margin-left: -20px;
+	}
+	#chat-icon-member{
+	  width: 40px;
+	  height: 40px;
+		font-size: 30px;
+	  color: white;
+	}
+	#chat-icon-chatlist{
+	  width: 40px;
+	  height: 40px;
+		font-size: 30px;
+	  color: white;
+	}
+	#chat_top {
+	  background-color: white;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+  #img_setting{
+    width: 70px;
+    height: 70px;
+    float: left;
+    margin-right: 8px;
+    padding: 10px;
+  }
+</style>
 <%= link_to "팀원 추가", action: 'addmember', controller: 'team', team: @team.id%>
-<% if @chat %>
-  <% @chat.each do |chat| %>
-    <li>
-      <form action ="/message/show" method="get">
-        <input type="hidden" name="chat" value=<%=chat.id%>>
-        <input type="submit" value="<%=chat.title%>">
-      </form>
-    </li>
-  <% end %>
-<% end %>
-<form action="/chat/create" method="post">
-  <input type="text" name="title">
-  <input type="hidden" name="team" value=<%=@team.id%>>
-  <br />
-  <% @team.users.each do |p| %>
-    <% if p != current_user %>
-      <%= p.email %> = <%= check_box_tag('user_ids[]', p.id) %><br />
-    <% end %>
-  <% end %>
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
-  <input type="submit" value="Send">
-</form>
+<!-- Chat Sidetab -->
+<section class="sidetab">
+  <div id="chat-icon-box" class="tabbable tabs-left">
+    <center><span id="chat-icon-member" href="#tab1" data-toggle="tab" role="button" class="glyphicon glyphicon-user" aria-hidden="true" style="color: white;"></span></center>
+    <br>
+    <center><span id="chat-icon-chatlist" href="#tab2" data-toggle="tab" role="button" class="glyphicon glyphicon-comment" aria-hidden="true" style="color: white;"></span></center>
+    <br>
+    <center><span id="chat-icon-chatlist" href="#tab3" data-toggle="tab" role="button" class="glyphicon glyphicon-hand-right" aria-hidden="true" style="color: white;"></span></center>
+  </div>
+</section>
 
-
-<p> Give Tasks </p>
-
-<form action="/task/create" method="post">
-  <p>taskname</p><input type="text" name="taskname">
-  
-  <div class="container">
-      <div class="row">
-          <div class='col-sm-3'>
-              <div class="form-group">
-                  <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" name="duedate"/>
-                      <span class="input-group-addon">
-                          <span class="glyphicon glyphicon-calendar"></span>
-                      </span>
-                  </div>
-              </div>
+<!-- Memberlist & Chatlist Sidebar -->
+<section class="sidebar" id="sidebar">
+  <div class="tab-content">
+    <div class="tab-pane" id="tab1">
+      <% temp = [] %>
+    	<% temp += @team.users.order(first_name: :asc) %>
+    	<div class="row" id="chat_top">
+      	<div class="col-sm-6"><h2 style="color: #372727;">Memebers</h2></div>
+        <div class="col-sm-1"><h2><%=temp.count%></h2></div>
+        <div class="col-sm-3"></div>
+        <form action="/team/addmember" method="get">
+          <input type="hidden" name="team" value="<%=@team.id%>"/>
+          <div class="col-sm-2"><button type="submit" class="btn btn-new btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button></div>
+        </form>
+      </div>
+      <!-- My Profile -->
+      <div class="row" id="chat_top">
+        <div class="col-sm-12">
+          <h5 style="color: #52D5CC">나</h3>
+        </div>
+      </div>
+      <div class="row" id="chat_top">
+        <div id="profile_me" class="col-sm-12">
+  	  		<aside style="padding-left: 12px;">
+  		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=current_user.image%>">
+  	    	</aside>
+		    	<h5 style="color: black;"><%=current_user.first_name%></h5>
+  	  	</div>
+      </div>
+      
+      <!-- Others Profile -->
+      <div class="row" id="chat_top">
+        <div class="col-sm-12">
+          <h5 style="color: #52D5CC">Members</h3>
+        </div>
+      </div>
+  		<% temp.each_with_index do |t,idx| %>
+  		  <% if t.id != current_user.id %>
+  		    <div class="row" id="chat_top">
+            <div id="profile<%=idx%>" class="col-sm-12">
+      	  		<aside style="padding-left: 12px;">
+      		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
+      	    	</aside>
+    		    	<h5 style="color: black;"><%=t.first_name%></h5>
+      	  	</div>
+          </div>
+		  	<% end %>
+  		<% end %>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <div class="row" id="chat_top">
+      	<div class="col-sm-6"><h2 style="color: #372727;">Chats</h2></div>
+        <div class="col-sm-1"><h2> </h2></div>
+        <div class="col-sm-3"></div>
+        <form action="/chat/create" method="post">
+          <input type="text" name="title">
+          <input type="hidden" name="team" value=<%=@team.id%>>
+          <br />
+          <% @team.users.each do |p| %>
+            <% if p != current_user %>
+              <%= p.email %> = <%= check_box_tag('user_ids[]', p.id) %><br />
+            <% end %>
+          <% end %>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          <div class="col-sm-2"><button type="submit" vlaue="Send" class="btn btn-new btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button></div>
+        </form>
+      </div>
+      
+      <% if @chat %>
+        <% @chat.each do |chat| %>
+          <div class="row" id="chat_top">
+            <div id="profile_me" class="col-sm-12">
+              <li>
+                <form action ="/message/show" method="get">
+                  <input type="hidden" name="chat" value="<%=chat.id%>">
+                  <input type="submit" value="<%=chat.title%>">
+                </form>
+              </li>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <div class="tab-pane" id="tab3">
+      <div class="row" id="chat_top">
+      	<div class="col-sm-6"><h2 style="color: #372727;">Give Tasks</h2></div>
+        <div class="col-sm-1"><h2> </h2></div>
+        <div class="col-sm-3"></div>
+      </div>
+      
+      <form action="/task/create" method="post">
+        <div class="row" id="chat_top">
+          <p>taskname</p>
+          <input type="text" name="taskname">
+        </div>
+        
+        <div class="row" id="chat_top">
+          <div class='col-sm-5'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                  <input type='text' class="form-control" name="duedate"/>
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+            </div>
           </div>
           <script type="text/javascript">
-              $(function () {
-                  $('#datetimepicker1').datetimepicker({
-                    format : 'YYYY-MM-DD'
-                  });
+            $(function () {
+              $('#datetimepicker1').datetimepicker({
+                format : 'YYYY-MM-DD'
               });
+            });
           </script>
-      </div>
+        </div>
+        
+        <div class="row" id="chat_top">
+          <% @team.users.each do |p| %>
+            <%= p.email %> = <%= check_box_tag('user_ids[]', p.id) %><br />
+          <% end %>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          <input type="hidden" name="team" value=<%=@team.id%>>
+          <input type="submit" value="send">
+        </div>
+      </form>
+    </div>
   </div>
+</section>
+
+<section class="homebody">
+  <p> Give Tasks </p>
   
-  <% @team.users.each do |p| %>
-      <%= p.email %> = <%= check_box_tag('user_ids[]', p.id) %><br />
-  <% end %>
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-  <input type="hidden" name="team" value=<%=@team.id%>>
-  <input type="submit" value="send">
-</form>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-fafasdf
-fdsaf
-
-fasd
-
-
-<a href="#test">home</a>
-<%= link_to "SHOW TASKS", action: 'show', controller: 'task', team: @team.id%>
+  
+</section>
