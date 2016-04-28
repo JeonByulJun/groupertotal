@@ -14,6 +14,15 @@
 	    overflow-x: hidden;
 	    margin-left: 3px;
 	}
+	#task_pararell{
+		margin-top: 20px;
+	}
+	#task_taskdue{
+		padding-top: 6px;
+	}
+	#task_name{
+		padding-top: 3px;
+	}
 </style>
 <head>
 	<div>
@@ -63,8 +72,12 @@
 					<% elsif (Time.now - t.last_seen) <= 172800 %>
 				    <h5 style="color: white;"><%=t.first_name%><br>
 				    	 1일 전</h5>
+				    <% elsif (Time.now - t.last_seen) <= 343600 %>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    	 2일 전</h5>
 				    <% else %>
-				    <h5 style="color: white;"><%=t.first_name%></h5>
+				    <h5 style="color: white;"><%=t.first_name%><br>
+				    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
 				    <% end %>
 		    	</aside>
 		  	</li>
@@ -166,7 +179,8 @@
 	<!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
     <li role="presentation" class="active"><a href="#contribution" aria-controls="contribution" role="tab" data-toggle="tab">Contribution</a></li>
-    <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">Tasks</a></li>
+    <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">Tasklist</a></li>
+    <li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">Sended Tasks</a></li>
   </ul>
 
 	<!-- Tab panes -->
@@ -452,29 +466,39 @@
 				<div class="panel panel-default">
 				    <div class="panel-heading" role="tab" id="headingOne">
 		  			  	<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-4" id="task_pararell">
 						    	<%sender = User.find(taskdo.sender)%>
-							    <aside>
-							    	<img class="img-rounded" alt="profile" src="<%=sender.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
-								    <h5> <%=sender.first_name%> <br>
-								    	<%=sender.email%></h5>
-						    	</aside>
+						    	<div class="col-md-8">
+								    <aside>
+								    	<img class="img-rounded" alt="profile" src="<%=sender.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+									    <h5 id="task_name"> <%=sender.first_name%> <br>
+									    	<%=sender.email%></h5>
+							    	</aside>
+						    	</div>
+						    	<div class="col-md-2">
+							    	<span class="glyphicon glyphicon-hand-right" aria-hidden="true" style="font-size: 20px; margin-top: 16px;"></span>
+						    	</div>
+						    	<div class="col-md-2">
+							    	<aside>
+								    	<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="40px" height="40px" style="margin-top: 10px; float: left; margin-right: 8px;">
+							    	</aside>
+						    	</div>
 						    </div>
-						    <div class="col-md-3">
-							    <div class="col-md-6">
-								    <h5><%=taskdo.taskname%></h5>
+						    <div class="col-md-3" id="task_pararell">
+							    <div class="col-md-6" id="task_taskdue">
+								    <h5 id="task_name"><%=taskdo.taskname%></h5>
 						 		</div>
-								<div class="col-md-6">
-								    <h5><%=taskdo.duedate%></h5>
+								<div class="col-md-6" id="task_taskdue">
+								    <h5 id="task_name"><%=taskdo.duedate%></h5>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="bar">
 								  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
 								</div>
 								<script> horild(); </script>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2" id="task_pararell">
 								<button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=slideridx%>" aria-expanded="true" aria-controls="collapseOne">
 									<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
 								</button>
@@ -490,46 +514,101 @@
 									<li><%=commentdo.wansungdo_log%>% : <%=commentdo.comment_log%></li>
 								<% end %>
 							</div>
-					        <form action="/task/wansungdo_update" method="post">
-						    	<input type="hidden" name="task_id" value="<%=taskdo.id%>">
-						    	<input type="hidden" name="team_id" value="<%=taskdo.team_id%>">
-								<a>comment</a><textarea type="text" name="comment" placeholder="comment for details"></textarea>
-						       	<input id="sl<%=slideridx%>" name="wansungdo" type="text" data-slider-value="<%= taskdo.wansungdo %>" data-slider-ticks="[0,10, 20,30, 40,50, 60,70, 80,90, 100]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='['0%','', '20%','', '40%','', '60%','', '80%','', '100%']'/>
-								<script>
-									var slider = new Slider("#sl<%=slideridx%>", {
-									    ticks: [0,10, 20,30, 40,50, 60,70, 80,90, 100],
-									    //ticks_labels: ['0%','', '20%','', '40%','', '60%','', '80%','', '100%'],
-									    ticks_snap_bounds: 30
-									});
-								</script>
-						    	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-								
-								<a><%=taskdo.wansungdo%>%</a>
-						    	<input type="submit" value="수정">
-						    </form>
+							<div class="col-md-6"></div>
+							<div class="col-md-3">
+						        <form action="/task/wansungdo_update" method="post">
+							    	<input type="hidden" name="task_id" value="<%=taskdo.id%>">
+							    	<input type="hidden" name="team_id" value="<%=taskdo.team_id%>">
+							    	<div class="row">
+							    		<div class="form-group">
+							    			<div class="col-md-10">
+												<label for="InputComment<%=slideridx%>"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Progress</label>
+												<input type="text" class="form-control" name="comment" id="InputComment<%=slideridx%>" placeholder="Comment">
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin-top: 10px;">
+										<div class="form-group">
+											<div class="col-md-10">
+												<label for="InputComment<%=slideridx%>"><span class="glyphicon glyphicon-indent-left" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Completion</label>
+												<br>
+									       		<input id="sl<%=slideridx%>" name="wansungdo" type="text" data-slider-value="<%= taskdo.wansungdo %>" data-slider-ticks="[0,10, 20,30, 40,50, 60,70, 80,90, 100]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='['0%','', '20%','', '40%','', '60%','', '80%','', '100%']'/>
+								       		</div>
+								       	</div>	
+							       	</div>
+									<script>
+										var slider = new Slider("#sl<%=slideridx%>", {
+										    ticks: [0,10, 20,30, 40,50, 60,70, 80,90, 100],
+										    //ticks_labels: ['0%','', '20%','', '40%','', '60%','', '80%','', '100%'],
+										    ticks_snap_bounds: 30
+										});
+									</script>
+							    	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+							    	<div class="row" style="margin-top: 10px;">
+							    		<div class="col-md-6 col-md-offset-4">
+											<span class="glyphicon glyphicon-dashboard" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span><c><%=taskdo.wansungdo%>%</c>
+											<button type="submit" class="btn btn-info btn-sm" aria-haspopup="true" aria-expanded="false" style="font-size: 13px;">
+										    edit
+											</button>
+										</div>
+									</div>
+							    </form>
+						    </div>
 				    	</div>
 				    </div>
 				</div>
 			<% end %>
 		<% end %>
-	</div>
-			
-			
+	</div>	
 	<!--tab-content tasks ends-->
 	
-		<br>
-	
-		<h4>너가 시킨 일</h4>
-		<% @tasksend.each do |tasksend| %>
-			<% if tasksend.wansungdo < 100 %>
-			  <li> name = <%=tasksend.taskname%> due = <%=tasksend.duedate%> 완성도 = <%=tasksend.wansungdo%>
-			    <% tasksend.users.each do |user| %>
-			      <p>하는사람 = <%=user.email%></p>
-			    <% end %>
-			  </li>
+    </div>
+    
+    <div role="tabpanel" class="tab-pane" id="sends">
+		<h3>Tasks you gave</h3>
+		<% @tasksend.each_with_index do |taskdo,idx| %>
+			<% if taskdo.wansungdo < 100 %>
+			<div class="row">
+				<div class="col-md-4" id="task_pararell">
+			    	<%sender = User.find(taskdo.sender)%>
+			    	<div class="col-md-2">
+					    <aside>
+					    	<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="40px" height="40px" style="margin-top: 10px; float: left; margin-right: 8px;">
+				    	</aside>
+			    	</div>
+			    	<div class="col-md-2">
+				    	<span class="glyphicon glyphicon-hand-right" aria-hidden="true" style="font-size: 20px; margin-top: 16px;"></span>
+			    	</div>
+			    	<div class="col-md-8">
+				    	<aside>
+				    		<% taskdo.users.each do |doer| %>
+					    		<img class="img-rounded" alt="profile" src="<%=doer.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+							    <h5 id="task_name"> <%=doer.first_name%> <br>
+							    	<%=doer.email%></h5>	
+			    			<% end %>
+				    	</aside>
+			    	</div>
+			    </div>
+			    <div class="col-md-3" id="task_pararell">
+				    <div class="col-md-6" id="task_taskdue">
+					    <h5 id="task_name"><%=taskdo.taskname%></h5>
+			 		</div>
+					<div class="col-md-6" id="task_taskdue">
+					    <h5 id="task_name"><%=taskdo.duedate%></h5>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="bar">
+					  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
+					</div>
+					<script> horild(); </script>
+				</div>
+				<div class="col-md-2" id="task_pararell"></div>
+			</div>
 			<% end %>
 		<% end %>
-	
-    </div>
+		
+		
+	</div>
     <!-- Tab ends -->
 </body>
