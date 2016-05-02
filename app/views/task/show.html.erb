@@ -343,7 +343,7 @@
 				</div>
 				
 				<div class="col-md-8">
-					<canvas id="canvas" style="width: auto; height: auto;">
+					<canvas id="canvas" style="width: 700px; height: 450px;">
 					<script>
 						var labelString = new Array();
 						var dataString = new Array();
@@ -415,15 +415,17 @@
 					<% end %>
 				</div>
 				<% @tasklist.each_with_index do |t,i| %>
-					<% if t.duedate == nil %>
-					<% t.duedate = Date.today %>
-					<% end %>
-					<% a = (t.duedate - (Date.today)).to_i %>
-					<% if a > 0 %>
-						<div class="bar2">
-							<div class="bar2-innertask" data-task ="<%=t.taskname%>"></div>
-					  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
-						</div>
+					<% if t.wansungdo < 100 %>
+						<% if t.duedate == nil %>
+						<% t.duedate = Date.today %>
+						<% end %>
+						<% a = (t.duedate - (Date.today)).to_i %>
+						<% if a > 0 %>
+							<div class="bar2">
+								<div class="bar2-innertask" data-task ="<%=t.taskname%>"></div>
+						  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+							</div>
+						<% end %>
 					<% end %>
 			  	<% end %>
 				<script>

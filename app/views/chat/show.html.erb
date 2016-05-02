@@ -146,8 +146,10 @@
       </div>
       <div class="row collapse" id="addchatroom">
           <form action="/chat/create" method="post">
-            회의방 이름 <input type="text" name="title" >
-            <input type="hidden" name="team" value=<%=@team.id%>>
+          	<div id="chat_top">
+	            회의방 이름 <input type="text" name="title" >
+	            <input type="hidden" name="team" value=<%=@team.id%>>
+            </div>
             <br />
             <% temp.each_with_index do |t,idx| %>
         		  <% if t.id != current_user.id %>
@@ -164,14 +166,14 @@
         		<% end %>
             <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
             <div class="col-sm-2"><button type="submit" vlaue="Send" class="btn btn-new btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button></div>
-          </form>
-        </div>
+        </form>
+      </div>
       <div class="row" id="chat_top">
         <div class="col-sm-12">
           <h5 style="color: #52D5CC">회의방</h3>
         </div>
       </div>
-    </div>
+      
       <% if @chat %>
         <% @chat.each do |chat| %>
           <div class="row" id="chat_top">
@@ -241,7 +243,7 @@
     	  		<aside style="padding-left: 12px;">
     		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=current_user.image%>">
     	    	</aside>
-  		    	<h5 style="color: black;"><%=current_user.first_name%></h5>
+  		    	<h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=current_user.first_name%></h5>
     	  	</div>
     	    <div id="profile_me" class="col-sm-1">
     	      <%= check_box_tag('user_ids[]', current_user.id) %><br />
@@ -257,11 +259,11 @@
     		<% temp.each_with_index do |t,idx| %>
     		  <% if t.id != current_user.id %>
     		    <div class="row" id="chat_top">
-              <div id="profile<%=idx%>" class="col-sm-11">
+              <div id="profile_me" class="col-sm-11">
         	  		<aside style="padding-left: 12px;">
         		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
         	    	</aside>
-      		    	<h5 style="color: black;"><%=t.first_name%></h5>
+      		    	<h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=t.first_name%></h5>
         	  	</div>
         	  	<div id="profile_me" class="col-sm-1">
         	      <%= check_box_tag('user_ids[]', t.id) %><br />
@@ -350,15 +352,17 @@
 					<% end %>
 				</div>
 			<% @teamtask.each_with_index do |b,i| %>
-				<% if b.duedate == nil %>
-					<% b.duedate = Date.today %>
-				<% end %>
-				<% a = (b.duedate - (Date.today)).to_i %>
-				<% if a > 0 %>
-					<div class="bar2">
-						<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
-				  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
-					</div>
+				<% if b.wansungdo < 100 %>
+					<% if b.duedate == nil %>
+						<% b.duedate = Date.today %>
+					<% end %>
+					<% a = (b.duedate - (Date.today)).to_i %>
+					<% if a > 0 %>
+						<div class="bar2">
+							<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
+					  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
+						</div>
+					<% end %>
 				<% end %>
 			<% end %>
 			<script>
@@ -392,7 +396,8 @@
 			<% temp += @team.users %>
 			<% temp.each_with_index do |t,idx| %>
 				<% ro = t.id %>
-				<% @taskindiv = t.tasks.where(:team_id => params[:team]).order(duedate: :asc) %>
+				<% @taskindiv_unordered = t.tasks.where(:team_id => params[:team]) %>
+				<% @taskindiv = @taskindiv_unordered.order(duedate: :asc) %>
 				<% if @taskindiv.count != 0 %>
 				<div class="row">
           <div id="profile_on_tasklist<%=idx%>" class="col-sm-12">
@@ -403,25 +408,27 @@
     	  	</div>
         </div>
 					<% @taskindiv.each_with_index do |b,i| %>
-						<% if b.duedate == nil %>
-							<% b.duedate = Date.today %>
-						<% end %>
-						<% a = (b.duedate - (Date.today)).to_i %>
-						<% if a > 0 %>
-							<div class="bar2">
-								<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
-						  		<div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
-							</div>
-							<!-- random color js, has problem -->
-							<script>
-								function ran_col(){
-									var color = "#";
-									var letters = {"4eb72a","00B0F0"};
-									color += letters[Math.floor(Math.random() * letters.length)];
-									document.getelementById('<%=i%>th-gantt-each-<%=idx%>').style.backgroundColor = color;
-								}
-								ran_col();
-							</script>
+							<% if b.wansungdo < 100 %>
+							<% if b.duedate == nil %>
+								<% b.duedate = Date.today %>
+							<% end %>
+							<% a = (b.duedate - (Date.today)).to_i %>
+							<% if a > 0 %>
+								<div class="bar2">
+									<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
+							  		<div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
+								</div>
+								<!-- random color js, has problem -->
+								<script>
+									function ran_col(){
+										var color = "#";
+										var letters = {"4eb72a","00B0F0"};
+										color += letters[Math.floor(Math.random() * letters.length)];
+										document.getelementById('<%=i%>th-gantt-each-<%=idx%>').style.backgroundColor = color;
+									}
+									ran_col();
+								</script>
+							<% end %>
 						<% end %>
 				  <% end %>
 				<% end %>
