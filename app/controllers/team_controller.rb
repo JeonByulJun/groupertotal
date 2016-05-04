@@ -2,13 +2,16 @@ class TeamController < ApplicationController
   before_action :authenticate_user!
 
   def index
+
+    @image = Imagemessage.all
+
     @team = current_user.teams
     @user = User.all
     if !current_user.teams.first
       redirect_to "/team/newteam"
     end
     #@mail=NoticeMailer.invitation(current_user).deliver
-    
+
   end
   def create
     team = Team.new(:teamname => params[:teamname])
@@ -44,4 +47,6 @@ class TeamController < ApplicationController
     current_user.save
     redirect_to "/team/profile"
   end
+
+
 end

@@ -16,4 +16,5 @@
 //= require sync
 //= require moment
 //= require bootstrap-datetimepicker
+//= require jquery.remotipart
 //= require_tree .

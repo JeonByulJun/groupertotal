@@ -1,7 +1,7 @@
 # Faye
 development:
-  server: "http://52.79.182.112:9292/faye"
-  adapter_javascript_url: "http://52.79.182.112:9292/faye/faye.js"
+  server: "http://localhost:9292/faye"
+  adapter_javascript_url: "http://localhost:9292/faye/faye.js"
   auth_token: DEVELOPMENT_SECRET_TOKEN
   adapter: "Faye"
   async: true

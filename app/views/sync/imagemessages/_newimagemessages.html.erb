@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-sm-1">
+    <img src="<%= current_user.image.url %>" alt="User.find(imagemessage.message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" onclick="alert('<%=imagemessage.message.content%>');" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
+  </div>
+  <div class="col-sm-11">
+    <strong><%=User.find(imagemessage.message.sender_id).first_name%></strong><br>
+    <img src="<%=imagemessage.imagemessageupload.url%>" style="padding: 10px;"><br>
+  </div>
+</div>
+
+
+<script>
+  <%if imagemessage.message.sender_id == current_user.id%>
+      var ta = document.getElementById('chatbox');
+
+      ta.scrollTop = ta.scrollHeight;
+  <%end%>
+</script>
+
+<form action="/message/update" method="put" data-remote=true id="messagelook">
+  <input type="hidden" name="messageid" value=<%=imagemessage.message.id%>>
+</form>
