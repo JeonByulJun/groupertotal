@@ -32,8 +32,8 @@ class MessageController < ApplicationController
     if @imagemessage.save
       @message.imagemessage = @imagemessage
       @message.save
-      #sync_new @message, scope: @chat, partial: 'newmessages'
-      sync_new @imagemessage, scope: @chat
+      sync_new @message, scope: @chat, partial: 'newmessages'
+      #sync_new @imagemessage, scope: @chat
 
     end
   end

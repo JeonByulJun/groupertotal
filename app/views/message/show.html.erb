@@ -29,7 +29,6 @@
       <% end %>
 
       <%= sync_new partial: 'newmessages', resource: Message.new, scope: @chat%>
-      <%= sync_new partial: 'newimagemessages', resource: Imagemessage.new, scope: @chat %>
     </div>
     <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
       <div class="form-group has-success has-feedback">
