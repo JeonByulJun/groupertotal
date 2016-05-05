@@ -178,7 +178,7 @@
       </div><!-- /.navbar-collapse -->
       <% else %>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">그루퍼란?</a></li>
+          <li><a data-toggle="tooltip" data-placement="bottom" title="팀을 효과적으로 운영할 수 있도록 도와주는 서비스">그루퍼란?</a></li>
           <li><a href="https://open.kakao.com/o/sbpof8i">그루퍼에 연락하기</a></li>
         </ul>
       <% end %>
@@ -190,6 +190,11 @@
 </body>
 </html>
 
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   //if (Notification.permission !== "granted")

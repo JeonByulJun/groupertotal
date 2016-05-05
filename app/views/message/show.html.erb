@@ -11,9 +11,9 @@
 
         <div class="row">
           <div class="col-sm-1">
-            <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" onclick="alert('<%=message.content%>');" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
+            <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
           </div>
-          <div class="col-sm-11">
+          <div class="col-sm-11 message" onclick="alert('dddd')">
             <div id="message<%=message.id%>">
               <strong><%=User.find(message.sender_id).first_name%></strong><br>
               <%=message.content%><br>
@@ -128,4 +128,14 @@ function normalImg(x) {
 function search(x) {
     $('#chatbox').animate({ scrollTop: $("#message"+x).offset().top-200 });
 }
+</script>
+
+<script>
+$(document).ready(function(){
+    $(".message").hover(function(){
+        $(this).css("background-color", "#F2F2F2");
+        }, function(){
+        $(this).css("background-color", "white");
+    });
+});
 </script>
