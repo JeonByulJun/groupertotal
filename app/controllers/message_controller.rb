@@ -24,8 +24,22 @@ class MessageController < ApplicationController
     @message.save
 
   end
-  private
-  def message_params
-    params.require(:message).permit(:content, :chat_id)
+  def imageup
+    @message = Message.new(:messagetype => 1, :chat_id => params[:chat_id], :sender_id => current_user.id)
+    @imagemessage = Imagemessage.new(:imagemessageupload => params[:image_file], :chat_id => params[:chat_id])
+    @chat = Chat.find(params[:chat_id])
+    if @imagemessage.save
+      @message.imagemessage = @imagemessage
+      @message.save
+      sync_new @message, scope: @chat, partial: 'newmessages'
+      #sync_new @imagemessage, scope: @chat
+
+    end
   end
+
+
+  private
+    def message_params
+      params.require(:message).permit(:content, :chat_id)
+    end
 end

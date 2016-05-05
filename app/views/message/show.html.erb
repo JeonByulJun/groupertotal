@@ -16,7 +16,12 @@
           <div class="col-sm-11">
             <div id="message<%=message.id%>">
               <strong><%=User.find(message.sender_id).first_name%></strong><br>
-              <%=message.content%><br>
+              <% if message.messagetype == 0 %>
+                <%=message.content%><br>
+              <% end %>
+              <% if message.messagetype == 1 %>
+                <img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px;"><br>
+              <% end %>
             </div>
 
           </div>
@@ -24,7 +29,6 @@
       <% end %>
 
       <%= sync_new partial: 'newmessages', resource: Message.new, scope: @chat%>
-
     </div>
     <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
       <div class="form-group has-success has-feedback">
@@ -36,6 +40,16 @@
       <%= f.hidden_field :chat_id, :value => @chat.id %>
 
     <%end%>
+
+
+
+    <%=form_tag "/imageup", method:"post", enctype:"multipart/form-data", :remote => true do %>
+        <input type="hidden" name="chat_id" value=<%= @chat.id %>>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+
+        <input type="file" name="image_file">
+        <input type="submit" value="ok">
+    <% end %>
 
 
     <script>

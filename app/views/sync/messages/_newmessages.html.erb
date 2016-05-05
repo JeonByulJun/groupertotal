@@ -4,7 +4,12 @@
   </div>
   <div class="col-sm-11">
     <strong><%=User.find(message.sender_id).first_name%></strong><br>
-    <%=message.content%><br>
+    <% if message.messagetype == 0 %>
+      <%=message.content%><br>
+    <% end %>
+    <% if message.messagetype == 1 %>
+      <img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px;"><br>
+    <% end %>
 
   </div>
 </div>

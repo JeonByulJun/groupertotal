@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   put '/whiteboard/update' => 'whiteboard#update'
   post '/whiteboard/update2' => 'whiteboard#update2'
   put '/message/update' => 'message#update'
+  post '/imageup' => 'message#imageup'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

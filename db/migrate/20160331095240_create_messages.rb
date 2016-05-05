@@ -4,6 +4,7 @@ class CreateMessages < ActiveRecord::Migration
       t.integer :chat_id
       t.integer :sender_id
       t.text :content
+      t.integer :messagetype, default: 0
       t.timestamps null: false
     end
   end
