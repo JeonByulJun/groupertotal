@@ -33,6 +33,9 @@ class MessageController < ApplicationController
       @message.save
       sync_new @message, scope: @chat, partial: 'newmessages'
       #sync_new @imagemessage, scope: @chat
+      respond_to do |format|
+        format.js
+      end
 
     end
   end
