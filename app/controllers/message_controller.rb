@@ -4,7 +4,6 @@ class MessageController < ApplicationController
     @whiteboard = @chat.whiteboard
     @message = current_user.messages.where(:chat_id => @chat.id).last
     @team = @chat.team
-
   end
 
   def create

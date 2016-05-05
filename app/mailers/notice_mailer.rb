@@ -5,8 +5,9 @@ class NoticeMailer < ApplicationMailer
   #
   #   en.notice_mailer.invitation.subject
   #
-  def invitation(user)
-    @user=user
-    mail(to: user.email, subject: 'Happy')
+  def invitation(email, inviter, team)
+    @inviter=inviter
+    @team=team
+    mail to: email, subject: "그루퍼에서 초대장이 왔습니다."
   end
 end

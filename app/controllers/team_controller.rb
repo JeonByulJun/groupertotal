@@ -7,8 +7,6 @@ class TeamController < ApplicationController
     if !current_user.teams.first
       redirect_to "/team/newteam"
     end
-    #@mail=NoticeMailer.invitation(current_user).deliver
-    
   end
   def create
     team = Team.new(:teamname => params[:teamname])
@@ -27,9 +25,23 @@ class TeamController < ApplicationController
     @user = User.all
   end
   def adding
-    @team = Team.find(params[:team])
-    @team.users << User.where(:id => params[:user_ids])
-    redirect_to :root
+    if params[:team]!=nil
+      @team = Team.find(params[:team])
+      @new_user=User.where(:email => params[:user_email])
+      new_user=@new_user
+      @ment = ""
+      if new_user[0]==nil
+        NoticeMailer.invitation(params[:user_email], current_user, @team).deliver_now
+        @ment=params[:user_email]+"로 가입된 회원이 아직 없네요! 메일 주소로 초대장을 보냈으니 회원가입 후 다시 초대해 보세요."
+      elsif @team.users.where(:email => params[:user_email])[0]==nil
+        @team.users << User.where(:email => params[:user_email])
+        @ment=params[:user_email]+"(이름: "+new_user[0].first_name+")"+" 팀원으로 가입되었습니다!"
+      else
+        @ment=params[:user_email]+"로 가입된 회원은 이미 팀에 초대되어 있네요!"
+      end
+    else
+      redirect_to :root
+    end
   end
   def profile
     @team = current_user.teams
