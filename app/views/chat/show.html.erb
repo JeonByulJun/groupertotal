@@ -147,7 +147,7 @@
       <div class="row collapse" id="addchatroom">
           <form action="/chat/create" method="post">
           	<div id="chat_top">
-	            회의방 이름 <input type="text" name="title" >
+	            회의방 이름 <input type="text" name="title" required>
 	            <input type="hidden" name="team" value=<%=@team.id%>>
             </div>
             <br />
