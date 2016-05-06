@@ -9,18 +9,18 @@
 
       <% @chat.messages.each do |message| %>
 
-        <div class="row">
+        <div class="row messages">
           <div class="col-sm-1">
             <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
           </div>
-          <div class="col-sm-11 message" onclick="alert('dddd')">
+          <div class="col-sm-11" onclick="alert('dddd')">
             <div id="message<%=message.id%>">
               <strong><%=User.find(message.sender_id).first_name%></strong><br>
               <% if message.messagetype == 0 %>
                 <%=message.content%><br>
               <% end %>
               <% if message.messagetype == 1 %>
-                <img src="<%=message.imagemessage.imagemessageupload.thumb.url%>" style="padding: 10px;"><br>
+                <a href="<%=message.imagemessage.imagemessageupload.url%>"><img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
               <% end %>
             </div>
 
@@ -30,26 +30,44 @@
 
       <%= sync_new partial: 'newmessages', resource: Message.new, scope: @chat%>
     </div>
-    <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
-      <div class="form-group has-success has-feedback">
-        <div class="input-group">
-          <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required autocomplete="off">
-          <span class="input-group-addon">+</span>
+    
+
+    
+      <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
+        <%= f.hidden_field :chat_id, :value => @chat.id %>
+        <div class="form-group has-success has-feedback">
+          <div class="dropup">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                +
+              </span>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a href="#"><span class="glyphicon glyphicon-file"></span> 파일 업로드</a></li>
+                <li><a><label for="imageupload" style="cursor: pointer;"><span class="glyphicon glyphicon-picture"></span> 사진업로드</label></a></li>
+              </ul>
+              <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required autocomplete="off">
+            </div>
+          </div>
         </div>
-      </div>
-      <%= f.hidden_field :chat_id, :value => @chat.id %>
+  
+      <%end%>
+      
+      
 
-    <%end%>
 
+    <form id="imagefileupload" class="form-inline" action="/imageup" method="post" enctype="multipart/form-data" data-remote="true">
+      <input type="hidden" name="chat_id" value=<%= @chat.id %>>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
-
-    <%=form_tag "/imageup", method:"post", enctype:"multipart/form-data", :remote => true do %>
-        <input type="hidden" name="chat_id" value=<%= @chat.id %>>
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-
-        <input type="file" name="image_file">
-        <input type="submit" value="ok">
-    <% end %>
+      <input id="imageupload" type="file" name="image_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+    </form>
+    
+                
+    <script>
+      $('#imageupload').change(function() {
+        $('#imagefileupload').submit();
+      });
+    </script>
 
 
     <script>
@@ -146,7 +164,7 @@ function search(x) {
 
 <script>
 $(document).ready(function(){
-    $(".message").hover(function(){
+    $(".messages").hover(function(){
         $(this).css("background-color", "#F2F2F2");
         }, function(){
         $(this).css("background-color", "white");
