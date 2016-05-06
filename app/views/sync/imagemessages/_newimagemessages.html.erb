@@ -1,10 +1,10 @@
-<div class="row">
+<div class="row messages">
   <div class="col-sm-1">
-    <img src="<%= current_user.image.url %>" alt="User.find(imagemessage.message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" onclick="alert('<%=imagemessage.message.content%>');" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
+    <img src="<%= current_user.image.url %>" alt="User.find(imagemessage.message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
   </div>
   <div class="col-sm-11">
     <strong><%=User.find(imagemessage.message.sender_id).first_name%></strong><br>
-    <img src="<%=imagemessage.imagemessageupload.url%>" style="padding: 10px;"><br>
+    <a href="<%=message.imagemessage.imagemessageupload.url%>"><img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
   </div>
 </div>
 

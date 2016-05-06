@@ -1,6 +1,6 @@
 <% if whiteboard.edit == true %>
-  <button id="whiteboardblock" disabled><span class="ui-button-text"><%=whiteboard.user.first_name%> 수정 중</span></button>
+  <button class="btn btn-default" id="whiteboardblock" disabled><span class="ui-button-text"><%=whiteboard.user.first_name%> 수정 중</span></button>
 
 <% else %>
-  <button id="whiteboardchange">수정하기</button>
+  <button class="btn btn-default" id="whiteboardchange">수정하기</button>
 <% end %>
