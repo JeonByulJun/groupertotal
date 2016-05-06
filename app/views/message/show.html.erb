@@ -13,7 +13,7 @@
           <div class="col-sm-1">
             <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
           </div>
-          <div class="col-sm-11" onclick="alert('dddd')">
+          <div class="col-sm-11">
             <div id="message<%=message.id%>">
               <strong><%=User.find(message.sender_id).first_name%></strong><br>
               <% if message.messagetype == 0 %>
