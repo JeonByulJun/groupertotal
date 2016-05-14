@@ -28,6 +28,7 @@ function onld(lineChartData){
     $(document).ready(function(){
   		var ctx = document.getElementById("canvas").getContext("2d");
     	var chart = new Chart(ctx).Line(lineChartData, {
+        scaleBeginAtZero: true,
   			responsive: false,
   			scaleFontSize: 17,
   			tooltipEvents: ["mousemove", "touchstart", "touchmove"]

@@ -18,7 +18,7 @@ class ChatController < ApplicationController
     @chat = current_user.chats.where(:team_id => params[:team])
     @managelist = Task.order(duedate: :asc)
     @managelistdesc = Task.order(duedate: :desc)
-    @teamtask = Task.where(:team_id => params[:team])
+    @teamtask = Task.where(:team_id => params[:team]).order(duedate: :asc)
   end
 
 end
