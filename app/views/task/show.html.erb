@@ -197,10 +197,6 @@
 				<% cnt_done << cnt %>
 				<% cnt = 0 %>
 
-				<% @task100.each do |g| %>
-					<li> <%=g.taskname%> <%=g.created_at%> </li>
-				<% end %>
-				<%=cnt_given%> <%=cnt_done%> <%=(Time.now - 1.month).strftime('%Y.%m')%>
 				<div class="col-md-8">
 					<canvas id="canvas" style="width: 700px; height: 450px;">
 					<script>

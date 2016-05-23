@@ -5,16 +5,15 @@ var CALENDAR = function () {
     function init(newWrap) { 
 			wrap = $(newWrap || "#cal"); 
 		label = wrap.find("#label");
+		
 		var a = new Date();
 		var n1 = a.getFullYear();
 		var n2 = a.getMonth();
 		var count = 12*(n1 - 2016) + (n2 + 1) - 4;
 		for ( var c = 0 ; c < count; c++ ){
-			//function(){ switchMonth(true); }
 			switchMonth(true);
-			//wrap.find("#next").bind("click.calendar", function () { switchMonth(true);  }); 
-			//document.getElementById('next').click();
 		}
+
 		wrap.find("#prev").bind("click.calendar", function () { switchMonth(false); }); 
 		wrap.find("#next").bind("click.calendar", function () { switchMonth(true);  }); 
 		label.bind("click.calendar", function () { switchMonth(null, new Date().getMonth(), new Date().getFullYear()); }); 
