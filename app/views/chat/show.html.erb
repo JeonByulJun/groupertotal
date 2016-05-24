@@ -22,7 +22,7 @@
         <div class="col-sm-3"></div>
         <form action="/team/addmember" method="get">
           <input type="hidden" name="team" value="<%=@team.id%>"/>
-          <div class="col-sm-2"><button type="submit" class="btn btn-new btn-circle btn-lg" data-toggle="tooltip" data-placement="bottom" title="팀원 추가" style="margin-top: 8px;"><i class="glyphicon glyphicon-plus"></i></button></div>
+          <div class="col-sm-2"><button type="submit" class="btn btn-new btn-circle btn-lg" data-toggle="collapse" data-placement="bottom" title="팀원 추가" style="margin-top: 8px;"><i class="glyphicon glyphicon-plus"></i></button></div>
         </form>
       </div>
       <!-- My Profile -->
@@ -65,7 +65,7 @@
       <div class="row" id="chat_top">
       	<div class="col-sm-6"><h2 style="color: #372727;">Chats</h2></div>
         <div class="col-sm-4"><h2> </h2></div>
-        <div class="col-sm-2"><button class="btn btn-new btn-circle btn-lg" type="button" data-toggle="tooltip" data-placement="bottom" title="채팅방 만들기" data-target="#addchatroom" aria-expanded="false" aria-controls="addchatroom" style="margin-top: 8px;"><i class="glyphicon glyphicon-plus"></i></button></div>
+        <div class="col-sm-2"><button class="btn btn-new btn-circle btn-lg" type="button" data-toggle="collapse" data-placement="bottom" title="채팅방 만들기" data-target="#addchatroom" aria-expanded="false" aria-controls="addchatroom" style="margin-top: 8px;"><i class="glyphicon glyphicon-plus"></i></button></div>
         
       </div>
       <div class="row collapse" id="addchatroom">
