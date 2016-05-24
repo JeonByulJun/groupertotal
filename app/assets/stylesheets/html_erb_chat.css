@@ -13,8 +13,8 @@
 }
 .sidebar{
     height: 100%;
-    width: 35%;
-    max-width: 440px;
+    width: 32%;
+    max-width: 420px;
     position: absolute;
     z-index: 1;
     top: 52px;

@@ -27,6 +27,9 @@ class TeamController < ApplicationController
   def addmember
     @team = Team.find(params[:team])
     @user = User.all
+    if !@team.users.include?(current_user)
+      redirect_to :root
+    end
   end
   def adding
     if params[:team]!=nil
@@ -56,6 +59,9 @@ class TeamController < ApplicationController
     end
     if(params[:name]!="" and params[:name]!=nil)
       current_user.first_name=params[:name]
+    end
+    if(params[:lname]!="" and params[:lname]!=nil)
+      current_user.last_name=params[:lname]
     end
     current_user.save
     redirect_to "/team/profile"

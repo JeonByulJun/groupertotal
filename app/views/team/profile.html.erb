@@ -18,13 +18,28 @@ background-size: cover;
             <input id="imageupload" type="file" name="image" style="visibility:hidden;position:absolute;top:0;left:0;">
             <label for="imageupload" style="cursor: pointer;"><img class="img-circle" src="<%= current_user.image.url %>" alt="<%=current_user.first_name%>" onmouseover="editImg(this)" onmouseout="normalImg(this)" width="100px" height="100px"></label>
           </form>
-          <a data-toggle="collapse" href="#name" aria-expanded="false" aria-controls="name" style="text-decoration: none;">
-            <h3><%=current_user.first_name%></h3>
-          </a>
+          <div class="row">
+            <div class="col-sm-2 col-sm-offset-4">
+              <a data-toggle="collapse" href="#name" aria-expanded="false" aria-controls="name" style="text-decoration: none;">
+                <h3><%=current_user.first_name%></h3>
+              </a>
+            </div>
+            <div class="col-sm-2">
+              <a data-toggle="collapse" href="#lname" aria-expanded="false" aria-controls="name" style="text-decoration: none;">
+                <h3><%=current_user.last_name%></h3>
+              </a>
+            </div>
+          </div>
           <div class="collapse" id="name">
             <form class="form-inline" action="/team/profileupdate" method="post" enctype="multipart/form-data">
               <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
               <input class="form-control" type="text" name="name" placeholder="새로운 이름 입력 후 엔터" required>
+            </form>
+          </div>
+          <div class="collapse" id="lname">
+            <form class="form-inline" action="/team/profileupdate" method="post" enctype="multipart/form-data">
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+              <input class="form-control" type="text" name="lname" placeholder="새로운 성 입력 후 엔터" required>
             </form>
           </div>
           *수정하려는 부분을 클릭하세요

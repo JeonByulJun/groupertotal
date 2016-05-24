@@ -4,6 +4,9 @@ class MessageController < ApplicationController
     @whiteboard = @chat.whiteboard
     @message = current_user.messages.where(:chat_id => @chat.id).last
     @team = @chat.team
+    if !@chat.users.include?(current_user)
+      redirect_to :root
+    end
   end
 
   def create

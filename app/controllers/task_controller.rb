@@ -19,7 +19,9 @@ class TaskController < ApplicationController
     @tasklist = @taskdo.order(duedate: :asc)
     @tasklistdesc = @taskdo.order(duedate: :desc)
     @team = Team.find(params[:team])
-
+    if !@team.users.include?(current_user)
+      redirect_to :root
+    end
   end
   
   def entire
@@ -27,6 +29,9 @@ class TaskController < ApplicationController
     @managelistdesc = Task.order(duedate: :desc)
     @team = Team.find(params[:team])
     @teamtask = Task.where(:team_id => params[:team])
+    if !@team.users.include?(current_user)
+      redirect_to :root
+    end
   end
   
   def wansungdo_update

@@ -5,7 +5,7 @@ var CALENDAR = function () {
     function init(newWrap) { 
 			wrap = $(newWrap || "#cal"); 
 		label = wrap.find("#label");
-		
+
 		var a = new Date();
 		var n1 = a.getFullYear();
 		var n2 = a.getMonth();
@@ -42,10 +42,10 @@ var CALENDAR = function () {
     } 
 
     function createCal(year, month) { 
-			var day = 1, i, j, haveDays = true,  
-     		startDay = new Date(year, month, day).getDay(), 
-    	    daysInMonths = [31, (((year%4===0)&&(year%100!==0))||(year%400===0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], 
-        	calendar = [];
+		var day = 1, i, j, haveDays = true,  
+ 		startDay = new Date(year, month, day).getDay(), 
+	    daysInMonths = [31, (((year%4===0)&&(year%100!==0))||(year%400===0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], 
+    	calendar = [];
 
         if (createCal.cache[year]) { 
 		    if (createCal.cache[year][month]) { 

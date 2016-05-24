@@ -19,6 +19,10 @@ class ChatController < ApplicationController
     @managelist = Task.order(duedate: :asc)
     @managelistdesc = Task.order(duedate: :desc)
     @teamtask = Task.where(:team_id => params[:team]).order(duedate: :asc)
+    
+    if !@team.users.include?(current_user)
+      redirect_to :root
+    end
   end
 
 end
