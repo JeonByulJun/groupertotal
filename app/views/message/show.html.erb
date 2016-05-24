@@ -30,9 +30,9 @@
 
       <%= sync_new partial: 'newmessages', resource: Message.new, scope: @chat%>
     </div>
-    
 
-    
+
+
       <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
         <%= f.hidden_field :chat_id, :value => @chat.id %>
         <div class="form-group has-success has-feedback">
@@ -49,10 +49,10 @@
             </div>
           </div>
         </div>
-  
+
       <%end%>
-      
-      
+
+
 
 
     <form id="imagefileupload" class="form-inline" action="/imageup" method="post" enctype="multipart/form-data" data-remote="true">
@@ -60,6 +60,7 @@
       <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
       <input id="imageupload" type="file" name="image_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+      <input type="submit">
     </form>
     <button type="hidden" style="visibility:hidden;position:absolute;top:0;left:0;" class="btn btn-primary btn-lg" id="imshow" data-toggle="modal" data-target="#myModal"></button>
 
