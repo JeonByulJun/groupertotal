@@ -22,6 +22,9 @@
               <% if message.messagetype == 1 %>
                 <a href="<%=message.imagemessage.imagemessageupload.url%>"><img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
               <% end %>
+              <% if message.messagetype == 2 %>
+                THIS CONTENT IS FILE!<br>
+              <% end %>
             </div>
 
           </div>
@@ -42,7 +45,7 @@
                 +
               </span>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><a href="#"><span class="glyphicon glyphicon-file"></span> 파일 업로드</a></li>
+                <li><a><label for="fileupload" style="cursor: pointer;"><span class="glyphicon glyphicon-file"></span> 파일업로드</label></a></li>
                 <li><a><label for="imageupload" style="cursor: pointer;"><span class="glyphicon glyphicon-picture"></span> 사진업로드</label></a></li>
               </ul>
               <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required autocomplete="off">
@@ -62,6 +65,15 @@
       <input id="imageupload" type="file" name="image_file" style="visibility:hidden;position:absolute;top:0;left:0;">
       <input type="submit">
     </form>
+
+    <form id="filefileupload" class="form-inline" action="/fileup" method="post" enctype="multipart/form-data" data-remote="true">
+      <input type="hidden" name="chat_id" value=<%= @chat.id %>>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+
+      <input id="fileupload" type="file" name="file_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+      <input type="submit">
+    </form>
+
     <button type="hidden" style="visibility:hidden;position:absolute;top:0;left:0;" class="btn btn-primary btn-lg" id="imshow" data-toggle="modal" data-target="#myModal"></button>
 
     <!-- Modal -->
@@ -98,7 +110,7 @@
         }
       }
     </script>
-    
+
 
 
     <script>

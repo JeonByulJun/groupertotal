@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   post '/whiteboard/update2' => 'whiteboard#update2'
   put '/message/update' => 'message#update'
   post '/imageup' => 'message#imageup'
+  post '/fileup' => 'message#fileup'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
