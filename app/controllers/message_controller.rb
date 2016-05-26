@@ -43,6 +43,22 @@ class MessageController < ApplicationController
     end
   end
 
+  def fileup
+    @message = Message.new(:messagetype => 2, :chat_id => params[:chat_id], :sender_id => current_user.id)
+    @filemessage = Filemessage.new(:filemessageupload => params[:file_file], :chat_id => params[:chat_id])
+    @chat = Chat.find(params[:chat_id])
+    if @filemessage.save
+      @message.filemessage = @filemessage
+      @message.save
+      sync_new @message, scope: @chat, partial: 'newmessages'
+      #sync_new @imagemessage, scope: @chat
+      respond_to do |format|
+        format.js
+      end
+
+    end
+  end
+
 
   private
     def message_params

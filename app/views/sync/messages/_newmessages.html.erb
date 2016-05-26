@@ -4,7 +4,15 @@
   </div>
   <div class="col-sm-11">
     <strong><%=User.find(message.sender_id).first_name%></strong><br>
-    <%=message.content%><br>
+    <% if message.messagetype == 0 %>
+      <%=message.content%><br>
+    <% end %>
+    <% if message.messagetype == 1 %>
+      <a href="<%=message.imagemessage.imagemessageupload.url%>"><img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+    <% end %>
+    <% if message.messagetype == 2 %>
+      THIS CONTENT IS FILE!<br>
+    <% end %>
 
   </div>
 </div>
