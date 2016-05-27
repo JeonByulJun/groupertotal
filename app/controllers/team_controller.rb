@@ -67,5 +67,14 @@ class TeamController < ApplicationController
     redirect_to "/team/profile"
   end
 
+    def deletemember
+      team = Team.find(params[:team])
+      chats = current_user.chats.where(:team_id => params[:team])
+      chats.each do |chat|
+        chat.users.delete(current_user)
+      end
+      team.users.delete(current_user)
+      redirect_to :root
+    end
 
 end

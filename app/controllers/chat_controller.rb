@@ -19,10 +19,17 @@ class ChatController < ApplicationController
     @managelist = Task.order(duedate: :asc)
     @managelistdesc = Task.order(duedate: :desc)
     @teamtask = Task.where(:team_id => params[:team]).order(duedate: :asc)
-    
+
     if !@team.users.include?(current_user)
       redirect_to :root
     end
   end
+
+  def deletemember
+    chat = Chat.find(params[:chat])
+    chat.users.delete(current_user)
+    redirect_to action: 'show', team: params[:team]
+  end
+
 
 end

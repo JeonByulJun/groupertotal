@@ -21,6 +21,12 @@ background-size: cover;
               <input type="hidden" name="team" value=<%=team.id%>>
               <button type="submit" class="btn btn-default"><%=team.teamname%></button>
             </form>
+            <form action="/team/deletemember" method="post">
+              <input type="hidden" name="team" value="<%=team.id%>">
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+              <input type="submit">
+            </form>
+
           <% end %>
           <a class="btn btn-link" href="team/newteam" role="button">새로운 팀 만들기</a>
         </div>
