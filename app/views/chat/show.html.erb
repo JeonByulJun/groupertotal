@@ -11,13 +11,13 @@
 </section>
 
 <!-- Memberlist & Chatlist Sidebar -->
-<section class="sidebar" id="sidebar">
+<section class="home sidebar" id="sidebar">
   <div class="tab-content">
     <div class="tab-pane" id="tab1">
       <% temp = [] %>
     	<% temp += @team.users.order(first_name: :asc) %>
     	<div class="row" id="chat_top">
-      	<div class="col-sm-6"><h2 style="color: #372727;">Memebers</h2></div>
+      	<div class="col-sm-6"><h2 style="color: #372727;">팀 멤버</h2></div>
         <div class="col-sm-1"><h2><%=temp.count%></h2></div>
         <div class="col-sm-3"></div>
         <form action="/team/addmember" method="get">
@@ -43,7 +43,7 @@
       <!-- Others Profile -->
       <div class="row" id="chat_top">
         <div class="col-sm-12">
-          <h5 style="color: #52D5CC">Members</h3>
+          <h5 style="color: #52D5CC">팀원</h3>
         </div>
       </div>
   		<% temp.each_with_index do |t,idx| %>
@@ -63,7 +63,7 @@
     <!-- Tab2: List of chat rooms -->
     <div class="tab-pane" id="tab2">
       <div class="row" id="chat_top">
-      	<div class="col-sm-6"><h2 style="color: #372727;">Chats</h2></div>
+      	<div class="col-sm-6"><h2 style="color: #372727;">회의방</h2></div>
         <div class="col-sm-4"><h2> </h2></div>
         
         <div class="col-sm-2"><button class="btn btn-new btn-circle btn-lg" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom" style="margin-top: 8px;"><span class="glyphicon glyphicon-plus"></span></button></div>
@@ -96,7 +96,7 @@
       </div>
       <div class="row" id="chat_top">
         <div class="col-sm-12">
-          <h5 style="color: #52D5CC">회의방</h3>
+          <h5 style="color: #52D5CC">방 목록</h3>
         </div>
       </div>
       
@@ -179,7 +179,7 @@
         <!-- Others Profile -->
         <div class="row" id="chat_top">
           <div class="col-sm-12">
-            <h5 style="color: #52D5CC">Members</h3>
+            <h5 style="color: #52D5CC">팀원</h3>
           </div>
         </div>
     		<% temp.each_with_index do |t,idx| %>
@@ -208,7 +208,7 @@
 
 
 <!-- Homebody for Notification or Something others -->
-<section class="homebody_chat">
+<section class="home homebody_chat">
   <div class="row">
 		<aside style="padding-left: 12px; padding-top: 12px;">
 			<img class="img-rounded" alt="profile" src="/favicon.ico" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 13px;">
@@ -222,8 +222,8 @@
   <!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
     <li role="presentation" class="active"><a href="#taskcalendar" aria-controls="home" role="tab" data-toggle="tab">Schedule</a></li>
-		<li role="presentation"><a href="#tasklist" aria-controls="home" role="tab" data-toggle="tab">Tasklist</a></li>
-		<li role="presentation"><a href="#taskindiv" aria-controls="home" role="tab" data-toggle="tab">Tasks</a></li>
+		<li role="presentation"><a href="#tasklist" aria-controls="home" role="tab" data-toggle="tab">나의 할일</a></li>
+		<li role="presentation"><a href="#taskindiv" aria-controls="home" role="tab" data-toggle="tab">팀 상황</a></li>
 	</ul>
 	
 	<!-- Tab panes -->

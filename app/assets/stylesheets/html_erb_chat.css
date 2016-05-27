@@ -3,7 +3,7 @@
     float: left;
     width: 75px;
     height: 100%;
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 52px;
     background-color: #52D5CC;
@@ -14,9 +14,8 @@
 .sidebar{
     height: 100%;
     width: 32%;
-    max-width: 420px;
-    position: absolute;
-    z-index: 1;
+    max-width: 425px;
+    position: fixed;
     top: 52px;
     left: 75px;
     background-color: #52D5CC;
@@ -24,8 +23,13 @@
     border: 1px solid #4CCFC5;
 }
 .homebody_chat{
+  top: 52px;
+  /*left: 50px;*/
+  float: right;
+  position: relative;
 	width: 61%;
-	float: right;
+  z-index: 1;
+  padding:15px;
 }
 #chat-icon-box{
 	position: absolute;
