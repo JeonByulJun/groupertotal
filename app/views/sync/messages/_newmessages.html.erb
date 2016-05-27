@@ -8,7 +8,9 @@
       <%=message.content%><br>
     <% end %>
     <% if message.messagetype == 1 %>
-      <a href="<%=message.imagemessage.imagemessageupload.url%>"><img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+
+        <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessage" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+
     <% end %>
     <% if message.messagetype == 2 %>
       THIS CONTENT IS FILE!<br>
@@ -18,13 +20,7 @@
 </div>
 
 
-<script>
-  <%if message.sender_id == current_user.id%>
-      var ta = document.getElementById('chatbox');
 
-      ta.scrollTop = ta.scrollHeight;
-  <%end%>
-</script>
 
 <form action="/message/update" method="put" data-remote=true id="messagelook">
   <input type="hidden" name="messageid" value=<%=message.id%>>

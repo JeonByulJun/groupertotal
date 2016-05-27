@@ -28,6 +28,30 @@
    </tbody>
 
 </table>
+
+<% @chats.each do |chat| %>
+  <%=chat.title%>
+  <table class = "table table-bordered table-striped">
+     <thead>
+        <tr>
+           <th>Name</th>
+           <th>Download Link</th>
+        </tr>
+     </thead>
+
+     <tbody>
+       <% chat.filemessages.each do |filemessage| %>
+          <tr>
+              <td><%= filemessage.filemessageupload.file.filename %></td>
+              <td><%= link_to "Download Resume", filemessage.filemessageupload_url %></td>
+
+           </tr>
+       <% end %>
+     </tbody>
+
+  </table>
+<% end %>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-new btn-lg" data-toggle="modal" data-target="#myModal">
   Launch demo modal
