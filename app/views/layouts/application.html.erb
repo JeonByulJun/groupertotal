@@ -243,7 +243,9 @@ UserVoice.push(['set', {
 // Identify the user and pass traits
 // To enable, replace sample data with actual user traits and uncomment the line
 UserVoice.push(['identify', {
+  <% if current_user%>
   email:      '<%=current_user.email%>', // User’s email address
+  <%end%>
   //name:       'John Doe', // User’s real name
   //created_at: 1364406966, // Unix timestamp for the date the user signed up
   //id:         123, // Optional: Unique id of the user (if set, this should not change)
