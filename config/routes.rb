@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :resumes, only: [:index, :new, :create, :destroy]
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   post '/fileup' => 'message#fileup'
   post '/team/deletemember' => 'team#deletemember'
   post '/chat/deletemember' => 'chat#deletemember'
+  post '/test/regmail' => 'test#regmail'
+  get '/test/regmail' => 'team#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

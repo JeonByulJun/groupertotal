@@ -14,37 +14,33 @@ background-size: cover;
       <div class="panel panel-default">
         <div class="panel-body">
 
-          <h2>가입하기</h2>
-          
+          <h2><%=@email%></h2>
+          <p>비밀번호만 설정하면 가입이 완료됩니다.</p>
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
             <%= devise_error_messages! %>
           
             <div class="field">
-              <%= f.label :이메일 %><br />
-              <%= f.email_field :email, autofocus: true, required: true %>
+              <%= f.email_field :email, autofocus: true, value: @email, hidden: true %>
             </div>
             
             <div class="field">
-              <%= f.label :성 %><br />
-              <%= f.text_field :last_name, required: true %>
+              <%= f.text_field :last_name, required: true, value: "성 설정하기", hidden: true %>
             </div>
             
             <div class="field">
-              <%= f.label :이름 %><br />
-              <%= f.text_field :first_name, required: true %>
+              <%= f.text_field :first_name, required: true, value: "이름 설정하기", hidden: true %>
             </div>
           
             <div class="field">
-              <%= f.label :비밀번호 %>
               <% if @minimum_password_length %>
-              <em>(최소 <%= @minimum_password_length %>자 이상)</em>
-              <% end %><br />
-              <%= f.password_field :password, autocomplete: "off", required: true %>
+                <%= f.password_field :password, class: "form-control", autocomplete: "off", required: true, placeholder: "비밀번호(최소 "+@minimum_password_length.to_s+"자)" %>
+              <% else %>
+                <%= f.password_field :password, class: "form-control", autocomplete: "off", required: true, placeholder: "비밀번호" %>
+              <% end %>
             </div>
           
             <div class="field">
-              <%= f.label :비밀번호확인 %><br />
-              <%= f.password_field :password_confirmation, autocomplete: "off", required: true %>
+              <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "off", required: true, placeholder: "확인" %>
             </div>
           
             <div class="actions">

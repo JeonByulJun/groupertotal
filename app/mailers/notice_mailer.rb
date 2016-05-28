@@ -10,4 +10,9 @@ class NoticeMailer < ApplicationMailer
     @team=team
     mail to: email, subject: "그루퍼에서 초대장이 왔습니다."
   end
+  def regmail(email)
+    @email=email
+    @auth=email.hash
+    mail to: email, subject: "그루퍼에서 초대장이 왔습니다."
+  end
 end
