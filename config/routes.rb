@@ -35,6 +35,9 @@ Rails.application.routes.draw do
   post '/chat/deletemember' => 'chat#deletemember'
   post '/test/regmail' => 'test#regmail'
   get '/test/regmail' => 'team#index'
+  get '/team/noteam' => 'team#noteam'
+  get '/team/search' => 'team#search'
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

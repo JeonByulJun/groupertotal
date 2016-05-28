@@ -8,7 +8,7 @@ class TeamController < ApplicationController
     @team = current_user.teams
     @user = User.all
     if !current_user.teams.first
-      redirect_to "/team/newteam"
+      redirect_to "/team/noteam"
     end
 
   end
@@ -17,7 +17,7 @@ class TeamController < ApplicationController
     team.users << current_user
     team.users << User.where(:id => params[:user_ids])
     if team.save
-      redirect_to :root
+      redirect_to "/team/addmember?team="+team.id.to_s
     end
   end
   def newteam
@@ -67,14 +67,22 @@ class TeamController < ApplicationController
     redirect_to "/team/profile"
   end
 
-    def deletemember
-      team = Team.find(params[:team])
-      chats = current_user.chats.where(:team_id => params[:team])
-      chats.each do |chat|
-        chat.users.delete(current_user)
-      end
-      team.users.delete(current_user)
+  def deletemember
+    team = Team.find(params[:team])
+    chats = current_user.chats.where(:team_id => params[:team])
+    chats.each do |chat|
+      chat.users.delete(current_user)
+    end
+    team.users.delete(current_user)
+    redirect_to :root
+  end
+    
+  def noteam
+    if current_user.teams.first
       redirect_to :root
     end
-
+  end
+  
+  def search
+  end
 end
