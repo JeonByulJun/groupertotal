@@ -1,0 +1,215 @@
+<div style="text-align:center">
+  <h3><%=@chat.title %></h3>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div style="text-align:center">채팅창</div>
+    <div style="overflow:scroll; overflow-x:hidden; word-wrap:break-word; word-break:break-all; width:auto; height:400px;" id="chatbox">
+
+      <% @chat.messages.each do |message| %>
+
+        <div class="row messages">
+          <div class="col-sm-1">
+            <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
+          </div>
+          <div class="col-sm-11">
+            <div id="message<%=message.id%>">
+              <strong><%=User.find(message.sender_id).first_name%></strong><br>
+              <% if message.messagetype == 0 %>
+                <%=message.content%><br>
+              <% end %>
+              <% if message.messagetype == 1 %>
+                <a href="<%=message.imagemessage.imagemessageupload.url%>"><img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+              <% end %>
+              <% if message.messagetype == 2 %>
+                THIS CONTENT IS FILE!<br>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%= sync_new partial: 'newmessages', resource: Message.new, scope: @chat%>
+    </div>
+
+
+      <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
+        <%= f.hidden_field :chat_id, :value => @chat.id %>
+        <div class="form-group has-success has-feedback">
+          <div class="dropup">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                +
+              </span>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a><label for="fileupload" style="cursor: pointer;"><span class="glyphicon glyphicon-file"></span> 파일업로드</label></a></li>
+                <li><a><label for="imageupload" style="cursor: pointer;"><span class="glyphicon glyphicon-picture"></span> 사진업로드</label></a></li>
+              </ul>
+              <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+      <%end%>
+
+
+
+
+    <form id="imagefileupload" class="form-inline" action="/imageup" method="post" enctype="multipart/form-data" data-remote="true">
+      <input type="hidden" name="chat_id" value=<%= @chat.id %>>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+
+      <input id="imageupload" type="file" name="image_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+      <input type="submit">
+    </form>
+
+    <form id="filefileupload" class="form-inline" action="/fileup" method="post" enctype="multipart/form-data" data-remote="true">
+      <input type="hidden" name="chat_id" value=<%= @chat.id %>>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+
+      <input id="fileupload" type="file" name="file_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+      <input type="submit">
+    </form>
+
+    <button type="hidden" style="visibility:hidden;position:absolute;top:0;left:0;" class="btn btn-primary btn-lg" id="imshow" data-toggle="modal" data-target="#myModal"></button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img id="blah" src="#" alt="your image" style="padding: 10px; max-width: 100%; height: auto;"/>
+          </div>
+          <div class="modal-footer">
+
+            <button id="closemodal" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+            <button id="imagesubmit" type="button" onclick="$('#imagefileupload').submit();$('#closemodal').click(); this.disabled=true;" class="btn btn-primary">이미지 올리기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        $("#imageupload").on('click',function(){
+          this.value=null;
+        });
+      })
+
+
+      $(function(){
+        $("#imageupload").on('change',function(){
+          $("#imagesubmit").prop('disabled', false);
+          document.getElementById('imshow').click();
+          readURL(this);
+        });
+      });
+
+      function readURL(input){
+        if(input.files && input.files[0]){
+          var reader = new FileReader();
+
+          reader.onload = function(e){
+            $('#blah').attr('src',e.target.result);
+          }
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+    </script>
+    
+
+
+
+    <script>
+      $(document).ready(function(){
+        $("#inputGroupSuccess1").keydown(function(event){
+            if(event.keyCode == 13){
+              $("#messageform").submit();
+
+              $('#inputGroupSuccess1').val('');
+              return false;
+            }
+
+        });
+      });
+    </script>
+  </div>
+  <div class="col-sm-6">
+    <div style="text-align:center">
+      화이트 보드
+      <%= sync partial: "whiteboardedit", resource: @whiteboard, scope: @chat %>
+
+      <nav>
+        <ul class="pagination pagination-sm">
+          <li><%=sync partial: 'whiteboardcondition', resource: @whiteboard, scope: @chat%></li>
+          <form action="/whiteboard/update2" method="post" id="whiteboardchangeform">
+            <input type="hidden" name="whiteboardid" value=<%=@whiteboard.id%>>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          </form>
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<div id="messagelook"></div>
+<% if @chat.messages.count != 0 %>
+  <form action="/message/update" method="put" data-remote=true id="messagelookall">
+    <input type="hidden" name="messageid" value=<%=@chat.messages.last.id%>>
+  </form>
+<% end %>
+
+<script>
+  $(document).ready(function(){
+    <%if @message %>
+
+      $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top-200 });
+      $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
+    <% end %>
+    <% if current_user == @whiteboard.user && @whiteboard.edit == true %>
+      $("#whiteboardblock").removeAttr('disabled');
+      $("#whiteboardblock span").text("완료");
+      $("#whiteboardblock").attr('id', 'whiteboardsend');
+      $("#whiteboardarea").removeAttr('readonly');
+    <% end %>
+
+    $("#whiteboardsend").click(function(){
+      $("#whiteboardform").submit();
+    });
+
+    $("#whiteboardchange").click(function(){
+      $("#whiteboardchangeform").submit();
+    });
+  });
+
+  $(document).ready(function(){
+    $('#messagelookall').submit();
+  });
+</script>
+<script>
+function bigImg(x) {
+    x.style.height = "56px";
+    x.style.width = "56px";
+}
+
+function normalImg(x) {
+    x.style.height = "36px";
+    x.style.width = "36px";
+}
+
+function search(x) {
+    $('#chatbox').animate({ scrollTop: $("#message"+x).offset().top-200 });
+}
+</script>
+
+<script>
+$(document).ready(function(){
+    $(".messages").hover(function(){
+        $(this).css("background-color", "#F2F2F2");
+        }, function(){
+        $(this).css("background-color", "white");
+    });
+});
+</script>

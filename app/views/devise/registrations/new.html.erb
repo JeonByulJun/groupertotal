@@ -1,0 +1,59 @@
+<style>
+body
+{
+background-image:url('/bgpic.jpg');
+background-repeat:no-repeat;
+background-size: cover;
+}
+</style>
+
+<div style="text-align:center">
+  <div class="row">
+    <br><br><br><br><br><br><br><br>
+    <div class="col-sm-4 col-sm-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <h2>가입하기</h2>
+          
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= devise_error_messages! %>
+          
+            <div class="field">
+              <%= f.label :이메일 %><br />
+              <%= f.email_field :email, autofocus: true, required: true %>
+            </div>
+            
+            <div class="field">
+              <%= f.label :성 %><br />
+              <%= f.text_field :last_name, required: true %>
+            </div>
+            
+            <div class="field">
+              <%= f.label :이름 %><br />
+              <%= f.text_field :first_name, required: true %>
+            </div>
+          
+            <div class="field">
+              <%= f.label :비밀번호 %>
+              <% if @minimum_password_length %>
+              <em>(최소 <%= @minimum_password_length %>자 이상)</em>
+              <% end %><br />
+              <%= f.password_field :password, autocomplete: "off", required: true %>
+            </div>
+          
+            <div class="field">
+              <%= f.label :비밀번호확인 %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off", required: true %>
+            </div>
+          
+            <div class="actions">
+              <button type="submit" class="btn btn-link">가입 완료</button>
+            </div>
+          <% end %>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

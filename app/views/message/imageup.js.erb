@@ -1,0 +1,12 @@
+$("#imageupload").on('click',function(){
+  this.value=null;
+});
+
+$(function(){
+  $("#imageupload").on('change',function(){
+    $("#imagesubmit").prop('disabled', false);
+
+    document.getElementById('imshow').click();
+    readURL(this);
+  });
+});

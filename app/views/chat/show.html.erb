@@ -1,0 +1,362 @@
+
+<!-- Chat Sidetab -->
+<section class="sidetab">
+  <div id="chat-icon-box" class="tabbable tabs-left">
+    <center><span id="chat-icon-member" href="#tab1" data-toggle="tab" role="button" class="glyphicon glyphicon-user" aria-hidden="true" style="color: white;"></span></center>
+    <br>
+    <center><span id="chat-icon-chatlist" href="#tab2" data-toggle="tab" role="button" class="glyphicon glyphicon-comment" aria-hidden="true" style="color: white;"></span></center>
+    <br>
+    <center><span id="chat-icon-chatlist" href="#tab3" data-toggle="tab" role="button" class="glyphicon glyphicon-hand-right" aria-hidden="true" style="color: white;"></span></center>
+  </div>
+</section>
+
+<!-- Memberlist & Chatlist Sidebar -->
+<section class="home sidebar" id="sidebar">
+  <div class="tab-content">
+    <div class="tab-pane" id="tab1">
+      <% temp = [] %>
+    	<% temp += @team.users.order(first_name: :asc) %>
+    	<div class="row" id="chat_top">
+      	<div class="col-sm-6"><h2 style="color: #372727;">팀 멤버</h2></div>
+        <div class="col-sm-1"><h2><%=temp.count%></h2></div>
+        <div class="col-sm-2"></div>
+        <form action="/team/addmember" method="get">
+          <input type="hidden" name="team" value="<%=@team.id%>"/>
+          <div class="col-sm-2"><button type="submit" class="btn btn-new btn-circle btn-lg" data-toggle="tooltip" data-placement="bottom" title="팀원 추가" style="margin-top: 8px;"><i class="glyphicon glyphicon-plus"></i></button></div>
+        </form>
+        <div class="col-sm-1"></div>
+      </div>
+      <!-- My Profile -->
+      <div class="row" id="chat_top">
+        <div class="col-sm-12">
+          <h5 style="color: #52D5CC">나</h3>
+        </div>
+      </div>
+      <div class="row" id="chat_top">
+        <div id="profile_me" class="col-sm-12">
+  	  		<aside style="padding-left: 12px;">
+  		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=current_user.image%>">
+  	    	</aside>
+		    	<h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=current_user.first_name%></h5>
+  	  	</div>
+      </div>
+      
+      <!-- Others Profile -->
+      <div class="row" id="chat_top">
+        <div class="col-sm-12">
+          <h5 style="color: #52D5CC">팀원</h3>
+        </div>
+      </div>
+  		<% temp.each_with_index do |t,idx| %>
+  		  <% if t.id != current_user.id %>
+  		    <div class="row" id="chat_top">
+            <div id="profile<%=idx%>" class="col-sm-12">
+      	  		<aside style="padding-left: 12px;">
+      		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
+      	    	</aside>
+    		    	<h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=t.first_name%></h5>
+      	  	</div>
+          </div>
+		  	<% end %>
+  		<% end %>
+    </div>
+    
+    <!-- Tab2: List of chat rooms -->
+    <div class="tab-pane" id="tab2">
+      <div class="row" id="chat_top">
+      	<div class="col-sm-6"><h2 style="color: #372727;">회의방</h2></div>
+        <div class="col-sm-3"></div>
+        
+        <div class="col-sm-2"><button class="btn btn-new btn-circle btn-lg" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom" style="margin-top: 8px;"><span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title="회의방 추가"></span></button></div>
+        <div class="col-sm-1"></div>
+
+        
+      </div>
+      <div class="row collapse" id="addchatroom2">
+        <form action="/chat/create" method="post">
+        	<div id="chat_top">
+            회의방 이름 <input type="text" name="title" required>
+            <input type="hidden" name="team" value=<%=@team.id%>>
+          </div>
+          <br />
+          <% temp.each_with_index do |t,idx| %>
+      		  <% if t.id != current_user.id %>
+      		    <div class="row" id="chat_top">
+                <div id="profile<%=idx%>" class="col-sm-12">
+          	  		<aside style="padding-left: 12px;">
+          		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
+          	    	</aside>
+        		    	<h5 style="color: black;"><%=t.first_name%></h5>
+        		    	<%= check_box_tag('user_ids[]', t.id) %>
+          	  	</div>
+              </div>
+    		  	<% end %>
+      		<% end %>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          <div class="col-sm-2"><button type="submit" vlaue="Send" class="btn btn-new btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button></div>
+        </form>
+      </div>
+      <div class="row" id="chat_top">
+        <div class="col-sm-12">
+          <h5 style="color: #52D5CC">방 목록</h3>
+        </div>
+      </div>
+      
+      <% if @chat %>
+        <% @chat.each do |chat| %>
+          <div class="row" id="chat_top">
+            <form action ="/message/show" method="get">
+              <div id="profile_me" class="col-sm-12">
+                    <input type="hidden" name="chat" value="<%=chat.id%>">
+                    <input class="btn btn-default" type="submit" value="<%=chat.title%>">
+              </div>
+            </form>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <!-- Tab3: Giving Tasks -->
+    <div class="tab-pane" id="tab3">
+      <div class="row" id="chat_top">
+      	<div class="col-sm-6"><h2 style="color: #372727;">Give Tasks</h2></div>
+        <div class="col-sm-1"><h2> </h2></div>
+        <div class="col-sm-3"></div>
+      </div>
+      
+      <form action="/task/create" method="post">
+        <div class="row" id="chat_top2">
+          <div class="form-group">
+	    			<div class="col-md-10">
+  						<label for="taskname_text"><span class="glyphicon glyphicon-briefcase" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Taskname</label>
+  						<input type="text" class="form-control" name="taskname" id="taskname_text" placeholder="Give Your Task">
+  					</div>
+  				</div>
+        </div>
+        
+        <div class="row" id="chat_top">
+          <div class='col-sm-10'>
+            <label for="datetimepicker1"><span class="glyphicon glyphicon-calendar" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Duedate</label>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                  <input type='text' class="form-control" name="duedate"/>
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+            </div>
+          </div>
+          <div class='col-sm-2'>
+            <button type="submit" value="send" class="btn btn-info btn-sm" aria-haspopup="true" aria-expanded="false" style="font-size: 13px; margin-top: 27px;">
+					    Enroll
+						</button>
+          </div>
+          <script type="text/javascript">
+            $(function () {
+              $('#datetimepicker1').datetimepicker({
+                format : 'YYYY-MM-DD'
+              });
+            });
+          </script>
+        </div>
+        
+        <!-- My Profile -->
+        <div class="row" id="chat_top">
+          <div class="col-sm-12">
+            <h5 style="color: #52D5CC">나</h3>
+          </div>
+        </div>
+        <div class="row" id="chat_top">
+          <div id="profile_me" class="col-sm-11">
+    	  		<aside style="padding-left: 12px;">
+    		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=current_user.image%>">
+    	    	</aside>
+  		    	<h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=current_user.first_name%></h5>
+    	  	</div>
+    	    <div id="profile_me" class="col-sm-1">
+    	      <%= check_box_tag('user_ids[]', current_user.id) %><br />
+    	    </div>
+        </div>
+        
+        <!-- Others Profile -->
+        <div class="row" id="chat_top">
+          <div class="col-sm-12">
+            <h5 style="color: #52D5CC">팀원</h3>
+          </div>
+        </div>
+    		<% temp.each_with_index do |t,idx| %>
+    		  <% if t.id != current_user.id %>
+    		    <div class="row" id="chat_top">
+              <div id="profile_me" class="col-sm-11">
+        	  		<aside style="padding-left: 12px;">
+        		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
+        	    	</aside>
+      		    	<h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=t.first_name%></h5>
+        	  	</div>
+        	  	<div id="profile_me" class="col-sm-1">
+        	      <%= check_box_tag('user_ids[]', t.id) %><br />
+        	    </div>
+            </div>
+  		  	<% end %>
+    		<% end %>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+        <input type="hidden" name="team" value=<%=@team.id%>>
+      </form>
+    </div>
+    <!-- end of Tab3 -->
+  </div>
+</section>
+
+
+
+<!-- Homebody for Notification or Something others -->
+<section class="home homebody_chat">
+  <div class="row">
+		<aside style="padding-left: 12px; padding-top: 12px;">
+			<img class="img-rounded" alt="profile" src="/favicon.ico" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 13px;">
+		</aside>
+		<h2> <%=@team.teamname%></h2>
+		<h4> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> </h4>
+	  <h5 style="color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> </h5>
+	</div>
+  <br>
+  
+  <!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
+    <li role="presentation" class="active"><a href="#taskcalendar" aria-controls="home" role="tab" data-toggle="tab">Schedule</a></li>
+		<li role="presentation"><a href="#tasklist" aria-controls="home" role="tab" data-toggle="tab">나의 할일</a></li>
+		<li role="presentation"><a href="#taskindiv" aria-controls="home" role="tab" data-toggle="tab">팀 상황</a></li>
+	</ul>
+	
+	<!-- Tab panes -->
+	<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="taskcalendar">
+      <div id="cal">
+        <div class="header">
+          <span class="left button" id="prev"> &lang; </span>
+          <span class="left hook"></span>
+          <span class="month-year" id="label"> April 2016 </span>
+          <span class="right hook"></span>
+          <span class="right button" id="next"> &rang; </span>
+        </div>
+        <table id="days">
+          <td>SUN</td><td>MON</td><td>TUE</td><td>WED</td><td>THU</td><td>FRI</td><td>SAT</td>
+        </table>
+        <div id="cal-frame">
+          <table class="curr">
+              <tbody>
+                  <tr><td class="nil"></td><td class="nil"></td><td class="nil"></td><td class="nil"></td><td class="nil"></td><td>1</td><td>2</td></tr> 
+                  <tr><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td class="today">8</td><td>9</td></tr> 
+                  <tr><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td></tr> 
+                  <tr><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td></tr> 
+                  <tr><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td></tr> 
+              </tbody> 
+          </table>
+        </div>
+      </div>
+      <script>
+        var cal = CALENDAR();
+
+        cal.init();
+      </script>
+    </div>
+
+		<div role="tabpanel" class="tab-pane" id="tasklist" style="background-color: #F3F3F3;">
+				<!-- gantt head -->
+				<div class="bar2">
+					<% for j in 0..11 %>
+						<% a = Date.today + j %>
+						<div class="col-md-1"><%=a.strftime("%m/%d") %></div>
+					<% end %>
+				</div>
+			<% @teamtask.each_with_index do |b,i| %>
+				<% if b.wansungdo < 100 %>
+					<% if b.duedate == nil %>
+						<% b.duedate = Date.today %>
+					<% end %>
+					<% a = (b.duedate - (Date.today)).to_i %>
+					<% if a > 0 %>
+						<div class="bar2">
+							<div class="bar2-innertask_chat" data-task ="<%=b.taskname%>"></div>
+					  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
+						</div>
+					<% end %>
+				<% end %>
+			<% end %>
+			<script>
+		    ganttfn();
+  		</script>
+		</div>
+
+		<div role="tabpanel" class="tab-pane" id="taskindiv" style="background-color: #F3F3F3;">
+			<!-- gantt head -->
+			<div class="bar2">
+				<%for i in 0..11 %>
+					<% a = Date.today + i %>
+					<div class="col-md-1"><%=a.strftime("%m/%d") %></div>
+				<% end %>
+			</div>
+			<% temp = [] %>
+			<% temp += @team.users %>
+			<% temp.each_with_index do |t,idx| %>
+				<% ro = t.id %>
+				<% @taskindiv_unordered = t.tasks.where(:team_id => params[:team]) %>
+				<% @taskindiv = @taskindiv_unordered.order(duedate: :asc) %>
+				<% if @taskindiv.count != 0 %>
+				<div class="row">
+          <div id="profile_on_tasklist<%=idx%>" class="col-sm-12">
+    	  		<aside style="padding-left: 12px;">
+    		    	<img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
+    	    	</aside>
+  		    	<h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=t.first_name%></h5>
+    	  	</div>
+        </div>
+					<% @taskindiv.each_with_index do |b,i| %>
+							<% if b.wansungdo < 100 %>
+							<% if b.duedate == nil %>
+								<% b.duedate = Date.today %>
+							<% end %>
+							<% a = (b.duedate - (Date.today)).to_i %>
+							<% if a > 0 %>
+								<div class="bar2">
+									<div class="bar2-innertask_chat" data-task ="<%=b.taskname%>"></div>
+							  		<div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
+								</div>
+								<!-- random color js, has problem -->
+								<script>
+									function ran_col(){
+										var color = "#";
+										var letters = {"4eb72a","00B0F0"};
+										color += letters[Math.floor(Math.random() * letters.length)];
+										document.getelementById('<%=i%>th-gantt-each-<%=idx%>').style.backgroundColor = color;
+									}
+									ran_col();
+								</script>
+							<% end %>
+						<% end %>
+				  <% end %>
+				<% end %>
+			<% end %>
+			
+			<script>
+			    function ganttfn(){
+			        (function(document) {
+			          var _bars = [].slice.call(document.querySelectorAll('.bar-innerday'));
+			          _bars.map(function(bar, index) {
+			            setTimeout(function() {
+			              var b = bar.dataset.date * 100/12;
+			              if(b>=99){
+			              	b=99;
+			              }
+			              b+="%";
+			              bar.style.width = b;
+			            }, 1);
+			          });
+			        })(document)
+			    }
+			    ganttfn();
+		  	</script>
+		</div>
+	</div>
+	
+</section>
