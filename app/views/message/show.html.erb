@@ -20,7 +20,7 @@
                 <%=message.content%><br>
               <% end %>
               <% if message.messagetype == 1 %>
-                <a href="<%=message.imagemessage.imagemessageupload.url%>"><img src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+                <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessageload" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
               <% end %>
               <% if message.messagetype == 2 %>
                 THIS CONTENT IS FILE!<br>
@@ -118,7 +118,7 @@
         }
       }
     </script>
-    
+
 
 
 
@@ -164,9 +164,9 @@
 <script>
   $(document).ready(function(){
     <%if @message %>
+        $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
+        $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
 
-      $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top-200 });
-      $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
     <% end %>
     <% if current_user == @whiteboard.user && @whiteboard.edit == true %>
       $("#whiteboardblock").removeAttr('disabled');
