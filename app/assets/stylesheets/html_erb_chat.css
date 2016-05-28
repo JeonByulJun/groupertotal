@@ -41,28 +41,28 @@
     overflow-x: hidden;
     border: 1px solid #4CCFC5;
     border-right: 1px solid #4CCFC5;
-}
-    .homebody_chat {
-      top: 52px;
-      /*left: 50px;*/
-      float: right;
-      position: relative;
-      width: 61%;
-      min-width: 607px;
-      z-index: 1;
-      padding:15px;
-    }
-    .sidebar{
-      height: 100%;
-      width: 32%;
-      max-width: 425px;
-      position: fixed;
-      top: 52px;
-      left: 75px;
-      background-color: #52D5CC;
-      overflow-x: hidden;
-      border: 1px solid #4CCFC5;
-    }
+  }
+  .homebody_chat {
+    top: 52px;
+    /*left: 50px;*/
+    float: right;
+    position: relative;
+    width: 61%;
+    min-width: 607px;
+    z-index: 1;
+    padding:15px;
+  }
+  .sidebar{
+    height: 100%;
+    width: 32%;
+    max-width: 425px;
+    position: fixed;
+    top: 52px;
+    left: 75px;
+    background-color: #52D5CC;
+    overflow-x: hidden;
+    border: 1px solid #4CCFC5;
+  }
 }
 
 #chat-icon-box{
