@@ -49,10 +49,51 @@ background-size: cover;
   </div>
 </div>
 
-<script>
-  $('#imageupload').change(function() {
-    $('#profileupload').submit();
+<button type="hidden" style="visibility:hidden;position:absolute;top:0;left:0;" class="btn btn-primary btn-lg" id="imshow" data-toggle="modal" data-target="#myModal"></button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="text-align: center;">
+        <img id="blah" src="#" alt="your image" style="padding: 10px; max-width: 50%; height: auto;"/>
+      </div>
+      <div class="modal-footer">
+
+        <button id="closemodal" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button id="imagesubmit" type="button" onclick="$('#profileupload').submit();$('#closemodal').click(); this.disabled=true;" class="btn btn-primary">프로필 바꾸기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $("#imageupload").on('click',function(){
+      this.value=null;
+    });
+  })
+  $(function(){
+    $("#imageupload").on('change',function(){
+      $("#imagesubmit").prop('disabled', false);
+      document.getElementById('imshow').click();
+      readURL(this);
+    });
   });
+  
+  function readURL(input){
+    if(input.files && input.files[0]){
+      var reader = new FileReader();
+
+      reader.onload = function(e){
+        $('#blah').attr('src',e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 </script>
 <script>
 function editImg(x) {
