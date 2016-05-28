@@ -26,12 +26,12 @@ class WhiteboardController < ApplicationController
     if @whiteboard.edit != true
       @whiteboard.edit = true
       if @whiteboard.save
-        redirect_to controller: 'message', action: 'show', chat: @whiteboard.chat.id
         sync_update @whiteboard, scope: @chat
 
       end
-    else
-      redirect_to controller: 'message', action: 'show', chat: @whiteboard.chat.id
+    end
+    respond_to do |format|
+      format.js
     end
 
   end
