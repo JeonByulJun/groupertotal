@@ -23,10 +23,45 @@ class MessageController < ApplicationController
   end
   def update
     @message = Message.find(params[:messageid])
-    @message.users << current_user
-    @message.save
+    @chat = @message.chat
+    if !@message.users.include?(current_user)
+      @message.users << current_user
+      @message.save
+      sync_update @message, scope: @chat, partial: 'readusers'
+      respond_to do |format|
+        format.js
+      end
+    end
+
 
   end
+
+  def updateall
+    @chat = Chat.find(params[:chat_id])
+    @messages = Message.where(:chat_id => params[:chat_id])
+    @lastmessage = current_user.messages.where(:chat_id => params[:chat_id]).last
+    if !@lastmessage
+
+      @unread = @messages.where(:id => 1..params[:message_id].to_i)
+      @unread.each do |message|
+        message.users << current_user
+        message.save
+        sync_update message, scope: @chat, partial: 'readusers'
+      end
+    elsif @lastmessage.id < params[:message_id].to_i
+      @unread = @messages.where(:id => @lastmessage.id+1..params[:message_id].to_i)
+      @unread.each do |message|
+        message.users << current_user
+        message.save
+        sync_update message, scope: @chat, partial: 'readusers'
+
+      end
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def imageup
     @message = Message.new(:messagetype => 1, :chat_id => params[:chat_id], :sender_id => current_user.id)
     @imagemessage = Imagemessage.new(:imagemessageupload => params[:image_file], :chat_id => params[:chat_id])

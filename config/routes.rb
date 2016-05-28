@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   post '/fileup' => 'message#fileup'
   post '/team/deletemember' => 'team#deletemember'
   post '/chat/deletemember' => 'chat#deletemember'
+  put '/message/updateall' => 'message#updateall'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

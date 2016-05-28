@@ -16,6 +16,11 @@
           <div class="col-sm-11">
             <div id="message<%=message.id%>">
               <strong><%=User.find(message.sender_id).first_name%></strong><br>
+
+
+              <%= sync partial: "readusers", resource: message, scope: @chat %>
+
+
               <% if message.messagetype == 0 %>
                 <%=message.content%><br>
               <% end %>
@@ -25,6 +30,7 @@
               <% if message.messagetype == 2 %>
                 THIS CONTENT IS FILE!<br>
               <% end %>
+
             </div>
           </div>
         </div>
@@ -168,8 +174,9 @@
 </div>
 <div id="messagelook"></div>
 <% if @chat.messages.count != 0 %>
-  <form action="/message/update" method="put" data-remote=true id="messagelookall">
-    <input type="hidden" name="messageid" value=<%=@chat.messages.last.id%>>
+  <form action="/message/updateall" method="put" data-remote=true id="messagelookall">
+    <input type="hidden" name="message_id" value=<%=@chat.messages.last.id%>>
+    <input type="hidden" name="chat_id" value=<%=@chat.id%>>
   </form>
 <% end %>
 
