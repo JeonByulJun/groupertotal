@@ -157,12 +157,12 @@
   <div class="col-sm-6">
     <div style="text-align:center">
       화이트 보드
-      <%= sync partial: "whiteboardedit", resource: @whiteboard, scope: @chat %>
+      <%= sync partial: "whiteboardedit", resource: @whiteboard, scope: @chat, refetch: true %>
 
       <nav>
         <ul class="pagination pagination-sm">
-          <li><%=sync partial: 'whiteboardcondition', resource: @whiteboard, scope: @chat%></li>
-          <form action="/whiteboard/update2" method="post" id="whiteboardchangeform">
+          <li><%=sync partial: 'whiteboardcondition', resource: @whiteboard, scope: @chat, refetch: true%></li>
+          <form action="/whiteboard/update2" method="post" id="whiteboardchangeform" data-remote=true>
             <input type="hidden" name="whiteboardid" value=<%=@whiteboard.id%>>
             <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
           </form>
