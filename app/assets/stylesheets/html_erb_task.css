@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 #profile_workmap{
   padding-left: 20px;
@@ -8,12 +9,22 @@
 	width: 82%;
     position: relative;
     top: 52px;
+=======
+/*** Sidebar ***/
+
+.homebody_task{
+	width: 82%;
+>>>>>>> 4d182d95de94022da37619a4a6d8f18b28a34785
 }
 .sidebar_task{
     height: 100%;
     width: 18%;
     max-width: 250px;
+<<<<<<< HEAD
     position: fixed;
+=======
+    position: absolute;
+>>>>>>> 4d182d95de94022da37619a4a6d8f18b28a34785
     z-index: 1;
     top: 51px;
     right: 0;
