@@ -1,498 +1,422 @@
-<body style="position: absolute;">
-<!-- Chat Sidetab -->
-<div class="sidetab">
-  <div id="chat-icon-box" class="tabbable tabs-left">
-    <center><span id="chat-icon-member" href="#tab1" data-toggle="tab" role="button" class="glyphicon glyphicon-user" aria-hidden="true" style="color: white;"></span></center>
-    <br>
-    <center><span id="chat-icon-chatlist" href="#tab2" data-toggle="tab" role="button" class="glyphicon glyphicon-comment" aria-hidden="true" style="color: white;"></span></center>
-    <br>
-    <center><span id="chat-icon-chatlist" href="#tab3" data-toggle="tab" role="button" class="glyphicon glyphicon-hand-right" aria-hidden="true" style="color: white;"></span></center>
-  </div>
-</div>
-
-<!-- Memberlist & Chatlist Sidebar -->
-<div class="home sidebar" id="sidebar">
-  <div class="tab-content">
-    <div class="tab-pane" id="tab1">
+<div class="row">
+<div class="col-sm-2" style="margin-top: 60px;">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
       <% temp = [] %>
       <% temp += @team.users.order(first_name: :asc) %>
-      <div class="row" id="chat_top">
-        <div class="col-sm-6"><h2 style="color: #372727;">팀 멤버</h2></div>
-        <div class="col-sm-1"><h2><%=temp.count%></h2></div>
-        <div class="col-sm-2"></div>
-        <form action="/team/addmember" method="get">
-          <input type="hidden" name="team" value="<%=@team.id%>"/>
-          <div class="col-sm-2"><button type="submit" class="btn btn-new btn-circle btn-lg" data-toggle="tooltip" data-placement="bottom" title="팀원 추가" style="margin-top: 8px;"><i class="glyphicon glyphicon-plus"></i></button></div>
-        </form>
-        <div class="col-sm-1"></div>
-      </div>
-      <!-- My Profile -->
-      <div class="row" id="chat_top">
-        <div class="col-sm-12">
-          <h5 style="color: #52D5CC">나</h3>
-        </div>
-      </div>
-      <div class="row" id="chat_top">
-        <div id="profile_me" class="col-sm-9">
-          <aside style="padding-left: 12px;">
-            <img id="img_setting" class="img-circle" alt="profile" src="<%=current_user.image%>">
-          </aside>
-          <h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=current_user.first_name%></h5>
-
-        </div>
-        <div class="col-sm-3">
-          <% if (Time.now - current_user.last_seen) <= 300 %>
-          <c>접속중</c>
-          <% elsif (Time.now - current_user.last_seen) <= 600 %>
-          <c>5분 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 1800 %>
-          <c>10분 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 3600 %>
-          <c>30분 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 10800 %>
-          <c>1시간 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 21600 %>
-          <c>3시간 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 43200 %>
-          <c>6시간 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 86400 %>
-          <c>12시간 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 172800 %>
-          <c>1일 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 343600 %>
-          <c>2일 전</c>
-          <% elsif (Time.now - current_user.last_seen) <= 687200 %>
-          <c>4일 전</c>
-          <% else %>
-          <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
-          <% end %>
-        </div>
-      </div>
-      
-      <!-- Others Profile -->
-      <div class="row" id="chat_top">
-        <div class="col-sm-12">
-          <h5 style="color: #52D5CC">팀원</h3>
-        </div>
-      </div>
-      <% temp.each_with_index do |t,idx| %>
-        <% if t.id != current_user.id %>
-          <div class="row" id="chat_top">
-            <div id="profile<%=idx%>" class="col-sm-9">
-              <aside style="padding-left: 12px;">
-                <img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
-              </aside>
-              <h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=t.first_name%></h5>
-            </div>
-            <div class="col-sm-3">
-              <% if (Time.now - t.last_seen) <= 300 %>
-              <c>접속중</c>
-              <% elsif (Time.now - t.last_seen) <= 600 %>
-              <c>5분 전</c>
-              <% elsif (Time.now - t.last_seen) <= 1800 %>
-              <c>10분 전</c>
-              <% elsif (Time.now - t.last_seen) <= 3600 %>
-              <c>30분 전</c>
-              <% elsif (Time.now - t.last_seen) <= 10800 %>
-              <c>1시간 전</c>
-              <% elsif (Time.now - t.last_seen) <= 21600 %>
-              <c>3시간 전</c>
-              <% elsif (Time.now - t.last_seen) <= 43200 %>
-              <c>6시간 전</c>
-              <% elsif (Time.now - t.last_seen) <= 86400 %>
-              <c>12시간 전</c>
-              <% elsif (Time.now - t.last_seen) <= 172800 %>
-              <c>1일 전</c>
-              <% elsif (Time.now - t.last_seen) <= 343600 %>
-              <c>2일 전</c>
-              <% elsif (Time.now - t.last_seen) <= 687200 %>
-              <c>4일 전</c>
-              <% else %>
-              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          멤버 <small><%=temp.count%>명</small>
+        </a>
+      </h4>
     </div>
-    
-    <!-- Tab2: List of chat rooms -->
-    <div class="tab-pane" id="tab2">
-      <div class="row" id="chat_top">
-        <div class="col-sm-6"><h2 style="color: #372727;">회의방</h2></div>
-        <div class="col-sm-3"></div>
-        
-        <div class="col-sm-2"><button class="btn btn-new btn-circle btn-lg" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom" style="margin-top: 8px;"><span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title="회의방 추가"></span></button></div>
-        <div class="col-sm-1"></div>
-
-        
-      </div>
-      <div class="row collapse" id="addchatroom2">
-        <form action="/chat/create" method="post">
-          <div id="chat_top">
-            회의방 이름 <input type="text" name="title" required>
-            <input type="hidden" name="team" value=<%=@team.id%>>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <div class="row">
+          <div id="profile_me" class="col-sm-12">
+            <img id="img_setting" style="width: 20px; height: 20px;" class="img-circle" alt="profile" src="<%=current_user.image%>">
+            <%=current_user.first_name%>
           </div>
-          <br />
-          <% temp.each_with_index do |t,idx| %>
-            <% if t.id != current_user.id %>
-              <div class="row" id="chat_top">
-                <div id="profile<%=idx%>" class="col-sm-12">
-                  <aside style="padding-left: 12px;">
-                    <img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
-                  </aside>
-                  <h5 style="color: black;"><%=t.first_name%></h5>
-                  <%= check_box_tag('user_ids[]', t.id) %>
-                </div>
+        </div>
+  
+        <!-- Others Profile -->
+        <% temp.each_with_index do |t,idx| %>
+          <% if t.id != current_user.id %>
+            <div class="row">
+              <div id="profile<%=idx%>" class="col-sm-12">
+                <img id="img_setting" style="width: 20px; height: 20px;" class="img-circle" alt="profile" src="<%=t.image%>">
+                <%=t.first_name%>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <hr/>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-8">
+            <form action="/team/addmember" method="get">
+              <input type="hidden" name="team" value="<%=@team.id%>"/>
+              <button type="submit" class="btn btn-new btn-xs" style="width: 100%;" data-toggle="tooltip" data-placement="bottom" title="팀원 추가"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              채팅방
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+          <div class="row" id="chat_top">
+            <div class="col-sm-12">
+              <h5 style="color: #52D5CC">방 목록</h3>
+            </div>
+          </div>
+          <% if @chat_side %>
+            <% @chat_side.each do |chat| %>
+              <div class="row well well-sm">
+                <form action ="/message/show" method="get">
+                  <input type="hidden" name="chat" value="<%=chat.id%>">
+                  <input type="hidden" name="team" value="<%=@team.id%>">
+                  <input class="btn btn-link" style="width: 100%;text-align: left;"type="submit" value="<%=chat.title%>">
+                </form>
+                <form action="/chat/deletemember" method="post">
+                  <input type="hidden" name="chat" value="<%=chat.id%>">
+                  <input type="hidden" name="team" value="<%=@team.id%>">
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+                  <button class=""type="submit"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
+                </form>
               </div>
             <% end %>
           <% end %>
-          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-          <div class="col-sm-2"><button type="submit" vlaue="Send" class="btn btn-new btn-circle btn-lg"><i class="glyphicon glyphicon-plus"></i></button></div>
-        </form>
-      </div>
-      <div class="row" id="chat_top">
-        <div class="col-sm-12">
-          <h5 style="color: #52D5CC">방 목록</h3>
-        </div>
-      </div>
-      
-      <% if @chat_side %>
-        <% @chat_side.each do |chat| %>
-          <div class="row" id="chat_top">
-            <form action ="/message/show" method="get">
-              <div id="profile_me" class="col-sm-12">
-                    <input type="hidden" name="chat" value="<%=chat.id%>">
-                    <input class="btn btn-default" type="submit" value="<%=chat.title%>">
+          <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8"><button class="btn btn-new btn-xs" style="width: 100%;" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom"><span class="glyphicon glyphicon-plus"></span></button></div>
+          </div>
+          <div class="row collapse" id="addchatroom2">
+            <form action="/chat/create" method="post">
+              <div id="chat_top" class="col-md-12">
+                회의방 이름 <input type="text" name="title" required>
+                <input type="hidden" name="team" value="<%=@team.id%>" style="width:100%;">
               </div>
+              <% temp.each_with_index do |t,idx| %>
+                <% if t.id != current_user.id %>
+                  <div class="row" id="chat_top">
+                    <div id="profile<%=idx%>" class="col-sm-12">
+                      <aside style="padding-left: 12px;">
+                        <img id="img_setting" style="width: 20px; height: 20px;" class="img-circle" alt="profile" src="<%=t.image%>">
+                      </aside>
+                      <h5 style="color: black;"><%=t.first_name%></h5>
+                      <%= check_box_tag('user_ids[]', t.id) %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
             </form>
           </div>
-        <% end %>
-      <% end %>
-    </div>
-    
-    <!-- Tab3: Giving Tasks -->
-    <div class="tab-pane" id="tab3">
-      <div class="row" id="chat_top">
-        <div class="col-sm-6"><h2 style="color: #372727;">Give Tasks</h2></div>
-        <div class="col-sm-1"><h2> </h2></div>
-        <div class="col-sm-3"></div>
+          </div>
+        </div>
       </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          할일 분배
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+        <div class="row">
+          <h3 style="color: #372727; padding-left: 10px"></h3>
+        </div>
       
       <form action="/task/create" method="post">
-        <div class="row" id="chat_top2">
+        <div class="row" style="border-top: 1px solid #ccc; padding-left:10px; padding-right:10px; padding-top:10px;">
           <div class="form-group">
-            <div class="col-md-10">
               <label for="taskname_text"><span class="glyphicon glyphicon-briefcase" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Taskname</label>
               <input type="text" class="form-control" name="taskname" id="taskname_text" placeholder="Give Your Task">
-            </div>
           </div>
         </div>
         
-        <div class="row" id="chat_top">
-          <div class='col-sm-10'>
-            <label for="datetimepicker1"><span class="glyphicon glyphicon-calendar" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Duedate</label>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker1'>
-                  <input type='text' class="form-control" name="duedate"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-            </div>
+        <div class="row" style=" padding-left:10px; padding-right:10px;">
+          <label for="datetimepicker1"><span class="glyphicon glyphicon-calendar" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Duedate</label>
+          <div class="form-group">
+              <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" name="duedate"/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
           </div>
-          <div class='col-sm-2'>
-            <button type="submit" value="send" class="btn btn-info btn-sm" aria-haspopup="true" aria-expanded="false" style="font-size: 13px; margin-top: 27px;">
-              Enroll
-            </button>
-          </div>
-          <script type="text/javascript">
-            $(function () {
-              $('#datetimepicker1').datetimepicker({
-                format : 'YYYY-MM-DD'
-              });
-            });
-          </script>
         </div>
+        <div class='row' style="padding-left:10px; padding-right:10px; padding-bottom:10px;">
+          <button type="submit" value="send" class="btn btn-new btn-sm" aria-haspopup="true" aria-expanded="false" style="font-size: 13px;">
+            Enroll
+          </button>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            $('#datetimepicker1').datetimepicker({
+              format : 'YYYY-MM-DD'
+            });
+          });
+        </script>
         
         <!-- My Profile -->
-        <div class="row" id="chat_top">
-          <div class="col-sm-12">
-            <h5 style="color: #52D5CC">나</h3>
+        <div class="row" style="border-top: 1px solid #ccc; padding-top: 5px">
+          <div class="col-sm-10">
+            <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
+            <%=current_user.first_name%>
           </div>
-        </div>
-        <div class="row" id="chat_top">
-          <div id="profile_me" class="col-sm-11">
-            <aside style="padding-left: 12px;">
-              <img id="img_setting" class="img-circle" alt="profile" src="<%=current_user.image%>">
-            </aside>
-            <h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=current_user.first_name%></h5>
-          </div>
-          <div id="profile_me" class="col-sm-1">
+          <div id="profile_me" class="col-sm-2">
             <%= check_box_tag('user_ids[]', current_user.id) %><br />
           </div>
         </div>
         
         <!-- Others Profile -->
         <div class="row" id="chat_top">
-          <div class="col-sm-12">
-            <h5 style="color: #52D5CC">팀원</h3>
-          </div>
         </div>
         <% temp.each_with_index do |t,idx| %>
           <% if t.id != current_user.id %>
-            <div class="row" id="chat_top">
-              <div id="profile_me" class="col-sm-11">
-                <aside style="padding-left: 12px;">
-                  <img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
-                </aside>
-                <h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=t.first_name%></h5>
+            <div class="row">
+              <div class="col-sm-10">
+                <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                <%=t.first_name%>
               </div>
-              <div id="profile_me" class="col-sm-1">
+              <div id="profile_me" class="col-sm-2">
                 <%= check_box_tag('user_ids[]', t.id) %><br />
               </div>
-            </div>
           <% end %>
         <% end %>
         <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
         <input type="hidden" name="team" value=<%=@team.id%>>
       </form>
     </div>
-    <!-- end of Tab3 -->
+    </div>
   </div>
 </div>
+</div>
 
-
-  <br>
-  <br>
-  <br>
-  <div style="text-align:center">
-    <h3><%=@chat.title %></h3>
-  </div>
+  <div class="col-sm-10" style="margin-top: 60px;">
+    <div style="text-align:center">
+      <h3><%=@chat.title %></h3>
+    </div>
 
 
 
-  <div class="row">
-    <div class="col-sm-6">
-      <div style="text-align:center">채팅창</div>
-      <div style="overflow:scroll; overflow-x:hidden; word-wrap:break-word; word-break:break-all; width:auto; height:400px;" id="chatbox">
+    <div class="row">
+      <div class="col-sm-6">
+        <div style="text-align:center">채팅창</div>
+        <div style="overflow:scroll; overflow-x:hidden; word-wrap:break-word; word-break:break-all; width:auto; height:400px;" id="chatbox">
 
-        <% @chat.messages.each do |message| %>
+          <% @chat.messages.each do |message| %>
 
-          <div class="row messages">
-            <div class="col-sm-1">
-              <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
-            </div>
-            <div class="col-sm-11">
-              <div id="message<%=message.id%>">
-                <strong><%=User.find(message.sender_id).first_name%></strong><br>
-                <% if message.messagetype == 0 %>
-                  <%=message.content%><br>
-                <% end %>
-                <% if message.messagetype == 1 %>
-                  <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessageload" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
-                <% end %>
-                <% if message.messagetype == 2 %>
-                  THIS CONTENT IS FILE!<br>
-                <% end %>
+            <div class="row messages">
+              <div class="col-sm-1">
+                <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
+              </div>
+              <div class="col-sm-11">
+                <div id="message<%=message.id%>">
+                  <strong><%=User.find(message.sender_id).first_name%></strong><br>
+                  <% if message.messagetype == 0 %>
+                    <%=message.content%><br>
+                  <% end %>
+                  <% if message.messagetype == 1 %>
+                    <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessageload" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+                  <% end %>
+                  <% if message.messagetype == 2 %>
+                    THIS CONTENT IS FILE!<br>
+                  <% end %>
+                </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
 
-        <%= sync_new partial: 'newmessages', resource: Message.new, scope: @chat%>
-      </div>
+          <%= sync_new partial: 'newmessages', resource: Message.new, scope: @chat%>
+        </div>
 
 
-        <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
-          <%= f.hidden_field :chat_id, :value => @chat.id %>
-          <div class="form-group has-success has-feedback">
-            <div class="dropup">
-              <div class="input-group">
-                <span class="input-group-addon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  +
-                </span>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <li><a><label for="fileupload" style="cursor: pointer;"><span class="glyphicon glyphicon-file"></span> 파일업로드</label></a></li>
-                  <li><a><label for="imageupload" style="cursor: pointer;"><span class="glyphicon glyphicon-picture"></span> 사진업로드</label></a></li>
-                </ul>
-                <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required autocomplete="off">
+          <%= form_for(:message, :url => {:controller => 'message', :action => 'create'}, :remote => true, :html => {:id => "messageform"}) do |f| %>
+            <%= f.hidden_field :chat_id, :value => @chat.id %>
+            <div class="form-group has-success has-feedback">
+              <div class="dropup">
+                <div class="input-group">
+                  <span class="input-group-addon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    +
+                  </span>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><a><label for="fileupload" style="cursor: pointer;"><span class="glyphicon glyphicon-file"></span> 파일업로드</label></a></li>
+                    <li><a><label for="imageupload" style="cursor: pointer;"><span class="glyphicon glyphicon-picture"></span> 사진업로드</label></a></li>
+                  </ul>
+                  <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required autocomplete="off">
+                </div>
               </div>
             </div>
-          </div>
 
-        <%end%>
-
+          <%end%>
 
 
 
-      <form id="imagefileupload" class="form-inline" action="/imageup" method="post" enctype="multipart/form-data" data-remote="true">
-        <input type="hidden" name="chat_id" value=<%= @chat.id %>>
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
-        <input id="imageupload" type="file" name="image_file" style="visibility:hidden;position:absolute;top:0;left:0;">
-      </form>
+        <form id="imagefileupload" class="form-inline" action="/imageup" method="post" enctype="multipart/form-data" data-remote="true">
+          <input type="hidden" name="chat_id" value=<%= @chat.id %>>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
-      <form id="filefileupload" class="form-inline" action="/fileup" method="post" enctype="multipart/form-data" data-remote="true">
-        <input type="hidden" name="chat_id" value=<%= @chat.id %>>
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          <input id="imageupload" type="file" name="image_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+        </form>
 
-        <input id="fileupload" type="file" name="file_file" style="visibility:hidden;position:absolute;top:0;left:0;">
-      </form>
+        <form id="filefileupload" class="form-inline" action="/fileup" method="post" enctype="multipart/form-data" data-remote="true">
+          <input type="hidden" name="chat_id" value=<%= @chat.id %>>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
-      <button type="hidden" style="visibility:hidden;position:absolute;top:0;left:0;" class="btn btn-primary btn-lg" id="imshow" data-toggle="modal" data-target="#myModal"></button>
+          <input id="fileupload" type="file" name="file_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+        </form>
 
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <img id="blah" src="#" alt="your image" style="padding: 10px; max-width: 100%; height: auto;"/>
-            </div>
-            <div class="modal-footer">
+        <button type="hidden" style="visibility:hidden;position:absolute;top:0;left:0;" class="btn btn-primary btn-lg" id="imshow" data-toggle="modal" data-target="#myModal"></button>
 
-              <button id="closemodal" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-              <button id="imagesubmit" type="button" onclick="$('#imagefileupload').submit();$('#closemodal').click(); this.disabled=true;" class="btn btn-primary">이미지 올리기</button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <img id="blah" src="#" alt="your image" style="padding: 10px; max-width: 100%; height: auto;"/>
+              </div>
+              <div class="modal-footer">
+
+                <button id="closemodal" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                <button id="imagesubmit" type="button" onclick="$('#imagefileupload').submit();$('#closemodal').click(); this.disabled=true;" class="btn btn-primary">이미지 올리기</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
 
-      <script type="text/javascript">
+        <script type="text/javascript">
 
-        $(document).ready(function(){
-          $("#fileupload").on('click',function(){
-            this.value=null;
+          $(document).ready(function(){
+            $("#fileupload").on('click',function(){
+              this.value=null;
+            });
+          })
+          $(function(){
+            $("#fileupload").on('change',function(){
+              $("#filefileupload").submit();
+            });
           });
-        })
-        $(function(){
-          $("#fileupload").on('change',function(){
-            $("#filefileupload").submit();
+
+
+          $(document).ready(function(){
+            $("#imageupload").on('click',function(){
+              this.value=null;
+            });
+          })
+
+
+          $(function(){
+            $("#imageupload").on('change',function(){
+              $("#imagesubmit").prop('disabled', false);
+              document.getElementById('imshow').click();
+              readURL(this);
+            });
           });
-        });
 
+          function readURL(input){
+            if(input.files && input.files[0]){
+              var reader = new FileReader();
 
-        $(document).ready(function(){
-          $("#imageupload").on('click',function(){
-            this.value=null;
-          });
-        })
-
-
-        $(function(){
-          $("#imageupload").on('change',function(){
-            $("#imagesubmit").prop('disabled', false);
-            document.getElementById('imshow').click();
-            readURL(this);
-          });
-        });
-
-        function readURL(input){
-          if(input.files && input.files[0]){
-            var reader = new FileReader();
-
-            reader.onload = function(e){
-              $('#blah').attr('src',e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-          }
-        }
-      </script>
-
-
-
-
-      <script>
-        $(document).ready(function(){
-          $("#inputGroupSuccess1").keydown(function(event){
-              if(event.keyCode == 13){
-                $("#messageform").submit();
-
-                $('#inputGroupSuccess1').val('');
-                return false;
+              reader.onload = function(e){
+                $('#blah').attr('src',e.target.result);
               }
 
+              reader.readAsDataURL(input.files[0]);
+            }
+          }
+        </script>
+
+
+
+
+        <script>
+          $(document).ready(function(){
+            $("#inputGroupSuccess1").keydown(function(event){
+                if(event.keyCode == 13){
+                  $("#messageform").submit();
+
+                  $('#inputGroupSuccess1').val('');
+                  return false;
+                }
+
+            });
           });
-        });
-      </script>
-    </div>
-    <div class="col-sm-6">
-      <div style="text-align:center">
-        화이트 보드
-        <%= sync partial: "whiteboardedit", resource: @whiteboard, scope: @chat, refetch: true %>
+        </script>
+      </div>
+      <div class="col-sm-6">
+        <div style="text-align:center">
+          화이트 보드
+          <%= sync partial: "whiteboardedit", resource: @whiteboard, scope: @chat, refetch: true %>
 
-        <nav>
-          <ul class="pagination pagination-sm">
-            <li><%=sync partial: 'whiteboardcondition', resource: @whiteboard, scope: @chat, refetch: true%></li>
-            <form action="/whiteboard/update2" method="post" id="whiteboardchangeform" data-remote=true>
-              <input type="hidden" name="whiteboardid" value=<%=@whiteboard.id%>>
-              <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-            </form>
+          <nav>
+            <ul class="pagination pagination-sm">
+              <li><%=sync partial: 'whiteboardcondition', resource: @whiteboard, scope: @chat, refetch: true%></li>
+              <form action="/whiteboard/update2" method="post" id="whiteboardchangeform" data-remote=true>
+                <input type="hidden" name="whiteboardid" value=<%=@whiteboard.id%>>
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+              </form>
 
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
+    <div id="messagelook"></div>
+    <% if @chat.messages.count != 0 %>
+      <form action="/message/update" method="put" data-remote=true id="messagelookall">
+        <input type="hidden" name="messageid" value=<%=@chat.messages.last.id%>>
+      </form>
+    <% end %>
+
+    <script>
+      $(document).ready(function(){
+        <%if @message %>
+            $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
+            $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
+
+        <% end %>
+        <% if current_user == @whiteboard.user && @whiteboard.edit == true %>
+          $("#whiteboardblock").removeAttr('disabled');
+          $("#whiteboardblock span").text("완료");
+          $("#whiteboardblock").attr('id', 'whiteboardsend');
+          $("#whiteboardarea").removeAttr('readonly');
+        <% end %>
+
+        $("#whiteboardsend").click(function(){
+          $("#whiteboardform").submit();
+        });
+
+        $("#whiteboardchange").click(function(){
+          $("#whiteboardchangeform").submit();
+        });
+      });
+
+      $(document).ready(function(){
+        $('#messagelookall').submit();
+      });
+    </script>
+    <script>
+    function bigImg(x) {
+        x.style.height = "56px";
+        x.style.width = "56px";
+    }
+
+    function normalImg(x) {
+        x.style.height = "36px";
+        x.style.width = "36px";
+    }
+
+    function search(x) {
+        $('#chatbox').animate({ scrollTop: $("#message"+x).offset().top-200 });
+    }
+    </script>
+
+    <script>
+    $(document).ready(function(){
+        $(".messages").hover(function(){
+            $(this).css("background-color", "#F2F2F2");
+            }, function(){
+            $(this).css("background-color", "white");
+        });
+    });
+    </script>
   </div>
-  <div id="messagelook"></div>
-  <% if @chat.messages.count != 0 %>
-    <form action="/message/update" method="put" data-remote=true id="messagelookall">
-      <input type="hidden" name="messageid" value=<%=@chat.messages.last.id%>>
-    </form>
-  <% end %>
-
-  <script>
-    $(document).ready(function(){
-      <%if @message %>
-          $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
-          $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
-
-      <% end %>
-      <% if current_user == @whiteboard.user && @whiteboard.edit == true %>
-        $("#whiteboardblock").removeAttr('disabled');
-        $("#whiteboardblock span").text("완료");
-        $("#whiteboardblock").attr('id', 'whiteboardsend');
-        $("#whiteboardarea").removeAttr('readonly');
-      <% end %>
-
-      $("#whiteboardsend").click(function(){
-        $("#whiteboardform").submit();
-      });
-
-      $("#whiteboardchange").click(function(){
-        $("#whiteboardchangeform").submit();
-      });
-    });
-
-    $(document).ready(function(){
-      $('#messagelookall').submit();
-    });
-  </script>
-  <script>
-  function bigImg(x) {
-      x.style.height = "56px";
-      x.style.width = "56px";
-  }
-
-  function normalImg(x) {
-      x.style.height = "36px";
-      x.style.width = "36px";
-  }
-
-  function search(x) {
-      $('#chatbox').animate({ scrollTop: $("#message"+x).offset().top-200 });
-  }
-  </script>
-
-  <script>
-  $(document).ready(function(){
-      $(".messages").hover(function(){
-          $(this).css("background-color", "#F2F2F2");
-          }, function(){
-          $(this).css("background-color", "white");
-      });
-  });
-  </script>
-</body>
+</div>

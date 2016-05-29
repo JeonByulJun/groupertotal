@@ -6,7 +6,7 @@
   top: 52px;
 }
 .homebody_task{
-    width: 82%;
+    width: 80%;
     position: relative;
     top: 52px;
 }
@@ -14,7 +14,8 @@
 
 .sidebar_task{
     height: 100%;
-    width: 18%;
+    width: auto;
+    min-width: 206px;
     max-width: 250px;
     position: fixed;
     z-index: 1;

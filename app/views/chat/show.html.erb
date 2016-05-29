@@ -162,8 +162,9 @@
           <div class="row" id="chat_top">
             <form action ="/message/show" method="get">
               <div id="profile_me" class="col-sm-12">
-                    <input type="hidden" name="chat" value="<%=chat.id%>">
-                    <input class="btn btn-default" type="submit" value="<%=chat.title%>">
+                <input type="hidden" name="chat" value="<%=chat.id%>">
+                <input type="hidden" name="team" value="<%=@team.id%>">
+                <input class="btn btn-default" type="submit" value="<%=chat.title%>">
               </div>
             </form>
           </div>
