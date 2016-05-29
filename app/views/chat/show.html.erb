@@ -4,6 +4,15 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
+          <a href="/chat/show?team=<%=@team.id%>" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne" style="font-family: 'Jeju Gothic', sans-serif;">
+            팀 홈으로 가기<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+          </a>
+      </h4>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
       <% temp = [] %>
       <% temp += @team.users.order(first_name: :asc) %>
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -67,17 +76,23 @@
                   <input type="hidden" name="chat" value="<%=chat.id%>">
                   <input type="hidden" name="team" value="<%=@team.id%>">
                   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-                  <% chat.users.each do |pic| %>
-
-                  <% end %>
-                  <button class=""type="submit" style="float:right;"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
+                  <div class="row">
+                    <div class="col-md-9">
+                      <% chat.users.each do |inchat| %>
+                        <img class="img-circle" alt="profile" src="<%=inchat.image%>" style="width: 20px; height: 20px;">
+                      <% end %>
+                    </div>
+                    <div class="col-md-3">
+                      <button class=""type="submit" style="float:right;"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
+                    </div>
+                  </div>
                 </form>
               </div>
             <% end %>
           <% end %>
           <div class="row">
             <div class="col-sm-2"></div>
-            <div class="col-sm-8"><button class="btn btn-new btn-xs" style="width: 100%;" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom"><span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title="팀원 추가"></span></button></div>
+            <div class="col-sm-8"><button class="btn btn-new btn-xs" style="width: 100%;" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom"><span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title="채팅방 추가"></span></button></div>
           </div>
           <div class="row collapse" id="addchatroom2">
             <form action="/chat/create" method="post">
@@ -183,6 +198,7 @@
       </div>
     </div>
   </div>
+  
 </div>
 </div>
 
@@ -194,8 +210,15 @@
       <img class="img-rounded" alt="profile" src="/favicon.ico" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 13px;">
     </aside>
     <h2> <%=@team.teamname%></h2>
-    <h4> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> </h4>
+    <h4 data-toggle="collapse" href="#belong" aria-expanded="false" aria-controls="name" style="text-decoration: none;"> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> <%=@team.belong%></h4>
     <h5 style="color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> </h5>
+    <div class="collapse" id="belong">
+      <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+        <%= hidden_field_tag "team", @team.id %> 
+        <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
+      </form>
+    </div>
   </div>
   <br>
   

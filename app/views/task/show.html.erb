@@ -105,9 +105,9 @@
 
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
-		<li role="presentation" class="active"><a href="#contribution" aria-controls="contribution" role="tab" data-toggle="tab">Contribution</a></li>
-		<li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">Tasklist</a></li>
-		<li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">Sended Tasks</a></li>
+		<li role="presentation" class="active"><a href="#contribution" aria-controls="contribution" role="tab" data-toggle="tab">기여도</a></li>
+		<li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">나의 할 일</a></li>
+		<li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">내가 시킨 일</a></li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -198,6 +198,7 @@
 				<% cnt = 0 %>
 
 				<div class="col-md-8">
+					<h3>월별 통계</h3>
 					<canvas id="canvas" style="width: 600px; height: 450px;">
 					<script>
 						var labelString = new Array();
@@ -250,7 +251,7 @@
     <!--tab-content tasks starts-->
     <div role="tabpanel" class="tab-pane" id="tasks" style="padding-left: 12px;">
 	
-	<h3>To do list</h3>
+	<h3>나의 할 일</h3>
 		
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		<% @tasklist.each_with_index do |taskdo,slideridx| %>
@@ -357,7 +358,7 @@
     </div>
     
     <div role="tabpanel" class="tab-pane" id="sends" style="padding-left: 12px;">
-		<h3>Tasks you gave</h3>
+		<h3>내가 시킨 일</h3>
 		<% @tasksend.each_with_index do |taskdo,idx| %>
 			<% if taskdo.wansungdo < 100 %>
 			<div class="row">

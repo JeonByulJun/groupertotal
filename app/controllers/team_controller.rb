@@ -82,6 +82,12 @@ class TeamController < ApplicationController
       redirect_to :root
     end
   end
+
+  def change_etc1
+    dd = Team.find(params[:team])
+    dd.belong = params[:belong]
+    redirect_to :root
+  end
   
   def search
   end

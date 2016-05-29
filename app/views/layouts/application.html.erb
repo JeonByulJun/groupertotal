@@ -6,6 +6,7 @@
   <%= javascript_include_tag 'application' %>
   <%= include_sync_config %>
   <%= csrf_meta_tags %>
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -19,9 +20,14 @@
   <meta name="google-signin-client_id" content="462449088434-dqsv26kcove38hjrsbjrhe1gkm3f4d1f.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
+  <!-- fonts -->
+  <style>
+  @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+  </style>
+
 </head>
 
-<body>
+<body style="font-family: 'Jeju Gothic', sans-serif;">
   <!--
   <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
   <script>
@@ -170,9 +176,9 @@
               <li><a href="/team/newteam">새로운 팀 만들기</a></li>
             </ul>
           </li>
+
           <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') and !current_page?(:controller => '/team', :action => 'profile') and !current_page?(:controller => '/team', :action => 'noteam') and  !current_page?(:controller => '/team', :action => 'search') %>
           
-            
             
             <% if current_page?(:controller => '/resumes')%>
             <li class="active"><a href="">클라우드<span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></li>
@@ -218,7 +224,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=current_user.first_name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/team/profile">프로필 바꾸기</a></li>
-              <li><a href="#">설정</a></li>
+              <!--<li><a href="#">설정</a></li>-->
               <li><a href="https://open.kakao.com/o/sbpof8i">그루퍼와 톡하기!</a></li>
               <li role="separator" class="divider"></li>
               <li><%= link_to "로그아웃", destroy_user_session_path, :method => :delete %></li>

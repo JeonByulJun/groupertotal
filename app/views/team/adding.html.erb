@@ -22,8 +22,8 @@
             
             <input type="hidden" name="team" value=<%=@team.id%>>
             
-            <a href="#" onclick="this.parentNode.submit()">팀원 더 초대하기</a>
-            <button class="btn btn-link" href="<%="/chat/show?team="+@team.id.to_s%>">그만 추가하기</a>
+            <button class="btn btn-link" href="#" onclick="this.parentNode.submit()">팀원 더 초대하기</button>
+            <a class="btn btn-link" href="<%="/chat/show?team="+@team.id.to_s%>">그만 추가하기</a>
             
           </form>
         </div>

@@ -51,7 +51,7 @@ function circle(canvas, sum, cnt){
 		//ctx.fillText(the_text, x, y)
 		ctx.fillText(text, W/2-text_width/2, H/2 + 15);
 		ctx.font = "20px arial";
-		text = 'Average Completion';
+		text = '평균 성취도';
 		text_width = ctx.measureText(text).width;
 		ctx.fillText(text, W/2-text_width/2, 0.3*H/2);
     }
