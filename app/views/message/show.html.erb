@@ -33,11 +33,39 @@
         </div>
       </div>
       <div class="row" id="chat_top">
-        <div id="profile_me" class="col-sm-12">
+        <div id="profile_me" class="col-sm-9">
           <aside style="padding-left: 12px;">
             <img id="img_setting" class="img-circle" alt="profile" src="<%=current_user.image%>">
           </aside>
           <h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=current_user.first_name%></h5>
+
+        </div>
+        <div class="col-sm-3">
+          <% if (Time.now - current_user.last_seen) <= 300 %>
+          <c>접속중</c>
+          <% elsif (Time.now - current_user.last_seen) <= 600 %>
+          <c>5분 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 1800 %>
+          <c>10분 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 3600 %>
+          <c>30분 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 10800 %>
+          <c>1시간 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 21600 %>
+          <c>3시간 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 43200 %>
+          <c>6시간 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 86400 %>
+          <c>12시간 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 172800 %>
+          <c>1일 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 343600 %>
+          <c>2일 전</c>
+          <% elsif (Time.now - current_user.last_seen) <= 687200 %>
+          <c>4일 전</c>
+          <% else %>
+          <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
+          <% end %>
         </div>
       </div>
       
@@ -50,11 +78,38 @@
       <% temp.each_with_index do |t,idx| %>
         <% if t.id != current_user.id %>
           <div class="row" id="chat_top">
-            <div id="profile<%=idx%>" class="col-sm-12">
+            <div id="profile<%=idx%>" class="col-sm-9">
               <aside style="padding-left: 12px;">
                 <img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
               </aside>
               <h5 style="color: black; font-size: 18px; padding-top: 15px;"><%=t.first_name%></h5>
+            </div>
+            <div class="col-sm-3">
+              <% if (Time.now - t.last_seen) <= 300 %>
+              <c>접속중</c>
+              <% elsif (Time.now - t.last_seen) <= 600 %>
+              <c>5분 전</c>
+              <% elsif (Time.now - t.last_seen) <= 1800 %>
+              <c>10분 전</c>
+              <% elsif (Time.now - t.last_seen) <= 3600 %>
+              <c>30분 전</c>
+              <% elsif (Time.now - t.last_seen) <= 10800 %>
+              <c>1시간 전</c>
+              <% elsif (Time.now - t.last_seen) <= 21600 %>
+              <c>3시간 전</c>
+              <% elsif (Time.now - t.last_seen) <= 43200 %>
+              <c>6시간 전</c>
+              <% elsif (Time.now - t.last_seen) <= 86400 %>
+              <c>12시간 전</c>
+              <% elsif (Time.now - t.last_seen) <= 172800 %>
+              <c>1일 전</c>
+              <% elsif (Time.now - t.last_seen) <= 343600 %>
+              <c>2일 전</c>
+              <% elsif (Time.now - t.last_seen) <= 687200 %>
+              <c>4일 전</c>
+              <% else %>
+              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
+              <% end %>
             </div>
           </div>
         <% end %>
