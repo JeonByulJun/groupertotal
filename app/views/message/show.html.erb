@@ -1,7 +1,13 @@
 <div style="text-align:center">
-  <h3><%=@chat.title %></h3>
+  <h3><%=@chat.title %> <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false">참여자 보기</button></h3>
+  
+</button>
+  <div class="collapse" id="collapseExample">
+    <% @chat.users.each do |inchat| %>
+      <button class="btn btn-default">#<%=inchat.first_name%> </button>
+    <% end%>
+  </div>
 </div>
-
 <div class="row">
   <div class="col-sm-6">
     <div style="text-align:center">채팅창</div>

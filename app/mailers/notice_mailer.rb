@@ -8,6 +8,8 @@ class NoticeMailer < ApplicationMailer
   def invitation(email, inviter, team)
     @inviter=inviter
     @team=team
+    @email=email
+    @auth=email.hash
     mail to: email, subject: "그루퍼에서 초대장이 왔습니다."
   end
   def regmail(email)
