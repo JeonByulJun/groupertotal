@@ -173,11 +173,7 @@
           <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') and !current_page?(:controller => '/team', :action => 'profile') and !current_page?(:controller => '/team', :action => 'noteam') and  !current_page?(:controller => '/team', :action => 'search') %>
           
             
-            <% if current_page?(:controller => '/message', :action => 'show')%>
-            <li class="active"><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
-            <% else %>
-            <li><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
-            <% end %>
+            
             <% if current_page?(:controller => '/resumes')%>
             <li class="active"><a href="">클라우드<span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></li>
             <% else %>

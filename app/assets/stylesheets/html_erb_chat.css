@@ -138,7 +138,7 @@
 }*/
 .bar2-innertask_chat:after{
   position: absolute;
-  right: 1%;
+  right: 50px;
   color: #0C0C0C;
   content: attr(data-task);
   font-size: 18px;
