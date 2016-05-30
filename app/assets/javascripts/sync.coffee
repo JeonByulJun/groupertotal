@@ -242,10 +242,10 @@ class Sync.MessageNewmessages extends Sync.View
                         ta.scrollTop = ta.scrollHeight;
                       });
                   }
-                              if($('#checkpoint').val() == "false"){
-                                $('#checkpoint').val("true");
-                                $("#messagelookall").submit();
-                              }
+                  if($('#checkpoint').val() == "false"){
+                    $('#checkpoint').val("true");
+                    $("#messagelookall").submit();
+                  }
                   var newval = $('#messagelookid').val();
                   $('#messagelookid').val(parseInt(newval)+1);
                   $("#messagelook").submit();

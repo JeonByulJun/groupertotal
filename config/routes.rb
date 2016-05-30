@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   post '/test/index' => 'test#index'
   get '/team/profile' => 'team#profile'
   post '/team/profileupdate' => 'team#profileupdate'
+  post '/team/change_etc1' => 'team#change_etc1'
   get '/test/index' => 'test#index'
   get '/test/invitation' => 'test#invitation'
   put '/whiteboard/update' => 'whiteboard#update'
@@ -36,6 +37,9 @@ Rails.application.routes.draw do
   put '/message/updateall' => 'message#updateall'
   post '/test/regmail' => 'test#regmail'
   get '/test/regmail' => 'team#index'
+  get '/team/noteam' => 'team#noteam'
+  get '/team/search' => 'team#search'
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

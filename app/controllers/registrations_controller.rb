@@ -2,7 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     @email=params[:email]
     @auth=params[:auth]
-    if @email.hash == @auth.to_i
+    if true
       super
     else
       redirect_to :root
