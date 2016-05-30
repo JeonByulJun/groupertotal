@@ -6,7 +6,6 @@
   <%= javascript_include_tag 'application' %>
   <%= include_sync_config %>
   <%= csrf_meta_tags %>
-
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -20,14 +19,9 @@
   <meta name="google-signin-client_id" content="462449088434-dqsv26kcove38hjrsbjrhe1gkm3f4d1f.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-  <!-- fonts -->
-  <style>
-  @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
-  </style>
-
 </head>
 
-<body style="font-family: 'Jeju Gothic', sans-serif;">
+<body>
   <!--
   <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
   <script>
@@ -40,7 +34,6 @@
       console.log('Family Name: ' + profile.getFamilyName());
       console.log("Image URL: " + profile.getImageUrl());
       console.log("Email: " + profile.getEmail());
-
       // The ID token you need to pass to your backend:
       var id_token = googleUser.getAuthResponse().id_token;
       console.log("ID Token: " + id_token);
@@ -55,7 +48,6 @@
       });
     }
   </script>
-
   <div id="naver_id_login"></div>
   <script type="text/javascript">
   	var naver_id_login = new naver_id_login("M0R6aB8v_c9bWdQlNM9D", "https://grouper1-hyunjunian.c9users.io/");
@@ -64,13 +56,11 @@
   	naver_id_login.setState("abcdefghijkmnopqrst");
   	naver_id_login.setPopup();
   	naver_id_login.init_naver_id_login();
-
     naver_id_login.get_naver_userprofile();
     email = naver_id_login.getProfileData('email');
     name = naver_id_login.getProfileData('name');
     age = naver_id_login.getProfileData('age');
   </script>
-
 	<div id="kakao-profile"></div>
   <a id="kakao-login-btn"></a>
   <input type="button" onclick="Kakao.Auth.logout();" value="로그아웃" />
@@ -104,47 +94,8 @@
   </script>
   -->
 
-  <style>
-    @media (max-width: 1090px) {
-      .navbar-header {
-          float: none;
-      }
-      .navbar-toggle {
-          display: block;
-      }
-      .navbar-collapse {
-          border-top: 1px solid transparent;
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-      }
-      .navbar-collapse.collapse {
-          display: none!important;
-      }
-      .navbar-nav {
-          float: none!important;
-          margin: 7.5px -15px;
-      }
-      .navbar-nav>li {
-          float: none;
-      }
-      .navbar-nav>li>a {
-          padding-top: 10px;
-          padding-bottom: 10px;
-      }
-      .navbar-text {
-          float: none;
-          margin: 15px 0;
-      }
-      /* since 3.1.0 */
-      .navbar-collapse.collapse.in {
-          display: block!important;
-      }
-      .collapsing {
-          overflow: hidden!important;
-      }
-    }
-  </style>
 
-  <nav class="navbar navbar-default" style="width:100%; position:fixed; z-index: 11;">
+  <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -176,10 +127,15 @@
               <li><a href="/team/newteam">새로운 팀 만들기</a></li>
             </ul>
           </li>
-
           <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') and !current_page?(:controller => '/team', :action => 'profile') and !current_page?(:controller => '/team', :action => 'noteam') and  !current_page?(:controller => '/team', :action => 'search') %>
 
 
+
+            <% if current_page?(:controller => '/message', :action => 'show')%>
+            <li class="active"><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
+            <% else %>
+            <li><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
+            <% end %>
             <% if current_page?(:controller => '/resumes')%>
             <li class="active"><a href="">클라우드<span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></li>
             <% else %>
@@ -224,7 +180,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=current_user.first_name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/team/profile">프로필 바꾸기</a></li>
-              <!--<li><a href="#">설정</a></li>-->
+              <li><a href="#">설정</a></li>
               <li><a href="https://open.kakao.com/o/sbpof8i">그루퍼와 톡하기!</a></li>
               <li role="separator" class="divider"></li>
               <li><%= link_to "로그아웃", destroy_user_session_path, :method => :delete %></li>
@@ -259,13 +215,11 @@ document.addEventListener('DOMContentLoaded', function () {
   //if (Notification.permission !== "granted")
     Notification.requestPermission();
 });
-
 function notifyMe() {
   if (!Notification) {
     alert('Desktop notifications not available in your browser. Try Chromium.');
     return;
   }
-
   if (Notification.permission !== "granted")
     Notification.requestPermission();
   else {
@@ -273,32 +227,26 @@ function notifyMe() {
       icon: '/Picture1.png',
       body: "누가 메세지를 보냈어요!",
     });
-
     notification.onclick = function () {
       window.open("/");
     };
-
   }
-
 }
 </script>
 
 <script>
 // Include the UserVoice JavaScript SDK (only needed once on a page)
 UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/nma6fghhmsHmFxYMlrLtsg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
-
 //
 // UserVoice Javascript SDK developer documentation:
 // https://www.uservoice.com/o/javascript-sdk
 //
-
 // Set colors
 UserVoice.push(['set', {
   accent_color: '#6aba2e',
   trigger_color: 'white',
   trigger_background_color: '#6aba2e'
 }]);
-
 // Identify the user and pass traits
 // To enable, replace sample data with actual user traits and uncomment the line
 UserVoice.push(['identify', {
@@ -318,13 +266,10 @@ UserVoice.push(['identify', {
   //  plan:         'Enhanced' // Plan name for the account
   //}
 }]);
-
 // Add default trigger to the bottom-right corner of the window:
 UserVoice.push(['addTrigger', {mode: 'contact', trigger_position: 'bottom-right' }]);
-
 // Or, use your own custom trigger:
 //UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
-
 // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
 </script>
