@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   post '/fileup' => 'message#fileup'
   post '/team/deletemember' => 'team#deletemember'
   post '/chat/deletemember' => 'chat#deletemember'
+  put '/message/updateall' => 'message#updateall'
   post '/test/regmail' => 'test#regmail'
   get '/test/regmail' => 'team#index'
   get '/team/noteam' => 'team#noteam'

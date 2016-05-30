@@ -4,7 +4,7 @@ development:
   adapter_javascript_url: "http://localhost:9292/faye/faye.js"
   auth_token: DEVELOPMENT_SECRET_TOKEN
   adapter: "Faye"
-  async: true
+  async: false
 
 # Pusher
 # development:

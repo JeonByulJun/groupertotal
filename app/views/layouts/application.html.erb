@@ -94,6 +94,7 @@
   </script>
   -->
 
+
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -127,8 +128,9 @@
             </ul>
           </li>
           <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') and !current_page?(:controller => '/team', :action => 'profile') and !current_page?(:controller => '/team', :action => 'noteam') and  !current_page?(:controller => '/team', :action => 'search') %>
-          
-            
+
+
+
             <% if current_page?(:controller => '/message', :action => 'show')%>
             <li class="active"><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
             <% else %>
@@ -151,10 +153,10 @@
               <form id="exit" action="/team/deletemember" method="post">
                 <input type="hidden" name="team" value="<%=@team.id%>">
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-                
+
               </form>
               <a class="btn btn-link" data-toggle="modal" data-target="#exitmodal">팀 나가기</a>
-              
+
               <div id="exitmodal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-sm">
                   <div class="modal-content" style="text-align: center;">
@@ -194,7 +196,7 @@
       <% end %>
     </div>
   </nav>
-  
+
 
 
 

@@ -2,9 +2,9 @@ class ResumesController < ApplicationController
    def index
       @resumes = Resume.where(:team_id => params[:team])
       @resumenew = Resume.new
-      @team = params[:team]
-      @team_int = Team.find(params[:team])
+      @team = Team.find(params[:team])
       @chats = current_user.chats.where(:team => params[:team])
+      
    end
 
    def new
@@ -17,7 +17,7 @@ class ResumesController < ApplicationController
       if @resume.save
          redirect_to action: 'index', team: params[:resume][:team_id]#, notice: "#{@resume.attachment.file.filename} 가 업로드 되었습니다."
       else
-         redirect_to :root, team: params[:resume][:team_id]#, notice: "파일을 올려주세요."
+         redirect_to action: 'index', team: params[:resume][:team_id]#, notice: "파일을 올려주세요."
       end
 
    end
