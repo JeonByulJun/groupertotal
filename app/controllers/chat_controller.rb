@@ -11,6 +11,9 @@ class ChatController < ApplicationController
       @chat.whiteboard.user = current_user
       @chat.save
       redirect_to action: 'show', team: params[:team]
+    else
+      redirect_to action: 'show', team: params[:team]
+
     end
   end
   def show
@@ -30,6 +33,14 @@ class ChatController < ApplicationController
     chat.users.delete(current_user)
     redirect_to action: 'show', team: params[:team]
   end
-
+  def addmember
+    @chat = Chat.find(params[:chat])
+    @chat.users << User.where(:id => params[:user_ids])
+    if @chat.save
+      redirect_to action: 'show', controller: 'message', team: params[:team], chat: params[:chat]
+    else
+      redirect_to action: 'show', controller: 'message', team: params[:team], chat: params[:chat]
+    end
+  end
 
 end

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   get '/test/regmail' => 'team#index'
   get '/team/noteam' => 'team#noteam'
   get '/team/search' => 'team#search'
-  
+  post '/chat/addmember' => 'chat#addmember'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
