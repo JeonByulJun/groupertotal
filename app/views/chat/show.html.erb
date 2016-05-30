@@ -203,7 +203,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <hr />
-                <% current_user.tasks.order(duedate: :asc).each_with_index do |b,i| %>
+                <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
                   <% sender = User.find(b.sender)%>
                   <% if b.wansungdo < 100 %>
                     <% if b.duedate == nil %>
@@ -295,7 +295,7 @@
             <div class="col-md-1"><%=a.strftime("%m/%d") %></div>
           <% end %>
         </div>
-        <% current_user.tasks.order(duedate: :asc).each_with_index do |b,i| %>
+        <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
           <% if b.wansungdo < 100 %>
             <% if b.duedate == nil %>
               <% b.duedate = Date.today %>
