@@ -5,7 +5,7 @@
   <div class="col-sm-11">
     <div id="message<%=message.id%>">
 
-      <strong><%=User.find(message.sender_id).first_name%>   read=<%message.users.each do |user|%><%=user.first_name+"    "  %><%end%></strong><br>
+      <strong><%=User.find(message.sender_id).first_name%></strong><br>
 
 
       <% if message.messagetype == 0 %>

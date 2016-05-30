@@ -220,6 +220,7 @@ class Sync.MessageNewmessages extends Sync.View
       `var temp = true;`
       beforeInsert: ($el, data) ->
         `$(document).ready(function(){
+
             var elem = $('#chatbox');
             if(elem[0].scrollHeight - elem.scrollTop() <= elem.outerHeight()){
                 temp = true;
@@ -241,6 +242,10 @@ class Sync.MessageNewmessages extends Sync.View
                         ta.scrollTop = ta.scrollHeight;
                       });
                   }
+                              if($('#checkpoint').val() == "false"){
+                                $('#checkpoint').val("true");
+                                $("#messagelookall").submit();
+                              }
                   var newval = $('#messagelookid').val();
                   $('#messagelookid').val(parseInt(newval)+1);
                   $("#messagelook").submit();

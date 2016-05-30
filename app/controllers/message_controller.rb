@@ -47,10 +47,8 @@ class MessageController < ApplicationController
 
     @chat = Chat.find(params[:chat_id])
     @messages = Message.where(:chat_id => params[:chat_id])
-    @lastmessage = current_user.messages.where(:chat_id => params[:chat_id]).last
-    @unload = @messages.where(:id => params[:message_id].to_i+1..Message.last.id)
-    #sync_new @unload.first, scope: @chat, partial: 'newmessages'
-
+    @check = params[:isupdate]
+    @number = Message.last.id
     if !@lastmessage
 
       @unread = @messages.where(:id => 1..params[:message_id].to_i)
@@ -68,6 +66,7 @@ class MessageController < ApplicationController
 
       end
     end
+    @unload = @messages.where(:chat_id => params[:chat_id], :id => params[:message_id].to_i+1..Message.last.id)
     respond_to do |format|
       format.js
     end
