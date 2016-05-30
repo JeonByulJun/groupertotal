@@ -7,9 +7,9 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
-              <a href="/chat/show?team=<%=@team.id%>" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">
-                팀 홈으로 가기<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-              </a>
+            <a href="/chat/show?team=<%=@team.id%>" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne" style="font-family: 'Jeju Gothic', sans-serif;">
+              팀 홈으로 가기<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
           </h4>
         </div>
       </div>
@@ -24,104 +24,113 @@
           </h4>
         </div>
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
+          <div class="panel-body" style="max-height: 300px;overflow: auto;">
             <div class="row">
-              <div id="profile_me" class="col-sm-12">
-                <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
-                <%=current_user.first_name%>
-              </div>
-            </div>
-
-            <!-- Others Profile -->
-            <% temp.each_with_index do |t,idx| %>
-              <% if t.id != current_user.id %>
-                <div class="row">
-                  <div id="profile<%=idx%>" class="col-sm-12">
-                    <img style="width: 35px; height: 35px;" class="img-circle" alt="profile" src="<%=t.image%>">
-                    <%=t.first_name%>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-            <hr/>
-            <div class="row">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-8">
+              <div class="col-sm-12">
                 <form action="/team/addmember" method="get">
                   <input type="hidden" name="team" value="<%=@team.id%>"/>
                   <button type="submit" class="btn btn-new btn-xs" style="width: 100%;" data-toggle="tooltip" data-placement="bottom" title="팀원 추가"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                 </form>
+                <hr />
+              </div>
+              <div id="profile_me" class="col-sm-12">
+                <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
+                <%=current_user.first_name%>
+                <% temp.each_with_index do |t,idx| %>
+                  <% if t.id != current_user.id %>
+                    <br><img style="width: 35px; height: 35px;" class="img-circle" alt="profile" src="<%=t.image%>">
+                    <%=t.first_name%>
+                  <% end %>
+                <% end %>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingTwo">
-              <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  채팅방 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                </a>
-              </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-              <div class="panel-body">
-              <% if @chat_side %>
-                <% @chat_side.each do |chat| %>
-                  <div class="row well well-sm">
-                    <form action ="/message/show" method="get">
-                      <input type="hidden" name="chat" value="<%=chat.id%>">
-                      <input type="hidden" name="team" value="<%=@team.id%>">
-                      <input class="btn btn-link" style="width: 100%;text-align: left;"type="submit" value="<%=chat.title%>">
-                    </form>
-                    <form action="/chat/deletemember" method="post">
-                      <input type="hidden" name="chat" value="<%=chat.id%>">
-                      <input type="hidden" name="team" value="<%=@team.id%>">
-                      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-                      <div class="row">
-                        <div class="col-md-9">
-                          <% @chat.users.each do |inchat| %>
-                            <img class="img-circle" alt="profile" src="<%=inchat.image%>" style="width: 20px; height: 20px;">
-                          <% end %>
-                        </div>
-                        <div class="col-md-3">
-                          <button class=""type="submit" style="float:right;"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                <% end %>
-              <% end %>
-              <div class="row">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-8"><button class="btn btn-new btn-xs" style="width: 100%;" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom"><span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="bottom" title="채팅방 추가"></span></button></div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              채팅방 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" >
+          <div class="panel-body" style="max-height: 300px;overflow: auto;">
+            <div class="row">
+              <div class="col-sm-12">
+                <div data-toggle="tooltip" data-placement="bottom" title="채팅방 추가">
+                  <button class="btn btn-new btn-xs" style="width: 100%;" type="button" data-toggle="collapse" data-placement="bottom" data-target="#addchatroom2" aria-expanded="false" aria-controls="addchatroom"><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+                <hr />
               </div>
-              <div class="row collapse" id="addchatroom2">
+            </div>
+
+            <div class="row collapse" id="addchatroom2">
+              <div class="col-sm-12">
                 <form action="/chat/create" method="post">
-                  <div id="chat_top" class="col-md-12">
-                    회의방 이름 <input type="text" name="title" required>
-                    <input type="hidden" name="team" value="<%=@team.id%>" style="width:100%;">
-                  </div>
+                  <input  class="form-control" type="text" name="title" placeholder="방 이름 입력" required>
+                  <br>
+                  <input type="hidden" name="team" value="<%=@team.id%>">
                   <% temp.each_with_index do |t,idx| %>
                     <% if t.id != current_user.id %>
-                      <div class="row" id="chat_top">
-                        <div id="profile<%=idx%>" class="col-sm-12">
-                          <aside style="padding-left: 12px;">
-                            <img id="img_setting" style="width: 35px; height: 35px;" class="img-circle" alt="profile" src="<%=t.image%>">
-                          </aside>
-                          <h5 style="color: black;"><%=t.first_name%></h5>
-                          <%= check_box_tag('user_ids[]', t.id) %>
+                      <div id="profile<%=idx%>">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                            <%=t.first_name%>
+                          </div>
+                          <div id="profile_me" class="col-sm-2 checkbox">
+                            <%= check_box_tag('user_ids[]', t.id) %>
+                          </div>
                         </div>
                       </div>
                     <% end %>
                   <% end %>
+                  <br>
+                  <button type="submit" value="send" class="btn btn-new btn-sm" aria-haspopup="true" aria-expanded="false" style="width: 100%">
+                    방 만들기
+                  </button>
                   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
                 </form>
+                <hr />
               </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <% if @chats %>
+                  <% @chats.each do |chat| %>
+                    <div class="well well-sm" style="cursor: pointer;" onclick="$('#chat<%=chat.id%>').submit();">
+                      <p><%=chat.title%></p>
+                      <form id="chat<%=chat.id%>" action ="/message/show" method="get">
+                        <input type="hidden" name="chat" value="<%=chat.id%>">
+                        <input type="hidden" name="team" value="<%=@team.id%>">
+                      </form>
+                      <form action="/chat/deletemember" method="post">
+                        <input type="hidden" name="chat" value="<%=chat.id%>">
+                        <input type="hidden" name="team" value="<%=@team.id%>">
+                        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+                        <div class="row">
+                          <div class="col-sm-9">
+                            <% chat.users.each do |inchat| %>
+                              <img class="img-circle" data-toggle="tooltip" data-placement="top" title="<%=inchat.first_name%>" src="<%=inchat.image%>" style="width: 20px; height: 20px;">
+                            <% end %>
+                          </div>
+                          <div class="col-sm-3">
+                            <button class="btn btn-danger btn-xs" type="submit" style="float:right;"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  <% end %>
+                <% end %>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingThree">
@@ -132,78 +141,94 @@
           </h4>
         </div>
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
+          <div class="panel-body" style="max-height: 300px;overflow: auto;">
             <div class="row">
-              <h3 style="color: #372727; padding-left: 10px"></h3>
-            </div>
-
-          <form action="/task/create" method="post">
-            <div class="row" style="border-top: 1px solid #ccc; padding-left:10px; padding-right:10px; padding-top:10px;">
-              <div class="form-group">
-                  <label for="taskname_text"><span class="glyphicon glyphicon-briefcase" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>작업이름</label>
-                  <input type="text" class="form-control" name="taskname" id="taskname_text" placeholder="Give Your Task">
+              <div class="col-sm-12">
+                <button class="btn btn-new btn-xs" style="width: 100%;"type="button" data-toggle="collapse" data-target="#givetask" aria-expanded="false" aria-controls="collapseExample">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
               </div>
             </div>
-
-            <div class="row" style=" padding-left:10px; padding-right:10px;">
-              <label for="datetimepicker1"><span class="glyphicon glyphicon-calendar" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>마감기한</label>
-              <div class="form-group">
-                  <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" name="duedate"/>
-                    <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+            <div class="row collapse" id="givetask">
+              <form action="/task/create" method="post">
+                <div class="col-sm-12">
+                  <hr />
+                  <input type="text" class="form-control" name="taskname" id="taskname_text" placeholder="작업의 이름 입력" required>
+                  <br>
+                  <div class="form-group">
+                    <div class='input-group date' id='datetimepicker1'>
+                      <input type='text' class="form-control" placeholder="마감일 설정" name="duedate" required>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
                   </div>
-              </div>
-            </div>
-            <div class='row' style="padding-left:10px; padding-right:10px; padding-bottom:10px;">
-              <button type="submit" value="send" class="btn btn-new btn-sm" aria-haspopup="true" aria-expanded="false" style="font-size: 13px;">
-                등
-              </button>
-            </div>
-            <script type="text/javascript">
-              $(function () {
-                $('#datetimepicker1').datetimepicker({
-                  format : 'YYYY-MM-DD'
-                });
-              });
-            </script>
+                </div>
 
-            <!-- My Profile -->
-            <div class="row" style="border-top: 1px solid #ccc; padding-top: 5px">
-              <div class="col-sm-10">
-                <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
-                <%=current_user.first_name%>
-              </div>
-              <div id="profile_me" class="col-sm-2">
-                <%= check_box_tag('user_ids[]', current_user.id) %><br />
-              </div>
-            </div>
+                <script type="text/javascript">
+                  $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                      format : 'YYYY-MM-DD'
+                    });
+                  });
+                </script>
+                <!-- My Profile -->
+                <div class="col-sm-10">
+                  <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
+                  <%=current_user.first_name%>
+                </div>
+                <div id="profile_me" class="col-sm-2 checkbox">
+                  <%= check_box_tag('user_ids[]', current_user.id) %><br />
+                </div>
 
-            <!-- Others Profile -->
-            <div class="row" id="chat_top">
+                <!-- Others Profile -->
+                <% temp.each_with_index do |t,idx| %>
+                  <% if t.id != current_user.id %>
+                      <div class="col-sm-10">
+                        <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                        <%=t.first_name%>
+                      </div>
+                      <div id="profile_me" class="col-sm-2 checkbox">
+                        <%= check_box_tag('user_ids[]', t.id) %>
+                      </div>
+                  <% end %>
+                <% end %>
+                <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+                <input type="hidden" name="team" value=<%=@team.id%>>
+                <div class="col-sm-12">
+                  <br>
+                  <button type="submit" value="send" class="btn btn-new btn-sm" aria-haspopup="true" aria-expanded="false" style="width: 100%">
+                    일 분배
+                  </button>
+                </div>
+              </form>
             </div>
-            <% temp.each_with_index do |t,idx| %>
-              <% if t.id != current_user.id %>
-                <div class="row">
-                  <div class="col-sm-10">
-                    <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
-                    <%=t.first_name%>
-                  </div>
-                  <div id="profile_me" class="col-sm-2">
-                    <%= check_box_tag('user_ids[]', t.id) %><br />
-                  </div>
-              <% end %>
-            <% end %>
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-            <input type="hidden" name="team" value=<%=@team.id%>>
-          </form>
-        </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <hr />
+                <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
+                  <% sender = User.find(b.sender)%>
+                  <% if b.wansungdo < 100 %>
+                    <% if b.duedate == nil %>
+                      <% b.duedate = Date.today %>
+                    <% end %>
+                    <% a = (b.duedate - (Date.today)).to_i %>
+                    <% if a > 0 %>
+                      <div class="well well-sm">
+                        <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
+                        <div style="text-align: right">
+                          <small>from</small> <img src="<%=sender.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=sender.first_name%>" class="img img-circle" style="width: 20px;height: 20px;">
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
-  </div>
   </div>
 
   <div class="col-sm-10">

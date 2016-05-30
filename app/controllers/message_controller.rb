@@ -1,7 +1,7 @@
 class MessageController < ApplicationController
   def show
     @chat = Chat.find(params[:chat])
-    @chat_side = current_user.chats.where(:team_id => params[:team])
+    @chats = current_user.chats.where(:team_id => params[:team])
     @whiteboard = @chat.whiteboard
     @message = current_user.messages.where(:chat_id => @chat.id).last
     @team = @chat.team

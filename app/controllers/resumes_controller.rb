@@ -2,9 +2,9 @@ class ResumesController < ApplicationController
    def index
       @resumes = Resume.where(:team_id => params[:team])
       @resumenew = Resume.new
-      @team = params[:team]
-      @team_int = Team.find(params[:team])
+      @team = Team.find(params[:team])
       @chats = current_user.chats.where(:team => params[:team])
+      
    end
 
    def new

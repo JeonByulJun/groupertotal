@@ -49,7 +49,6 @@
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-
               채팅방 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
             </a>
           </h4>
@@ -84,7 +83,7 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    <% end %>
                   <% end %>
                   <br>
                   <button type="submit" value="send" class="btn btn-new btn-sm" aria-haspopup="true" aria-expanded="false" style="width: 100%">
@@ -98,8 +97,8 @@
 
             <div class="row">
               <div class="col-sm-12">
-                <% if @chat %>
-                  <% @chat.each do |chat| %>
+                <% if @chats %>
+                  <% @chats.each do |chat| %>
                     <div class="well well-sm" style="cursor: pointer;" onclick="$('#chat<%=chat.id%>').submit();">
                       <p><%=chat.title%></p>
                       <form id="chat<%=chat.id%>" action ="/message/show" method="get">
@@ -178,6 +177,7 @@
                 <div id="profile_me" class="col-sm-2 checkbox">
                   <%= check_box_tag('user_ids[]', current_user.id) %><br />
                 </div>
+
                 <!-- Others Profile -->
                 <% temp.each_with_index do |t,idx| %>
                   <% if t.id != current_user.id %>
@@ -203,7 +203,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <hr />
-                <% current_user.tasks.order(duedate: :asc).each_with_index do |b,i| %>
+                <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
                   <% sender = User.find(b.sender)%>
                   <% if b.wansungdo < 100 %>
                     <% if b.duedate == nil %>
@@ -246,7 +246,6 @@
         </form>
       </div>
     </div>
-
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
@@ -296,7 +295,7 @@
             <div class="col-md-1"><%=a.strftime("%m/%d") %></div>
           <% end %>
         </div>
-        <% current_user.tasks.order(duedate: :asc).each_with_index do |b,i| %>
+        <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
           <% if b.wansungdo < 100 %>
             <% if b.duedate == nil %>
               <% b.duedate = Date.today %>
@@ -364,7 +363,6 @@
             <% end %>
           <% end %>
         <% end %>
-
 
         <script>
           function ganttfn(){
