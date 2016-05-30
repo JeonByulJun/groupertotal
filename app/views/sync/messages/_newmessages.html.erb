@@ -1,18 +1,19 @@
 <div class="row messages">
   <div class="col-sm-1">
-    <img src="<%= current_user.image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" onclick="alert('<%=message.content%>');" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
+    <img src="<%= User.find(message.sender_id).image.url %>" alt="User.find(message.sender_id).first_name" class="img-circle" onmouseover="bigImg(this)" onmouseout="normalImg(this)" onclick="alert('<%=message.content%>');" style="padding-top:2px; padding-left:2px" width="36px" height="36px">
   </div>
   <div class="col-sm-11">
     <div id="message<%=message.id%>">
 
-      <strong><%=User.find(message.sender_id).first_name%></strong><br>
+      <strong><%=User.find(message.sender_id).first_name%>   read=<%message.users.each do |user|%><%=user.first_name+"    "  %><%end%></strong><br>
+
 
       <% if message.messagetype == 0 %>
         <%=message.content%><br>
       <% end %>
       <% if message.messagetype == 1 %>
 
-          <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessage" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+        <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessage" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
 
       <% end %>
       <% if message.messagetype == 2 %>
@@ -20,14 +21,8 @@
       <% end %>
 
 
+
     </div>
 
   </div>
 </div>
-
-
-
-
-<form action="/message/update" method="put" data-remote=true id="messagelook">
-  <input type="hidden" name="messageid" value=<%=message.id%>>
-</form>

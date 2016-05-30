@@ -22,38 +22,49 @@ class MessageController < ApplicationController
     end
   end
   def update
-    @message = Message.find(params[:messageid])
-    @chat = @message.chat
-    if !@message.users.include?(current_user)
-      @message.users << current_user
-      @message.save
-      sync_update @message, scope: @chat, partial: 'readusers'
-      respond_to do |format|
-        format.js
+
+    @chat = Chat.find(params[:chat_id])
+    @message = @chat.messages[params[:message_id].to_i]
+    @user = User.find(params[:user_id])
+    if !@message.users.include?(@user)
+      @message.users << @user
+      if @message.save
+
+
+
       end
     end
+    respond_to do |format|
+      format.js
+    end
+    sync_update @message, scope: @chat, partial: 'newmessages'
+
 
 
   end
 
   def updateall
+
     @chat = Chat.find(params[:chat_id])
     @messages = Message.where(:chat_id => params[:chat_id])
     @lastmessage = current_user.messages.where(:chat_id => params[:chat_id]).last
+    @unload = @messages.where(:id => params[:message_id].to_i+1..Message.last.id)
+    #sync_new @unload.first, scope: @chat, partial: 'newmessages'
+
     if !@lastmessage
 
       @unread = @messages.where(:id => 1..params[:message_id].to_i)
       @unread.each do |message|
         message.users << current_user
         message.save
-        sync_update message, scope: @chat, partial: 'readusers'
+        sync_update message, scope: @chat, partial: 'newmessages'
       end
     elsif @lastmessage.id < params[:message_id].to_i
       @unread = @messages.where(:id => @lastmessage.id+1..params[:message_id].to_i)
       @unread.each do |message|
         message.users << current_user
         message.save
-        sync_update message, scope: @chat, partial: 'readusers'
+        sync_update message, scope: @chat, partial: 'newmessages'
 
       end
     end
