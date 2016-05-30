@@ -368,6 +368,7 @@
         <input id="checkmessage" type="hidden" name="message_id" value=<%=@chat.messages.last.id%>>
         <input type="hidden" name="chat_id" value=<%=@chat.id%>>
         <input id="checkpoint" type="hidden" name="isupdate" value="false">
+        <input type="hidden" name="lastread" value="<%=@message.id%>">
       </form>
     <% end %>
 
@@ -380,12 +381,14 @@
 
     <script>
       $(document).ready(function(){
+
         <%if @message %>
             $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
             $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
-
+            $('.imagemessages:last').load(function(){
+              $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
+            });
         <% end %>
-
 
         $("#whiteboardsend").click(function(){
           $("#whiteboardform").submit();
@@ -396,7 +399,9 @@
         });
       });
       $(document).ready(function(){
+
         $('#messagelookall').submit();
+
       });
 
     </script>
@@ -416,15 +421,7 @@
     }
     </script>
 
-    <script>
-    $(document).ready(function(){
-        $(".messages").hover(function(){
-            $(this).css("background-color", "#F2F2F2");
-            }, function(){
-            $(this).css("background-color", "white");
-        });
-    });
-    </script>
+
   </div>
 
 </div>

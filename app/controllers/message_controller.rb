@@ -50,21 +50,20 @@ class MessageController < ApplicationController
     @messages = Message.where(:chat_id => params[:chat_id])
     @check = params[:isupdate]
     @number = Message.last.id
-    if !@lastmessage
+    if @check == "false"
+      if !@lastmessage
 
-      @unread = @messages.where(:id => 1..params[:message_id].to_i)
-      @unread.each do |message|
-        message.users << current_user
-        message.save
-        sync_update message, scope: @chat, partial: 'newmessages'
-      end
-    elsif @lastmessage.id < params[:message_id].to_i
-      @unread = @messages.where(:id => @lastmessage.id+1..params[:message_id].to_i)
-      @unread.each do |message|
-        message.users << current_user
-        message.save
-        sync_update message, scope: @chat, partial: 'newmessages'
-
+        @unread = @messages.where(:id => 1..params[:message_id].to_i)
+        @unread.each do |message|
+          message.users << current_user
+          message.save
+        end
+      elsif @lastmessage.id < params[:message_id].to_i
+        @unread = @messages.where(:id => @lastmessage.id+1..params[:message_id].to_i)
+        @unread.each do |message|
+          message.users << current_user
+          message.save
+        end
       end
     end
     @unload = @messages.where(:chat_id => params[:chat_id], :id => params[:message_id].to_i+1..Message.last.id)
@@ -93,7 +92,7 @@ class MessageController < ApplicationController
     @message = Message.new(:messagetype => 2, :chat_id => params[:chat_id], :sender_id => current_user.id)
     @filemessage = Filemessage.new(:filemessageupload => params[:file_file], :chat_id => params[:chat_id])
     @chat = Chat.find(params[:chat_id])
-    if @filemessage.filemessageupload && @filemessage.save
+    if @filemessage.filemessageupload.file && @filemessage.save
       @message.filemessage = @filemessage
       @message.save
       sync_new @message, scope: @chat, partial: 'newmessages'

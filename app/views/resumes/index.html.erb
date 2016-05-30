@@ -22,7 +22,7 @@
           <% temp = [] %>
           <% temp += @team_int.users.order(first_name: :asc) %>
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              멤버 <small><%=temp.count%>명</small> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
+              멤버 <small><%=temp.count%>명</small> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             </a>
           </h4>
         </div>
@@ -34,7 +34,7 @@
                 <%=current_user.first_name%>
               </div>
             </div>
-      
+
             <!-- Others Profile -->
             <% temp.each_with_index do |t,idx| %>
               <% if t.id != current_user.id %>
@@ -64,7 +64,7 @@
             <div class="panel-heading" role="tab" id="headingTwo">
               <h4 class="panel-title">
                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  채팅방 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> 
+                  채팅방 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
                 </a>
               </h4>
             </div>
@@ -130,7 +130,7 @@
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              작업 분배 <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> 
+              작업 분배 <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
             </a>
           </h4>
         </div>
@@ -139,7 +139,7 @@
             <div class="row">
               <h3 style="color: #372727; padding-left: 10px"></h3>
             </div>
-          
+
             <form action="/task/create" method="post">
               <div class="row" style="border-top: 1px solid #ccc; padding-left:10px; padding-right:10px; padding-top:10px;">
                 <div class="form-group">
@@ -147,7 +147,7 @@
                     <input type="text" class="form-control" name="taskname" id="taskname_text" placeholder="Give Your Task">
                 </div>
               </div>
-              
+
               <div class="row" style=" padding-left:10px; padding-right:10px;">
                 <label for="datetimepicker1"><span class="glyphicon glyphicon-calendar" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>마감기한</label>
                 <div class="form-group">
@@ -171,7 +171,7 @@
                   });
                 });
               </script>
-              
+
               <!-- My Profile -->
               <div class="row" style="border-top: 1px solid #ccc; padding-top: 5px">
                 <div class="col-sm-10">
@@ -182,7 +182,7 @@
                   <%= check_box_tag('user_ids[]', current_user.id) %><br />
                 </div>
               </div>
-              
+
               <!-- Others Profile -->
               <div class="row" id="chat_top">
               </div>
@@ -219,11 +219,13 @@
 
       <tbody>
         <% @resumes.each do |resume| %>
+          <% if resume.attachment.file %>
            <tr>
               <td><%= resume.attachment.file.filename %></td>
               <td><%= link_to "Download Resume", resume.attachment_url %></td>
               <td><%= button_to "Delete",  resume, method: :delete, class: "btn btn-danger", data: {confirm: "#{resume.attachment.file.filename} 을 삭제하실 건가요?"} %></td>
            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
@@ -240,11 +242,13 @@
 
          <tbody>
            <% chat.filemessages.each do |filemessage| %>
+            <% if filemessage.filemessageupload.file %>
               <tr>
                   <td><%= filemessage.filemessageupload.file.filename %></td>
                   <td><%= link_to "Download Resume", filemessage.filemessageupload_url %></td>
 
                </tr>
+            <% end %>
            <% end %>
          </tbody>
 
@@ -281,17 +285,13 @@
                <%= f.hidden_field :name %>
                <%= f.hidden_field :team_id, :value => @team %>
 
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                <%= f.submit "올리기", class: "btn btn-primary" %>
              <% end %>
+             <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-

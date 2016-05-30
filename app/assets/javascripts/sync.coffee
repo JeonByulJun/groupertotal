@@ -234,14 +234,7 @@ class Sync.MessageNewmessages extends Sync.View
 
       afterInsert: -> `$(document).ready(function(){
 
-                  if(temp){
-                      var ta = document.getElementById('chatbox');
-                      ta.scrollTop = ta.scrollHeight;
-                      $('.imagemessage:last').load(function(){
-                        var ta = document.getElementById('chatbox');
-                        ta.scrollTop = ta.scrollHeight;
-                      });
-                  }
+
                   if($('#checkpoint').val() == "false"){
                     $('#checkpoint').val("true");
                     $("#messagelookall").submit();
@@ -249,6 +242,11 @@ class Sync.MessageNewmessages extends Sync.View
                   var newval = $('#messagelookid').val();
                   $('#messagelookid').val(parseInt(newval)+1);
                   $("#messagelook").submit();
+                  if(temp){
+                      var ta = document.getElementById('chatbox');
+                      ta.scrollTop = ta.scrollHeight;
+
+                  }
                 });`
 
 class Sync.Partial

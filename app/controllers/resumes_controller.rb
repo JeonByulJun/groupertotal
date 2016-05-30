@@ -17,7 +17,7 @@ class ResumesController < ApplicationController
       if @resume.save
          redirect_to action: 'index', team: params[:resume][:team_id]#, notice: "#{@resume.attachment.file.filename} 가 업로드 되었습니다."
       else
-         redirect_to :root, team: params[:resume][:team_id]#, notice: "파일을 올려주세요."
+         redirect_to action: 'index', team: params[:resume][:team_id]#, notice: "파일을 올려주세요."
       end
 
    end

@@ -13,11 +13,12 @@
       <% end %>
       <% if message.messagetype == 1 %>
 
-        <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessage" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
+        <a href="<%=message.imagemessage.imagemessageupload.url%>"><img class="imagemessages" src="<%=message.imagemessage.imagemessageupload.url%>" style="padding: 10px; max-width: 70%; height: auto;"></a><br>
 
       <% end %>
-      <% if message.messagetype == 2 %>
-        THIS CONTENT IS FILE!<br>
+      <% if message.messagetype == 2 && message.filemessage.filemessageupload.file %>
+
+        <%= link_to message.filemessage.filemessageupload.file.filename, message.filemessage.filemessageupload.url, :target => "_blank" %><br>
       <% end %>
 
 
