@@ -10,7 +10,7 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
-              <a href="/chat/show?team=<%=@team.id%>" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne" style="font-family: 'Jeju Gothic', sans-serif;">
+              <a href="/chat/show?team=<%=@team_int.id%>" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne" style="font-family: 'Jeju Gothic', sans-serif;">
                 팀 홈으로 가기<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
               </a>
           </h4>
@@ -20,7 +20,7 @@
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
           <% temp = [] %>
-          <% temp += @team.users.order(first_name: :asc) %>
+          <% temp += @team_int.users.order(first_name: :asc) %>
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               멤버 <small><%=temp.count%>명</small> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
             </a>
@@ -51,7 +51,7 @@
               <div class="col-sm-2"></div>
               <div class="col-sm-8">
                 <form action="/team/addmember" method="get">
-                  <input type="hidden" name="team" value="<%=@team.id%>"/>
+                  <input type="hidden" name="team" value="<%=@team_int.id%>"/>
                   <button type="submit" class="btn btn-new btn-xs" style="width: 100%;" data-toggle="tooltip" data-placement="bottom" title="팀원 추가"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                 </form>
               </div>
@@ -75,12 +75,12 @@
                   <div class="row well well-sm">
                     <form action ="/message/show" method="get">
                       <input type="hidden" name="chat" value="<%=chat.id%>">
-                      <input type="hidden" name="team" value="<%=@team.id%>">
+                      <input type="hidden" name="team" value="<%=@team_int.id%>">
                       <input class="btn btn-link" style="width: 100%;text-align: left;"type="submit" value="<%=chat.title%>">
                     </form>
                     <form action="/chat/deletemember" method="post">
                       <input type="hidden" name="chat" value="<%=chat.id%>">
-                      <input type="hidden" name="team" value="<%=@team.id%>">
+                      <input type="hidden" name="team" value="<%=@team_int.id%>">
                       <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
                       <div class="row">
                         <div class="col-md-9">
@@ -104,7 +104,7 @@
                 <form action="/chat/create" method="post">
                   <div id="chat_top" class="col-md-12">
                     회의방 이름 <input type="text" name="title" required>
-                    <input type="hidden" name="team" value="<%=@team.id%>" style="width:100%;">
+                    <input type="hidden" name="team" value="<%=@team_int.id%>" style="width:100%;">
                   </div>
                   <% temp.each_with_index do |t,idx| %>
                     <% if t.id != current_user.id %>
@@ -199,14 +199,15 @@
                 <% end %>
               <% end %>
               <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-              <input type="hidden" name="team" value=<%=@team.id%>>
+              <input type="hidden" name="team" value=<%=@team_int.id%>>
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-sm-2" style="margin-top: 60px;">
+  </div>
+  <div class="col-sm-10" style="margin-top: 60px;">
     <table class = "table table-bordered table-striped">
       <thead>
         <tr>

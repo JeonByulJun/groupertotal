@@ -3,6 +3,7 @@ class ResumesController < ApplicationController
       @resumes = Resume.where(:team_id => params[:team])
       @resumenew = Resume.new
       @team = params[:team]
+      @team_int = Team.find(params[:team])
       @chats = current_user.chats.where(:team => params[:team])
    end
 
