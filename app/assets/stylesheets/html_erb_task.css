@@ -1,14 +1,25 @@
-
+#mediachart{
+    height: 0px;
+}
+#mediaborder{
+    border-bottom: 1px solid #ccc;
+}
+@media screen and (min-width: 1069px) {
+  #mediachart{
+    height:30px;
+  }
+  #mediaborder{
+    border-bottom: 0px solid #ccc;
+  }
+}
 
 #profile_workmap{
   padding-left: 20px;
   position: relative;
-  top: 52px;
 }
 .homebody_task{
-    width: 80%;
     position: relative;
-    top: 52px;
+    margin-top: 20px;
 }
 /*** Sidebar ***/
 

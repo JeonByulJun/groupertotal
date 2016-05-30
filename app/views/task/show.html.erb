@@ -74,11 +74,13 @@
                     <% if t.id != current_user.id %>
                       <div id="profile<%=idx%>">
                         <div class="row">
-                          <div class="col-sm-10">
+                          <div class="col-xs-3">
                             <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                          </div>
+                          <div class="col-xs-6">
                             <%=t.first_name%>
                           </div>
-                          <div id="profile_me" class="col-sm-2 checkbox">
+                          <div id="profile_me" class="col-xs-3 checkbox">
                             <%= check_box_tag('user_ids[]', t.id) %>
                           </div>
                         </div>
@@ -141,9 +143,10 @@
           <div class="panel-body" style="max-height: 300px;overflow: auto;">
             <div class="row">
               <div class="col-sm-12">
-                <button class="btn btn-new btn-xs" style="width: 100%;"type="button" data-toggle="collapse" data-target="#givetask" aria-expanded="false" aria-controls="collapseExample">
-                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
+                <div data-toggle="tooltip" data-placement="bottom" title="작업 추가">
+                  <button class="btn btn-new btn-xs" style="width: 100%;" type="button" data-toggle="collapse" data-target="#givetask" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                </div>
               </div>
             </div>
             <div class="row collapse" id="givetask">
@@ -170,24 +173,28 @@
                   });
                 </script>
                 <!-- My Profile -->
-                <div class="col-sm-10">
+                <div class="col-xs-3">
                   <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
+                </div>
+                <div class="col-xs-6">
                   <%=current_user.first_name%>
                 </div>
-                <div id="profile_me" class="col-sm-2 checkbox">
+                <div id="profile_me" class="col-xs-3 checkbox">
                   <%= check_box_tag('user_ids[]', current_user.id) %><br />
                 </div>
 
                 <!-- Others Profile -->
                 <% temp.each_with_index do |t,idx| %>
                   <% if t.id != current_user.id %>
-                      <div class="col-sm-10">
-                        <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
-                        <%=t.first_name%>
-                      </div>
-                      <div id="profile_me" class="col-sm-2 checkbox">
-                        <%= check_box_tag('user_ids[]', t.id) %>
-                      </div>
+                    <div class="col-xs-3">
+                      <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                    </div>
+                    <div class="col-xs-6">
+                      <%=t.first_name%>
+                    </div>
+                    <div id="profile_me" class="col-xs-3 checkbox">
+                      <%= check_box_tag('user_ids[]', t.id) %>
+                    </div>
                   <% end %>
                 <% end %>
                 <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
@@ -228,104 +235,16 @@
     </div>
   </div>
 
-	<div class="col-sm-10" style="margin-top:60px;">
+	<div class="col-sm-10">
 		<div class="row">
-			<aside style="padding-left: 12px;">
-				<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 8px; margin-top: 5px;">
+			<aside style="padding-left: 12px; padding-top: 12px;">
+				<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 13px;">
 			</aside>
-			<div style="margin-left: 15px;">
-				<h2> <%=current_user.first_name%><%=current_user.last_name%></h2>
+			<div style="margin-left: 15px; padding-top:10px;">
+				<h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%=current_user.first_name%><%=current_user.last_name%></h2>
 				<h4 style="color: gray;"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=current_user.email%> </h4>
 			</div>
 		</div>
-		<br>
-		<% temp = [] %>
-		<% temp += @team.users %>
-		<section class="sidebar_task">
-			<br>
-			<% temp.each_with_index do |t,idx| %>
-			  	<div role="presentation" class="active" id="<%=idx%>" data-toggle="modal" data-target="#<%=idx%>info">
-				    <div class="row" style="margin-top: 5px;">
-				    	<div class="col-md-12">
-					  		<aside>
-					  			<div class="col-md-3">
-						    		<img class="img-rounded" alt="profile" src="<%=t.image%>" width="40px" height="40px" style="float: left;">
-						    	</div>
-						    	<% if (Time.now - t.last_seen) <= 300 %>
-						    	<div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>접속중</c></div>
-								<% elsif (Time.now - t.last_seen) <= 600 %>
-								<div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>5분 전</c></div>
-							    <% elsif (Time.now - t.last_seen) <= 1800 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>10분 전</c></div>
-							    <% elsif (Time.now - t.last_seen) <= 3600 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>30분 전</c></div>
-							    <% elsif (Time.now - t.last_seen) <= 10800 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>1시간 전</c></div>
-							    <% elsif (Time.now - t.last_seen) <= 21600 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>3시간 전</c></div>
-							    <% elsif (Time.now - t.last_seen) <= 43200 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>6시간 전</c></div>
-							    <% elsif (Time.now - t.last_seen) <= 86400 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>12시간 전</c></div>
-								<% elsif (Time.now - t.last_seen) <= 172800 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>1일 전</c></div>
-							    <% elsif (Time.now - t.last_seen) <= 343600 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>2일 전</c></div>
-						    	<% elsif (Time.now - t.last_seen) <= 687200 %>
-							    <div class="col-md-5" id="sidebar_name"><c><%=t.first_name%></c></div>
-						    	<div class="col-md-4" id="sidebar_status"><c>4일 전</c></div>
-							    <% else %>
-							    <h5 style="color: white;"><%=t.first_name%><br>
-							    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
-							    <% end %>
-					    	</aside>
-				    	</div>
-					</div>
-			  	</div>
-			<% end %>
-		</section>
-		<% temp.each_with_index do |t,idx| %>
-			<div class="modal fade" id="<%=idx%>info" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-				<div class="modal-dialog modal-lg">
-				    <div class="modal-content">
-						<% ro = t.id %>
-						<% @taskindiv = t.tasks.where(:team_id => params[:team]) %>
-						<% @taskindiv.each_with_index do |b,i| %>
-							<!-- gantt head -->
-							<div class="bar2">
-								<% for j in 0..11 %>
-									<% a = Date.today + j %>
-									<div class="col-md-1"><%=a.strftime("%m/%d") %></div>
-								<% end %>
-							</div>
-							<% if b.duedate == nil %>
-								<% b.duedate = Date.today %>
-							<% end %>
-							<% a = (b.duedate - (Date.today)).to_i %>
-							<% if a > 0 %>
-								<div class="bar2">
-									<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
-							  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
-								</div>
-							<% end %>
-						<% end %>
-						<script>
-						    ganttfn();
-					  	</script>
-				    </div>
-		  		</div>
-			</div>
-		<% end %>
 
 	<div class="homebody_task">
 
@@ -337,7 +256,7 @@
 		</ul>
 
 		<!-- Tab panes -->
-	  	<div class="tab-content">
+	  <div class="tab-content">
 	  	<!--tab-content contribution starts-->
 		<div role="tabpanel" class="tab-pane active" id="contribution">
 		    	<div class="row">
@@ -424,8 +343,9 @@
 					<% cnt = 0 %>
 
 					<div class="col-md-8">
-						<h3>월별 통계</h3>
-						<canvas id="canvas" style="width: 600px; height: 450px;">
+						<h3 style="width: 600px; text-align: center;">월별 통계 <span class="glyphicon glyphicon-stats" aria-hidden="true"></span></h3>
+            <h5 style="width: 700px; text-align: right; padding-right: 100px;"><span style="color: gray;" class="glyphicon glyphicon-stop" aria-hidden="true"></span>주어진 일<span style="color: #56BDBC;" class="glyphicon glyphicon-stop" aria-hidden="true"></span>완료된 일</h5>
+						<canvas id="canvas" style="width: 600px; height: 450px; padding-left: 10px;">
 						<script>
 							var labelString = new Array();
 							var dataString = new Array();
@@ -447,10 +367,11 @@
 
 				<div class="row" style="background-color: #F3F3F3; padding-left: 10px;">
 					<!-- gantt head -->
+          <h3 style="text-align: center;">마감일 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></h3><br>
 					<div class="bar2">
 						<%for i in 0..11 %>
 							<% a = Date.today + i %>
-							<div class="col-md-1"><%=a.strftime("%m/%d") %></div>
+							<div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
 						<% end %>
 					</div>
 					<% @tasklist.each_with_index do |t,i| %>
@@ -475,86 +396,95 @@
 	    <!--tab-content contribution ends-->
 
 	    <!--tab-content tasks starts-->
-	    <div role="tabpanel" class="tab-pane" id="tasks" style="padding-left: 12px;">
+	<div role="tabpanel" class="tab-pane" id="tasks" style="padding-left: 12px;">
 
 		<h3>나의 할 일</h3>
 
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			<% @tasklist.each_with_index do |taskdo,slideridx| %>
-			    <% if taskdo.wansungdo < 100 %>
+			  <% if taskdo.wansungdo < 100 %>
 					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingOne">
-			  			  	<div class="row">
-								<div class="col-md-4" id="task_pararell">
-							    	<%sender = User.find(taskdo.sender)%>
-							    	<div class="col-md-8">
-									    <aside>
-									    	<img class="img-rounded" alt="profile" src="<%=sender.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
-										    <h5 id="task_name"> <%=sender.first_name%> <br>
-										    	<%=sender.email%></h5>
-								    	</aside>
-							    	</div>
-							    	<div class="col-md-2">
-								    	<span class="glyphicon glyphicon-hand-right" aria-hidden="true" style="font-size: 20px; margin-top: 16px;"></span>
-							    	</div>
-							    	<div class="col-md-2">
-								    	<aside>
-									    	<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="40px" height="40px" style="margin-top: 10px; float: left; margin-right: 8px;">
-								    	</aside>
-							    	</div>
-							    </div>
-							    <div class="col-md-3" id="task_pararell">
-								    <div class="col-md-6" id="task_taskdue">
-									    <h5 id="task_name"><%=taskdo.taskname%></h5>
-							 		</div>
-									<div class="col-md-6" id="task_taskdue">
-									    <h5 id="task_name"><%=taskdo.duedate%></h5>
-									</div>
-								</div>
+				    <div class="panel-heading" role="tab" id="headingOne">
+		  			  <div class="row">
+
+						    <div class="col-md-4" id="task_pararell">
+						    	<%sender = User.find(taskdo.sender)%>
+						    	<div class="col-md-8">
+								    <aside>
+								    	<img class="img-rounded" alt="profile" src="<%=sender.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+									    <h5 id="task_name"> <%=sender.first_name%> <br>
+									    	<%=sender.email%></h5>
+							    	</aside>
+						    	</div>
+						    	<div class="col-md-2">
+							    	<span class="glyphicon glyphicon-hand-right" aria-hidden="true" style="font-size: 20px; margin-top: 16px;"></span>
+						    	</div>
+						    	<div class="col-md-2">
+							    	<aside>
+								    	<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="40px" height="40px" style="margin-top: 10px; float: left; margin-right: 8px;">
+							    	</aside>
+						    	</div>
+						    </div>
+
+						    <div class="col-md-3" id="task_pararell">
+							    <div class="col-md-6" id="task_taskdue">
+								    <h5 id="task_name"><%=taskdo.taskname%></h5>
+						 		  </div>
+							  	<div class="col-md-6" id="task_taskdue">
+								    <h5 id="task_name"><%=taskdo.duedate%></h5>
+								 </div>
+							  </div>
+
 								<div class="col-md-3">
 									<div class="bar">
-									  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
+								  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
 									</div>
 									<script> horild(); </script>
 								</div>
-								<div class="col-md-2" id="task_pararell">
-									<button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=slideridx%>" aria-expanded="true" aria-controls="collapseOne">
-										<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-									</button>
-							    </div>
-							</div>
-					    </div>
 
-					    <div id="collapse<%=slideridx%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-					    	<div class="panel-body">
-					    		<div class="col-md-3">
+							  <div class="col-md-2" id="task_pararell">
+								 <button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=slideridx%>" aria-expanded="true" aria-controls="collapseOne">
+									<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+								 </button>
+						    </div>
+
+						  </div>
+				    </div>
+
+				    <div id="collapse<%=slideridx%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				    	<div class="panel-body">
+
+				    		<div class="col-md-3">
 									<% @commentdo = Comment.where(:task_id => taskdo.id) %>
 									<% @commentdo.each do |commentdo| %>
 										<li><%=commentdo.wansungdo_log%>% : <%=commentdo.comment_log%> <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> <%=commentdo.created_at.strftime("%Y.%m.%d")%></li>
 									<% end %>
-								</div>
-								<div class="col-md-6"></div>
-								<div class="col-md-3">
-							        <form action="/task/wansungdo_update" method="post">
-								    	<input type="hidden" name="task_id" value="<%=taskdo.id%>">
-								    	<input type="hidden" name="team_id" value="<%=taskdo.team_id%>">
-								    	<div class="row">
-								    		<div class="form-group">
-								    			<div class="col-md-10">
-													<label for="InputComment<%=slideridx%>"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Progress</label>
+		            </div>
+
+							  <div class="col-md-6"></div>
+
+							  <div class="col-md-3">
+					        <form action="/task/wansungdo_update" method="post">
+							    	<input type="hidden" name="task_id" value="<%=taskdo.id%>">
+							    	<input type="hidden" name="team_id" value="<%=taskdo.team_id%>">
+							    	<div class="row">
+							    		<div class="form-group">
+							    			<div class="col-md-10">
+													<label for="InputComment<%=slideridx%>"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>진행사항</label>
 													<input type="text" class="form-control" name="comment" id="InputComment<%=slideridx%>" placeholder="Comment">
-												</div>
-											</div>
-										</div>
+								        </div>
+										  </div>
+									  </div>
 										<div class="row" style="margin-top: 10px;">
 											<div class="form-group">
 												<div class="col-md-10">
-													<label for="InputComment<%=slideridx%>"><span class="glyphicon glyphicon-indent-left" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>Completion</label>
+													<label for="InputComment<%=slideridx%>"><span class="glyphicon glyphicon-indent-left" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span>완성도 수정</label>
 													<br>
-										       		<input id="sl<%=slideridx%>" name="wansungdo" type="text" data-slider-value="<%= taskdo.wansungdo %>" data-slider-ticks="[0,10, 20,30, 40,50, 60,70, 80,90, 100]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='['0%','', '20%','', '40%','', '60%','', '80%','', '100%']'/>
-									       		</div>
-									       	</div>
-								       	</div>
+
+										      <input id="sl<%=slideridx%>" name="wansungdo" type="text" data-slider-value="<%= taskdo.wansungdo %>" data-slider-ticks="[0,10, 20,30, 40,50, 60,70, 80,90, 100]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='['0%','', '20%','', '40%','', '60%','', '80%','', '100%']'/>
+							       		</div>
+							       	</div>
+						       	</div>
 										<script>
 											var slider = new Slider("#sl<%=slideridx%>", {
 											    ticks: [0,10, 20,30, 40,50, 60,70, 80,90, 100],
@@ -562,71 +492,72 @@
 											    ticks_snap_bounds: 30
 											});
 										</script>
-								    	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-								    	<div class="row" style="margin-top: 10px;">
-								    		<div class="col-md-6 col-md-offset-4">
+							    	<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+							    	<div class="row" style="margin-top: 10px;">
+							    		<div class="col-md-6 col-md-offset-4">
 												<span class="glyphicon glyphicon-dashboard" aria-hidden="true" style="padding-top: 2px; margin-right: 2px;"></span><c><%=taskdo.wansungdo%>%</c>
-												<button type="submit" class="btn btn-info btn-sm" aria-haspopup="true" aria-expanded="false" style="font-size: 13px;">
-											    edit
+												<button type="submit" class="btn btn-new btn-sm" aria-haspopup="true" aria-expanded="false" style="font-size: 13px;">
+											    수정
 												</button>
 											</div>
 										</div>
-								    </form>
-							    </div>
-					    	</div>
-					    </div>
+							    </form>
+						    </div>
+
+				    	</div>
+				    </div>
+
 					</div>
+
 				<% end %>
 			<% end %>
 		</div>
 		<!--tab-content tasks ends-->
 
-	    </div>
+	</div>
 
 	    <div role="tabpanel" class="tab-pane" id="sends" style="padding-left: 12px;">
 			<h3>내가 시킨 일</h3>
 			<% @tasksend.each_with_index do |taskdo,idx| %>
 				<% if taskdo.wansungdo < 100 %>
-				<div class="row">
-					<div class="col-md-4" id="task_pararell">
-				    	<%sender = User.find(taskdo.sender)%>
-				    	<div class="col-md-2">
-						    <aside>
-						    	<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="40px" height="40px" style="margin-top: 10px; float: left; margin-right: 8px;">
-					    	</aside>
-				    	</div>
-				    	<div class="col-md-2">
-					    	<span class="glyphicon glyphicon-hand-right" aria-hidden="true" style="font-size: 20px; margin-top: 16px;"></span>
-				    	</div>
-				    	<div class="col-md-8">
-					    	<aside>
-					    		<% taskdo.users.each do |doer| %>
-						    		<img class="img-rounded" alt="profile" src="<%=doer.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
-								    <h5 id="task_name"> <%=doer.first_name%> <br>
-								    	<%=doer.email%></h5>
-				    			<% end %>
-					    	</aside>
-				    	</div>
-				    </div>
-				    <div class="col-md-3" id="task_pararell">
-					    <div class="col-md-6" id="task_taskdue">
-						    <h5 id="task_name"><%=taskdo.taskname%></h5>
-				 		</div>
-						<div class="col-md-6" id="task_taskdue">
-						    <h5 id="task_name"><%=taskdo.duedate%></h5>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="bar">
+  				<div class="row" id="mediaborder">
+  					<div class="col-md-5" id="task_pararell">
+  			    	<%sender = User.find(taskdo.sender)%>
+  			    	<div class="col-sm-2">
+  					    <aside>
+  					    	<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="40px" height="40px" style="margin-top: 10px; float: left; margin-right: 8px;">
+  				    	</aside>
+  			    	</div>
+  			    	<div class="col-sm-2">
+  				    	<span class="glyphicon glyphicon-hand-right" aria-hidden="true" style="font-size: 20px; margin-top: 16px;"></span>
+  			    	</div>
+  			    	<div class="col-sm-8">
+  				    	<aside>
+  				    		<% taskdo.users.each do |doer| %>
+  					    		<img class="img-rounded" alt="profile" src="<%=doer.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+  							    <h5 id="task_name"> <%=doer.first_name%> <br>
+  							    	<%=doer.email%></h5>
+  			    			<% end %>
+  				    	</aside>
+  			    	</div>
+  			    </div>
+  			    <div class="col-md-3" id="task_pararell">
+  				    <div class="col-xs-6" id="task_taskdue">
+  					    <h5 id="task_name"><%=taskdo.taskname%></h5>
+  				 		</div>
+  						<div class="col-xs-6" id="task_taskdue">
+  						    <h5 id="task_name"><%=taskdo.duedate%></h5>
+  						</div>
+  					</div>
+  					<div class="col-md-3">
+  						<div class="bar" id="mediachart">
 						  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
-						</div>
-						<script> horild(); </script>
-					</div>
-					<div class="col-md-2" id="task_pararell"></div>
-				</div>
+  						</div>
+  						<script> horild(); </script>
+  					</div>
+  				</div>
 				<% end %>
 			<% end %>
-
 
 		</div>
 	    <!-- Tab ends -->

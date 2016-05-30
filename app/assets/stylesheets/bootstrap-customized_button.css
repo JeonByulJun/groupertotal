@@ -10,3 +10,12 @@
 .btn-trans{
   color: white;
 }
+
+.btn-bel{
+  background-color: black;
+  color: white;
+}
+.btn-loc{
+  background-color: gray;
+  color: white;
+}

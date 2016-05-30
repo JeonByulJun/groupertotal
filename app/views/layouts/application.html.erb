@@ -131,11 +131,7 @@
 
 
 
-            <% if current_page?(:controller => '/message', :action => 'show')%>
-            <li class="active"><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
-            <% else %>
-            <li><a href="#">화이트보드<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span></a></li>
-            <% end %>
+            
             <% if current_page?(:controller => '/resumes')%>
             <li class="active"><a href="">클라우드<span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></li>
             <% else %>
@@ -180,7 +176,6 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=current_user.first_name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/team/profile">프로필 바꾸기</a></li>
-              <li><a href="#">설정</a></li>
               <li><a href="https://open.kakao.com/o/sbpof8i">그루퍼와 톡하기!</a></li>
               <li role="separator" class="divider"></li>
               <li><%= link_to "로그아웃", destroy_user_session_path, :method => :delete %></li>
