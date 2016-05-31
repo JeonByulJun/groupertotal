@@ -135,7 +135,7 @@
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              할 일 <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+              작업 분배 <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
             </a>
           </h4>
         </div>
@@ -370,6 +370,7 @@
     						var dataString = new Array();
     						var dataString2 = new Array();
     						var barChartData = first(labelString, dataString, dataString2);
+
     						<% for i in 0..2 %>
     							barChartData.labels.push("<%=(Time.now - (2-i).month).strftime("%Y.%m")%>");
     							dataString.push(<%=cnt_given[2-i]%>);
@@ -392,30 +393,30 @@
               <% end %>
             </div>
           </div>
-            <% @tasklist.each_with_index do |t,i| %>
-              <% if t.wansungdo < 100 %>
-                <% if t.duedate == nil %>
-                <% t.duedate = Date.today %>
-                <% end %>
-                <% a = (t.duedate - (Date.today)).to_i %>
-                <% if a >= 0 %>
-                <div class="row" style="background-color: #F3F3F3; padding-left: 10px;">
-                  <div class="col-xs-10">
-                    <div class="bar2">
-                    <div class="bar2-innertask" data-task =""></div>
-                      <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
-                    </div>
-                  </div>
-                  <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all;">
-                    <h4 style="float:right; right:7.5%;"> <%=t.taskname %> </h4>
+          <% @tasklist.each_with_index do |t,i| %>
+            <% if t.wansungdo < 100 %>
+              <% if t.duedate == nil %>
+              <% t.duedate = Date.today %>
+              <% end %>
+              <% a = (t.duedate - (Date.today)).to_i %>
+              <% if a >= 0 %>
+              <div class="row" style="background-color: #F3F3F3; padding-left: 10px;">
+                <div class="col-xs-10">
+                  <div class="bar2">
+                  <div class="bar2-innertask" data-task =""></div>
+                    <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
                   </div>
                 </div>
-                <% end %>
+                <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all; text-align: right;">
+                  <h4 style="padding-right: 10px;"> <%=t.taskname %> </h4>
+                </div>
+              </div>
               <% end %>
             <% end %>
-            <script>
-              ganttfn();
-            </script>
+          <% end %>
+          <script>
+            ganttfn();
+          </script>
     		</div>
     	  <!--tab-content contribution ends-->
 
@@ -475,7 +476,7 @@
       						  </div>
       				    </div>
 
-      				    <div id="collapse<%=slideridx%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      				    <div id="collapse<%=slideridx%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       				    	<div class="panel-body">
 
       				    		<div class="col-md-3">
