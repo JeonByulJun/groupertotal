@@ -22,77 +22,6 @@
 </head>
 
 <body>
-  <!--
-  <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-  <script>
-    function onSignIn(googleUser) {
-      // Useful data for your client-side scripts:
-      var profile = googleUser.getBasicProfile();
-      console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-      console.log('Full Name: ' + profile.getName());
-      console.log('Given Name: ' + profile.getGivenName());
-      console.log('Family Name: ' + profile.getFamilyName());
-      console.log("Image URL: " + profile.getImageUrl());
-      console.log("Email: " + profile.getEmail());
-      // The ID token you need to pass to your backend:
-      var id_token = googleUser.getAuthResponse().id_token;
-      console.log("ID Token: " + id_token);
-    };
-  </script>
-  <a href="#" onclick="signOut();">Sign out</a>
-  <script>
-    function signOut() {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log('User signed out.');
-      });
-    }
-  </script>
-  <div id="naver_id_login"></div>
-  <script type="text/javascript">
-  	var naver_id_login = new naver_id_login("M0R6aB8v_c9bWdQlNM9D", "https://grouper1-hyunjunian.c9users.io/");
-  	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain(".service.com");
-  	naver_id_login.setState("abcdefghijkmnopqrst");
-  	naver_id_login.setPopup();
-  	naver_id_login.init_naver_id_login();
-    naver_id_login.get_naver_userprofile();
-    email = naver_id_login.getProfileData('email');
-    name = naver_id_login.getProfileData('name');
-    age = naver_id_login.getProfileData('age');
-  </script>
-	<div id="kakao-profile"></div>
-  <a id="kakao-login-btn"></a>
-  <input type="button" onclick="Kakao.Auth.logout();" value="로그아웃" />
-  <input type="button" onclick="getKakaotalkUserProfile();" value="프로필" />
-  <script type='text/javascript'>
-    //<![CDATA[
-      // 사용할 앱의 JavaScript 키를 설정해 주세요.
-      Kakao.init('9565439f91483946dbb7c590c98360b7');
-      // 카카오 로그인 버튼을 생성합니다.
-      Kakao.Auth.createLoginButton({
-        container: '#kakao-login-btn',
-        success: function(authObj) {
-          alert(JSON.stringify(authObj));
-        },
-        fail: function(err) {
-           alert(JSON.stringify(err));
-        }
-      });
-      function getKakaotalkUserProfile(){
-				Kakao.API.request({
-					url: '/v1/user/me',
-					success: function(res) {
-						$("#kakao-profile").append(res.properties.nickname);
-						$("#kakao-profile").append($("<img/>",{"src":res.properties.profile_image,"alt":res.properties.nickname+"님의 프로필 사진"}));
-					},
-					fail: function(error) {
-						console.log(error);
-					}
-				});
-			}
-  </script>
-  -->
 
 
   <nav class="navbar navbar-default">
@@ -131,7 +60,7 @@
 
 
 
-            
+
             <% if current_page?(:controller => '/resumes')%>
             <li class="active"><a href="">클라우드<span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a></li>
             <% else %>
@@ -197,11 +126,8 @@
 </body>
 </html>
 
-<script>
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
-</script>
+
+<!--
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   //if (Notification.permission !== "granted")
@@ -226,7 +152,14 @@ function notifyMe() {
 }
 </script>
 
+-->
+
 <script>
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 // Include the UserVoice JavaScript SDK (only needed once on a page)
 UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/nma6fghhmsHmFxYMlrLtsg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 //
@@ -264,4 +197,14 @@ UserVoice.push(['addTrigger', {mode: 'contact', trigger_position: 'bottom-right'
 //UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
 // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78271255-1', 'auto');
+  ga('send', 'pageview');
+
 </script>

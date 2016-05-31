@@ -58,3 +58,5 @@ gem 'remotipart', '~> 1.2'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'bootstrap-sass', '~>3.3.6'
+gem 'fog'
+

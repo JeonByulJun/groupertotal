@@ -168,7 +168,8 @@
                 <script type="text/javascript">
                   $(function () {
                     $('#datetimepicker1').datetimepicker({
-                      format : 'YYYY-MM-DD'
+                      format : 'YYYY-MM-DD',
+                      minDate: new Date()
                     });
                   });
                 </script>
@@ -210,6 +211,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <hr />
+                <!-- 할 일 -->
                 <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
                   <% sender = User.find(b.sender)%>
                   <% if b.wansungdo < 100 %>
@@ -218,7 +220,7 @@
                     <% end %>
                     <% a = (b.duedate - (Date.today)).to_i %>
                     <% if a >= 0 %>
-                      <div class="well well-sm">
+                      <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                         <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
                         <div style="text-align: right">
                           <small>from</small> <img src="<%=sender.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=sender.first_name%>" class="img img-circle" style="width: 20px;height: 20px;">
@@ -227,6 +229,26 @@
                     <% end %>
                   <% end %>
                 <% end %>
+                <hr />
+                <!-- 시킨 일 -->
+                <% Task.where(:team_id => @team.id, :sender => current_user.id).order(duedate: :asc).each_with_index do |b,i| %>
+
+                  <% if b.wansungdo < 100 %>
+                    <% if b.duedate == nil %>
+                      <% b.duedate = Date.today %>
+                    <% end %>
+                    <% a = (b.duedate - (Date.today)).to_i %>
+                    <% if a > 0 %>
+                      <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
+                        <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
+                        <div style="text-align: right">
+                          <small>to</small> <% b.users.each do |user| %><img src="<%=user.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=user.first_name%>" class="img img-circle" style="width: 20px;height: 20px;"><% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
               </div>
             </div>
           </div>
@@ -246,12 +268,15 @@
 
       <h4 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 15px; text-decoration: none;"> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> <%=@team.belong%>
       <button class="btn btn-bel btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#belong" aria-expanded="false" aria-controls="belong"><span class="glyphicon glyphicon-pencil"></span></button></h4>
-      
+
+      <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
+      <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
+
       <div class="collapse" id="belong">
         <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
           <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-          <%= hidden_field_tag "team", @team.id %> 
-          <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
+          <%= hidden_field_tag "team", @team.id %>
+          <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" style="margin-left: 120px;" required>
         </form>
       </div>
 
@@ -261,8 +286,8 @@
       <div class="collapse" id="location" style="margin-left: 125px;">
         <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
           <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-          <%= hidden_field_tag "team", @team.id %> 
-          <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" required>
+          <%= hidden_field_tag "team", @team.id %>
+          <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" style="margin-left: 120px;" required>
         </form>
       </div>
     </div>
@@ -368,16 +393,7 @@
                     <div class="bar2-innertask_chat" data-task ="D -<%=a%>"></div>
                     <div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="<%=b.taskname%>" style="background-color: #00B0F0; overflow:hidden;"></div>
                   </div>
-                  <!-- random color js, has problem -->
-                  <script>
-                    function ran_col(){
-                      var color = "#";
-                      var letters = {"4eb72a","00B0F0"};
-                      color += letters[Math.floor(Math.random() * letters.length)];
-                      document.getelementById('<%=i%>th-gantt-each-<%=idx%>').style.backgroundColor = color;
-                    }
-                    ran_col();
-                  </script>
+
                 <% end %>
               <% end %>
             <% end %>
