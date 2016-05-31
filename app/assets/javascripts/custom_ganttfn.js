@@ -5,12 +5,12 @@ function ganttfn(){
       setTimeout(function() {
         var b = bar.dataset.date * 100/11;
         if(b>=99){
-        	b=98;
+        	b=96;
         }
         else if(b==0){
-          b=4;
+          b=5;
         }
-        b+=3;
+        b+=4;
         b+="%";
         bar.style.width = b;
       }, 1);
