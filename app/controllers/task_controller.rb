@@ -1,6 +1,6 @@
 class TaskController < ApplicationController
   def create
-    if params[:user_ids].count != 0
+    if params[:user_ids]
       @task = Task.new(:taskname => params[:taskname], :duedate => params[:duedate])
       @task.users << User.where(:id => params[:user_ids])
       @task.sender = current_user.id
