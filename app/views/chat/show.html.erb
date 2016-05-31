@@ -269,14 +269,11 @@
       <h4 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 15px; text-decoration: none;"> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> <%=@team.belong%>
       <button class="btn btn-bel btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#belong" aria-expanded="false" aria-controls="belong"><span class="glyphicon glyphicon-pencil"></span></button></h4>
 
-      <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
-      <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
-
       <div class="collapse" id="belong">
         <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
           <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
           <%= hidden_field_tag "team", @team.id %>
-          <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" style="margin-left: 120px;" required>
+          <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
         </form>
       </div>
 
@@ -287,7 +284,7 @@
         <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
           <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
           <%= hidden_field_tag "team", @team.id %>
-          <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" style="margin-left: 120px;" required>
+          <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" required>
         </form>
       </div>
     </div>
@@ -334,23 +331,33 @@
 
       <div role="tabpanel" class="tab-pane active" id="tasklist" style="background-color: #F3F3F3;">
         <!-- gantt head -->
-        <div class="bar2">
-          <% for j in 0..11 %>
-            <% a = Date.today + j %>
-            <div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
-          <% end %>
+        <div class="row">
+          <div class="bar2">
+            <%for i in 0..10 %>
+              <% a = Date.today + i %>
+              <div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
+            <% end %>
+          </div>
         </div>
+        
         <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
           <% if b.wansungdo < 100 %>
             <% if b.duedate == nil %>
-              <% b.duedate = Date.today %>
+            <% b.duedate = Date.today %>
             <% end %>
             <% a = (b.duedate - (Date.today)).to_i %>
             <% if a >= 0 %>
-              <div class="bar2">
-                <div class="bar2-innertask_chat" data-task ="D -<%=a%>"></div>
-                <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="<%=b.taskname%>" style="background-color: #00B0F0; overflow:hidden;"></div>
+            <div class="row" style="overflow:hidden;">
+              <div class="col-xs-10">
+                <div class="bar2">
+                <div class="bar2-innertask_chat" data-task =""></div>
+                  <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0; overflow:hidden;"></div>
+                </div>
               </div>
+              <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all;">
+                <h4 style="float:right; right:7.5%;"> <%=b.taskname %> </h4>
+              </div>
+            </div>
             <% end %>
           <% end %>
         <% end %>

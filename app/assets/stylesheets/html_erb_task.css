@@ -87,10 +87,19 @@
         margin-top: 60px;
     }
 }
+.bar2 {
+    background-color: #F3F3F3; /*gray*/
+    width: 90%;
+    height: 40px;
+}
 .bar2-innertask:after{
     position: absolute;
     right: 80px;
     color: #0C0C0C;
+    content: attr(data-task);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 30px;
 }
 .bar-innerday {
     background-color: #00B0F0; /*slight deep blue*/
@@ -111,11 +120,7 @@
     font-weight: 700;
     line-height: 30px;
 }
-.bar2 {
-    background-color: #F3F3F3; /*gray*/
-    width: 90%;
-    height: 40px;
-}
+
 /*** --  ***/
 .bar {
     background-color: #f2f2f1;
