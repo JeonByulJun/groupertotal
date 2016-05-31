@@ -1,9 +1,9 @@
+
 <% if !flash[:notice].blank? %>
    <div class = "alert alert-info">
       <%= flash[:notice] %>
    </div>
 <% end %>
-
 
 <div class="row">
   <div class="col-sm-2">
@@ -265,51 +265,39 @@
 
   <!-- Homebody for Notification or Something others -->
   <div class="col-sm-10">
-    <table class = "table table-bordered table-striped">
-      <thead>
-        <tr>
-           <th>Name</th>
-           <th>Download Link</th>
-           <th>Delete</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @resumes.each do |resume| %>
-          <% if resume.attachment.file %>
-           <tr>
-              <td><%= resume.attachment.file.filename %></td>
-              <td><%= link_to "Download Resume", resume.attachment_url %></td>
-              <td><%= button_to "Delete",  resume, method: :delete, class: "btn btn-danger", data: {confirm: "#{resume.attachment.file.filename} 을 삭제하실 건가요?"} %></td>
-           </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
+    <h3>클라우드 <small>파일명을 클릭하면 다운로드됩니다.</small></h3>
+    <% @resumes.each do |resume| %>
+      <% if resume.attachment.file %>
+        <div class="well well-sm" style="margin-bottom: 3px;">
+          <div class="row">
+            <div class="col-sm-10">
+              <%= link_to resume.attachment.file.filename, resume.attachment_url, :target => "_blank" %>
+            </div>
+            <div class="col-sm-2">
+              <%= button_to "삭제",  resume, method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "#{resume.attachment.file.filename} 을 삭제하실 건가요?"} %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
 
     <% @chats.each do |chat| %>
       <%=chat.title%>
-      <table class = "table table-bordered table-striped">
-         <thead>
-            <tr>
-               <th>Name</th>
-               <th>Download Link</th>
-            </tr>
-         </thead>
-
-         <tbody>
-           <% chat.filemessages.each do |filemessage| %>
-            <% if filemessage.filemessageupload.file %>
-              <tr>
-                  <td><%= filemessage.filemessageupload.file.filename %></td>
-                  <td><%= link_to "Download Resume", filemessage.filemessageupload_url %></td>
-
-               </tr>
-            <% end %>
-           <% end %>
-         </tbody>
-
-      </table>
+       <% chat.filemessages.each do |filemessage| %>
+         <% if filemessage.filemessageupload.file %>
+        <div class="well well-sm" style="margin-bottom: 3px;">
+          <div class="row">
+            <div class="col-sm-10">
+               <%= link_to filemessage.filemessageupload.file.filename, filemessage.filemessageupload_url, :target => "_blank" %>
+            </div>
+            <div class="col-sm-2">
+              <%= button_to "삭제",  resume, method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "#{resume.attachment.file.filename} 을 삭제하실 건가요?"} %>
+            </div>
+          </div>
+        </div>
+  
+       <% end %>
+     <% end %>
     <% end %>
 
     <!-- Button trigger modal -->
