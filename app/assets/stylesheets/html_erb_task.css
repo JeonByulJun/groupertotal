@@ -91,10 +91,6 @@
     position: absolute;
     right: 80px;
     color: #0C0C0C;
-    content: attr(data-task);
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 30px;
 }
 .bar-innerday {
     background-color: #00B0F0; /*slight deep blue*/

@@ -368,11 +368,12 @@
     				<!-- gantt head -->
             <h3 style="text-align: center;">마감일 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></h3><br>
     				<div class="bar2">
-    					<%for i in 0..11 %>
+    					<%for i in 0..10 %>
     						<% a = Date.today + i %>
     						<div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
     					<% end %>
     				</div>
+          </div>
     				<% @tasklist.each_with_index do |t,i| %>
     					<% if t.wansungdo < 100 %>
     						<% if t.duedate == nil %>
@@ -380,17 +381,23 @@
     						<% end %>
     						<% a = (t.duedate - (Date.today)).to_i %>
     						<% if a >= 0 %>
-    							<div class="bar2">
-    								<div class="bar2-innertask" data-task ="D -<%=a%>"></div>
-    						  	<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="<%=t.taskname%>" style="overflow:hidden;"></div>
-    							</div>
+                  <div class="row" style="background-color: #F3F3F3; padding-left: 10px;">
+                    <div class="col-xs-11">
+        							<div class="bar2">
+        								<div class="bar2-innertask" data-task =""></div>
+        						  	<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="overflow:hidden;"></div>
+        							</div>
+                    </div>
+                    <div class="col-xs-1" style="word-wrap:break-word; word-break:break-all;">
+                    <%=t.taskname%>
+                    </div>
+                  </div>
     						<% end %>
     					<% end %>
     			  <% end %>
     				<script>
     				  ganttfn();
     			  </script>
-    			</div>
     		</div>
     	  <!--tab-content contribution ends-->
 
