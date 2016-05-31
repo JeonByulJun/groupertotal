@@ -121,7 +121,7 @@
     </div>
   </nav>
   <% if current_user %>
-    <% if current_page?(:controller => '/chat', :action => 'show') or current_page?(:controller => '/resumes', :action => 'index') or current_page?(:controller => '/task', :action => 'show') %>
+    <% if current_page?(:controller => '/chat', :action => 'show') or current_page?(:controller => '/resumes', :action => 'index') or current_page?(:controller => '/task', :action => 'show') or current_page?(:controller => '/message', :action => 'show') %>
       <div class="row">
       <div class="col-sm-2">
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
