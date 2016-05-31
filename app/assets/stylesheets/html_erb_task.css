@@ -115,7 +115,11 @@
     font-weight: 700;
     line-height: 30px;
 }
-
+.bar2 {
+    background-color: #F3F3F3; /*gray*/
+    width: 90%;
+    height: 40px;
+}
 /*** --  ***/
 .bar {
     background-color: #f2f2f1;

@@ -217,7 +217,7 @@
                       <% b.duedate = Date.today %>
                     <% end %>
                     <% a = (b.duedate - (Date.today)).to_i %>
-                    <% if a > 0 %>
+                    <% if a >= 0 %>
                       <div class="well well-sm">
                         <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
                         <div style="text-align: right">
@@ -321,10 +321,10 @@
               <% b.duedate = Date.today %>
             <% end %>
             <% a = (b.duedate - (Date.today)).to_i %>
-            <% if a > 0 %>
+            <% if a >= 0 %>
               <div class="bar2">
-                <div class="bar2-innertask_chat" data-task ="<%=b.taskname%>"></div>
-                <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
+                <div class="bar2-innertask_chat" data-task ="D -<%=a%>"></div>
+                <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="<%=b.taskname%>" style="background-color: #00B0F0; overflow:hidden;"></div>
               </div>
             <% end %>
           <% end %>
@@ -363,10 +363,10 @@
                   <% b.duedate = Date.today %>
                 <% end %>
                 <% a = (b.duedate - (Date.today)).to_i %>
-                <% if a > 0 %>
+                <% if a >= 0 %>
                   <div class="bar2">
-                    <div class="bar2-innertask_chat" data-task ="<%=b.taskname%>"></div>
-                    <div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
+                    <div class="bar2-innertask_chat" data-task ="D -<%=a%>"></div>
+                    <div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="<%=b.taskname%>" style="background-color: #00B0F0; overflow:hidden;"></div>
                   </div>
                   <!-- random color js, has problem -->
                   <script>

@@ -217,7 +217,7 @@
                       <% b.duedate = Date.today %>
                     <% end %>
                     <% a = (b.duedate - (Date.today)).to_i %>
-                    <% if a > 0 %>
+                    <% if a >= 0 %>
                       <div class="well well-sm">
                         <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
                         <div style="text-align: right">
@@ -379,10 +379,10 @@
     						<% t.duedate = Date.today %>
     						<% end %>
     						<% a = (t.duedate - (Date.today)).to_i %>
-    						<% if a > 0 %>
+    						<% if a >= 0 %>
     							<div class="bar2">
-    								<div class="bar2-innertask" data-task ="<%=t.taskname%>"></div>
-    						  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+    								<div class="bar2-innertask" data-task ="D -<%=a%>"></div>
+    						  	<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="<%=t.taskname%>" style="overflow:hidden;"></div>
     							</div>
     						<% end %>
     					<% end %>
@@ -412,7 +412,7 @@
         						    	<div class="col-sm-8">
         								    <aside>
         								    	<img class="img-rounded" alt="profile" src="<%=sender.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
-        									    <h5 id="task_name"> <%=sender.first_name%> <br>
+        									    <h5 id="task_name" style="word-wrap:break-word; word-break:break-all;"> <%=sender.first_name%> <br>
         									    	<%=sender.email%></h5>
         							    	</aside>
         						    	</div>
@@ -429,8 +429,8 @@
 
       						    <div class="col-md-2" id="task_pararell">
       							    <div id="task_taskdue" style="text-align: center;">
-      								    <h5 id="special_taskname"><%=taskdo.taskname%></h5>
-                          <h5><%=taskdo.duedate%></h5>
+      								    <h5 id="special_taskname" style="word-wrap:break-word; word-break:break-all;"><%=taskdo.taskname%></h5>
+                          <h5 style="word-wrap:break-word; word-break:break-all;"><%=taskdo.duedate%></h5>
                         </div>
       							  </div>
 
@@ -534,7 +534,7 @@
       				    	<aside>
       				    		<% taskdo.users.each do |doer| %>
       					    		<img class="img-rounded" alt="profile" src="<%=doer.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
-      							    <h5 id="task_name"> <%=doer.first_name%> <br>
+      							    <h5 id="task_name" style="word-wrap:break-word; word-break:break-all;"> <%=doer.first_name%> <br>
       							    	<%=doer.email%></h5>
       			    			<% end %>
       				    	</aside>
@@ -542,14 +542,14 @@
       			    </div>
       			    <div class="col-md-3" id="task_pararell">
       				    <div class="col-xs-6" id="task_taskdue">
-      					    <h5 id="task_name"><%=taskdo.taskname%></h5>
+      					    <h5 id="task_name" style="word-wrap:break-word; word-break:break-all;"><%=taskdo.taskname%></h5>
       				 		</div>
       						<div class="col-xs-6" id="task_taskdue">
-      						    <h5 id="task_name"><%=taskdo.duedate%></h5>
+      						    <h5 id="task_name" style="word-wrap:break-word; word-break:break-all;"><%=taskdo.duedate%></h5>
       						</div>
       					</div>
       					<div class="col-md-3">
-      						<div class="bar" id="mediachart">
+      						<div class="bar" id="mediachart" style="float:right;">
     						  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
       						</div>
       						<script> horild(); </script>
