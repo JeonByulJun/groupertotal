@@ -168,7 +168,8 @@
                 <script type="text/javascript">
                   $(function () {
                     $('#datetimepicker1').datetimepicker({
-                      format : 'YYYY-MM-DD'
+                      format : 'YYYY-MM-DD',
+                      minDate: new Date()
                     });
                   });
                 </script>
@@ -376,15 +377,11 @@
               $("#filefileupload").submit();
             });
           });
-
-
           $(document).ready(function(){
             $("#imageupload").on('click',function(){
               this.value=null;
             });
           })
-
-
           $(function(){
             $("#imageupload").on('change',function(){
               $("#imagesubmit").prop('disabled', false);
@@ -392,15 +389,12 @@
               readURL(this);
             });
           });
-
           function readURL(input){
             if(input.files && input.files[0]){
               var reader = new FileReader();
-
               reader.onload = function(e){
                 $('#blah').attr('src',e.target.result);
               }
-
               reader.readAsDataURL(input.files[0]);
             }
           }
@@ -411,7 +405,6 @@
             $("#inputGroupSuccess1").keydown(function(event){
                 if(event.keyCode == 13){
                   $("#messageform").submit();
-
                   $('#inputGroupSuccess1').val('');
                   return false;
                 }
@@ -437,7 +430,7 @@
         </div>
       </div>
     </div>
-    <% if @chat.messages.count != 0 %>
+    <% if @chat.messages.count != 0 and @message %>
       <form action="/message/updateall" method="put" data-remote=true id="messagelookall">
         <input id="checkmessage" type="hidden" name="message_id" value=<%=@chat.messages.last.id%>>
         <input type="hidden" name="chat_id" value=<%=@chat.id%>>
@@ -455,7 +448,6 @@
 
     <script>
       $(document).ready(function(){
-
         <%if @message %>
             $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
             $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
@@ -463,35 +455,23 @@
               $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
             });
         <% end %>
-
         $("#whiteboardsend").click(function(){
           $("#whiteboardform").submit();
         });
-
         $("#whiteboardchange").click(function(){
           $("#whiteboardchangeform").submit();
         });
       });
       $(document).ready(function(){
-
         $('#messagelookall').submit();
-
       });
 
-    </script>
-    <script>
-    function bigImg(x) {
-        x.style.height = "56px";
-        x.style.width = "56px";
+    function onmessage(x) {
+      x.style.backgroundColor = "#F2F2F2";
     }
+    function outmessage(x) {
+      x.style.backgroundColor = "rgba(0,0,0,0)";
 
-    function normalImg(x) {
-        x.style.height = "36px";
-        x.style.width = "36px";
-    }
-
-    function search(x) {
-        $('#chatbox').animate({ scrollTop: $("#message"+x).offset().top-200 });
     }
     </script>
 
