@@ -109,6 +109,7 @@
     top: 5px;
     position: relative;
     transition: width 1250ms linear;
+    border-radius: 5px;
 }
 
 .bar-innerday:after {

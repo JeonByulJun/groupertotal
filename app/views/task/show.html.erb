@@ -112,12 +112,10 @@
                         <input type="hidden" name="team" value="<%=@team.id%>">
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
                         <div class="row">
-                          <div class="col-sm-9">
+                          <div class="col-xs-12">
                             <% chat.users.each do |inchat| %>
                               <img class="img-circle" data-toggle="tooltip" data-placement="top" title="<%=inchat.first_name%>" src="<%=inchat.image%>" style="width: 20px; height: 20px;">
                             <% end %>
-                          </div>
-                          <div class="col-sm-3">
                             <button class="btn btn-danger btn-xs" type="submit" style="float:right;"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
                           </div>
                         </div>
@@ -135,7 +133,7 @@
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              할 일 <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+              작업 분배 <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
             </a>
           </h4>
         </div>
@@ -271,7 +269,9 @@
   		<ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
   			<li role="presentation" class="active"><a href="#contribution" aria-controls="contribution" role="tab" data-toggle="tab">기여도</a></li>
   			<li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">나의 할 일</a></li>
+        <li role="presentation"><a href="#tasks_complete" aria-controls="tasks_complete" role="tab" data-toggle="tab">완료한 일</a></li>
   			<li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">내가 시킨 일</a></li>
+        
   		</ul>
 
   	  <!-- Tab panes -->
@@ -370,6 +370,7 @@
     						var dataString = new Array();
     						var dataString2 = new Array();
     						var barChartData = first(labelString, dataString, dataString2);
+
     						<% for i in 0..2 %>
     							barChartData.labels.push("<%=(Time.now - (2-i).month).strftime("%Y.%m")%>");
     							dataString.push(<%=cnt_given[2-i]%>);
@@ -383,7 +384,7 @@
 
     			<br>
 
-    			<div class="row" style="background-color: #F3F3F3; padding-left: 10px;">
+    			<div class="row" style="background-color: #F3F3F3;">
           <!-- gantt head -->
             <div class="bar2">
               <%for i in 0..10 %>
@@ -392,30 +393,30 @@
               <% end %>
             </div>
           </div>
-            <% @tasklist.each_with_index do |t,i| %>
-              <% if t.wansungdo < 100 %>
-                <% if t.duedate == nil %>
-                <% t.duedate = Date.today %>
-                <% end %>
-                <% a = (t.duedate - (Date.today)).to_i %>
-                <% if a >= 0 %>
-                <div class="row" style="background-color: #F3F3F3; padding-left: 10px;">
-                  <div class="col-xs-10">
-                    <div class="bar2">
-                    <div class="bar2-innertask" data-task =""></div>
-                      <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
-                    </div>
-                  </div>
-                  <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all;">
-                    <h4 style="float:right; right:7.5%;"> <%=t.taskname %> </h4>
+          <% @tasklist.each_with_index do |t,i| %>
+            <% if t.wansungdo < 100 %>
+              <% if t.duedate == nil %>
+              <% t.duedate = Date.today %>
+              <% end %>
+              <% a = (t.duedate - (Date.today)).to_i %>
+              <% if a >= 0 %>
+              <div class="row" style="background-color: #F3F3F3;">
+                <div class="col-xs-10">
+                  <div class="bar2">
+                  <div class="bar2-innertask" data-task =""></div>
+                    <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
                   </div>
                 </div>
-                <% end %>
+                <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all; text-align: right;">
+                  <h4 style="padding-right: 10px;"> <%=t.taskname %> </h4>
+                </div>
+              </div>
               <% end %>
             <% end %>
-            <script>
-              ganttfn();
-            </script>
+          <% end %>
+          <script>
+            ganttfn();
+          </script>
     		</div>
     	  <!--tab-content contribution ends-->
 
@@ -539,11 +540,59 @@
       	</div>
         <!--tab-ends-->
 
+        <!--tab-content tasks starts-->
+        <div role="tabpanel" class="tab-pane" id="tasks_complete" style="padding-left: 12px;">
+
+          <h3>완료한 일</h3>
+
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <% @task100.each_with_index do |taskdo,idx| %>
+              <div class="row" id="mediaborder">
+                <div class="col-md-5" id="task_pararell">
+                  <%sender = User.find(taskdo.sender)%>
+                  <div class="col-sm-2">
+                    <aside>
+                      <img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="40px" height="40px" style="margin-top: 10px; float: left; margin-right: 8px;">
+                    </aside>
+                  </div>
+                  <div class="col-sm-2">
+                    <span class="glyphicon glyphicon-hand-right" aria-hidden="true" style="font-size: 20px; margin-top: 16px;"></span>
+                  </div>
+                  <div class="col-sm-8" id="special_down">
+                    <aside>
+                      <% taskdo.users.each do |doer| %>
+                        <img class="img-rounded" alt="profile" src="<%=doer.image%>" width="40px" height="40px" style="float: left; margin-right: 8px;">
+                        <h5 id="task_name" style="word-wrap:break-word; word-break:break-all;"> <%=doer.first_name%> <br>
+                          <%=doer.email%></h5>
+                      <% end %>
+                    </aside>
+                  </div>
+                </div>
+                <div class="col-md-3" id="task_pararell">
+                  <div class="col-xs-6" id="task_taskdue">
+                    <h5 id="task_name" style="word-wrap:break-word; word-break:break-all;"><%=taskdo.taskname%></h5>
+                  </div>
+                  <div class="col-xs-6" id="task_taskdue">
+                      <h5 id="task_name" style="word-wrap:break-word; word-break:break-all;"><%=taskdo.duedate%></h5>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="bar" id="mediachart" style="float:right;">
+                    <div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
+                  </div>
+                  <script> horild(); </script>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <!--tab-content tasks ends-->
+        </div>
+        <!--tab-ends-->
+
         <!--tab-starts-->
     	  <div role="tabpanel" class="tab-pane" id="sends" style="padding-left: 12px;">
     			<h3>내가 시킨 일</h3>
     			<% @tasksend.each_with_index do |taskdo,idx| %>
-    				<% if taskdo.wansungdo < 100 %>
       				<div class="row" id="mediaborder">
       					<div class="col-md-5" id="task_pararell">
       			    	<%sender = User.find(taskdo.sender)%>
@@ -580,7 +629,6 @@
       						<script> horild(); </script>
       					</div>
       				</div>
-    				<% end %>
     			<% end %>
     		</div>
     	  <!-- Tab ends -->
