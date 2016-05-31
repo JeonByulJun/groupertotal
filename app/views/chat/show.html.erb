@@ -74,10 +74,8 @@
                     <% if t.id != current_user.id %>
                       <div id="profile<%=idx%>">
                         <div class="row">
-                          <div class="col-xs-3">
+                          <div class="col-xs-9">
                             <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
-                          </div>
-                          <div class="col-xs-6">
                             <%=t.first_name%>
                           </div>
                           <div id="profile_me" class="col-xs-3 checkbox">
@@ -174,10 +172,8 @@
                 <!-- My Profile -->
                 <div class="row">
                   <div class="col-sm-12">
-                    <div class="col-xs-3">
+                    <div class="col-xs-9">
                       <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
-                    </div>
-                    <div class="col-xs-6">
                       <%=current_user.first_name%>
                     </div>
                     <div id="profile_me" class="col-xs-3 checkbox">
@@ -191,10 +187,8 @@
                   <% if t.id != current_user.id %>
                     <div class="row">
                       <div class="col-sm-12">
-                        <div class="col-xs-3">
+                        <div class="col-xs-9">
                           <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
-                        </div>
-                        <div class="col-xs-6">
                           <%=t.first_name%>
                         </div>
                         <div id="profile_me" class="col-xs-3 checkbox">
