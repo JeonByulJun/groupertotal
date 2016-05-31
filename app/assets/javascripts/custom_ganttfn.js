@@ -7,8 +7,8 @@ function ganttfn(){
         if(b>=99){
         	b=99;
         }
-        if(b=0){
-          b=4;
+        if(b==0){
+          b=5;
         }
         b+="%";
         bar.style.width = b;
