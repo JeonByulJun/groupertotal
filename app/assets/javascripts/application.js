@@ -17,3 +17,7 @@
 //= require bootstrap-datetimepicker
 //= require jquery.remotipart
 //= require_tree .
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
