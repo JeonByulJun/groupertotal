@@ -224,6 +224,7 @@ class Sync.MessageNewmessages extends Sync.View
             var elem = $('#chatbox');
             if(elem[0].scrollHeight - elem.scrollTop() <= elem.outerHeight()){
                 temp = true;
+
             } else {
                 temp = false;
             }
@@ -243,6 +244,9 @@ class Sync.MessageNewmessages extends Sync.View
                   $('#messagelookid').val(parseInt(newval)+1);
                   $("#messagelook").submit();
                   if(temp){
+                      var images = document.getElementsByClassName('imagemessages');
+
+                      images[images.length-1].addEventListener("load", imgload);
                       var ta = document.getElementById('chatbox');
                       ta.scrollTop = ta.scrollHeight;
 
