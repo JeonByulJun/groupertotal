@@ -331,7 +331,7 @@
 
       <div role="tabpanel" class="tab-pane active" id="tasklist" style="background-color: #F3F3F3;">
         <!-- gantt head -->
-        <div class="row">
+        <div class="row" style="padding-left: 15px;">
           <div class="bar2">
             <%for i in 0..10 %>
               <% a = Date.today + i %>
@@ -368,11 +368,13 @@
 
       <div role="tabpanel" class="tab-pane" id="taskindiv" style="background-color: #F3F3F3;">
         <!-- gantt head -->
-        <div class="bar2">
-          <%for i in 0..11 %>
-            <% a = Date.today + i %>
-            <div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
-          <% end %>
+        <div class="row" style="padding-left: 15px;">
+          <div class="bar2">
+            <%for i in 0..10 %>
+              <% a = Date.today + i %>
+              <div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
+            <% end %>
+          </div>
         </div>
         <% temp = [] %>
         <% temp += @team.users %>
@@ -386,7 +388,7 @@
                 <aside >
                   <img id="img_setting" class="img-circle" alt="profile" src="<%=t.image%>">
                 </aside>
-                <h5 ><%=t.first_name%></h5>
+                <h5 style="padding-top: 15px;"><%=t.first_name%></h5>
               </div>
             </div>
             <% @taskindiv.each_with_index do |b,i| %>
@@ -396,11 +398,17 @@
                 <% end %>
                 <% a = (b.duedate - (Date.today)).to_i %>
                 <% if a >= 0 %>
-                  <div class="bar2">
-                    <div class="bar2-innertask_chat" data-task ="D -<%=a%>"></div>
-                    <div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="<%=b.taskname%>" style="background-color: #00B0F0; overflow:hidden;"></div>
+                <div class="row" style="overflow:hidden;">
+                  <div class="col-xs-10">
+                    <div class="bar2">
+                    <div class="bar2-innertask_chat" data-task =""></div>
+                      <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0; overflow:hidden;"></div>
+                    </div>
                   </div>
-
+                  <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all;">
+                    <h4 style="float:right; right:7.5%;"> <%=b.taskname %> </h4>
+                  </div>
+                </div>
                 <% end %>
               <% end %>
             <% end %>
@@ -408,21 +416,6 @@
         <% end %>
 
         <script>
-          function ganttfn(){
-              (function(document) {
-                var _bars = [].slice.call(document.querySelectorAll('.bar-innerday'));
-                _bars.map(function(bar, index) {
-                  setTimeout(function() {
-                    var b = bar.dataset.date * 100/12;
-                    if(b>=99){
-                      b=99;
-                    }
-                    b+="%";
-                    bar.style.width = b;
-                  }, 1);
-                });
-              })(document)
-          }
           ganttfn();
         </script>
       </div>
