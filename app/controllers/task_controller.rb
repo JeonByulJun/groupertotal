@@ -16,7 +16,7 @@ class TaskController < ApplicationController
 
   def show
     task1 = Task.where(:sender => current_user.id)
-    @tasksend = task1.where(:team_id => params[:team])
+    @tasksend = task1.where(:team_id => params[:team]).order(duedate: :asc)
     task2 = current_user.tasks
     @taskdo = task2.where(:team_id => params[:team])
     @task100 = @taskdo.where(:wansungdo => 100)

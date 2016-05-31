@@ -226,10 +226,29 @@
                     <% end %>
                     <% a = (b.duedate - (Date.today)).to_i %>
                     <% if a > 0 %>
-                      <div class="well well-sm">
+                      <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                         <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
                         <div style="text-align: right">
                           <small>from</small> <img src="<%=sender.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=sender.first_name%>" class="img img-circle" style="width: 20px;height: 20px;">
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <hr />
+                <!-- 시킨 일 -->
+                <% Task.where(:team_id => @team.id, :sender => current_user.id).order(duedate: :asc).each_with_index do |b,i| %>
+
+                  <% if b.wansungdo < 100 %>
+                    <% if b.duedate == nil %>
+                      <% b.duedate = Date.today %>
+                    <% end %>
+                    <% a = (b.duedate - (Date.today)).to_i %>
+                    <% if a > 0 %>
+                      <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
+                        <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
+                        <div style="text-align: right">
+                          <small>to</small> <% b.users.each do |user| %><img src="<%=user.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=user.first_name%>" class="img img-circle" style="width: 20px;height: 20px;"><% end %>
                         </div>
                       </div>
                     <% end %>

@@ -18,7 +18,7 @@
   <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.1.js"></script>
   <meta name="google-signin-client_id" content="462449088434-dqsv26kcove38hjrsbjrhe1gkm3f4d1f.apps.googleusercontent.com">
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-
+  <script src="/assets/bootstrap-slider.js"></script>
 </head>
 
 <body>
@@ -155,6 +155,11 @@ function notifyMe() {
 -->
 
 <script>
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 // Include the UserVoice JavaScript SDK (only needed once on a page)
 UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/nma6fghhmsHmFxYMlrLtsg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 //

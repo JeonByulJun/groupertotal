@@ -13,6 +13,15 @@
   }
 }
 
+#special_down{
+    margin-left: 100px;
+}
+@media screen and (min-width: 767px) {
+  #special_down{
+    margin-left: 0px;
+  }
+}
+
 #profile_workmap{
   padding-left: 20px;
   position: relative;
@@ -36,11 +45,18 @@
     overflow-x: hidden;
     margin-left: 3px;
 }
+
 #task_pararell{
-    margin-top: 20px;
+    margin-top: 50px;
 }
+@media screen and (min-width: 768px) {
+    #task_pararell{
+        margin-top:0px;
+    }
+}
+
 #task_taskdue{
-    padding-top: 6px;
+    margin-top: 8px;
 }
 #task_name{
     padding-top: 3px;
@@ -56,19 +72,25 @@
 
 /*** Individual Modal ***/
 
-.bar2 {
-    background-color: #F3F3F3; /*gray*/
-    width: 90%;
-    height: 40px;
+
+#bar_disappear{
+    height: 30px;
+}
+#special_taskname{
+    margin-top: 20px;
+}
+@media screen and (max-width: 991px) {
+    #bar_disappear{
+        height:0px;
+    }
+    #special_taskname{
+        margin-top: 60px;
+    }
 }
 .bar2-innertask:after{
     position: absolute;
     right: 80px;
     color: #0C0C0C;
-    content: attr(data-task);
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 30px;
 }
 .bar-innerday {
     background-color: #00B0F0; /*slight deep blue*/
@@ -89,7 +111,11 @@
     font-weight: 700;
     line-height: 30px;
 }
-
+.bar2 {
+    background-color: #F3F3F3; /*gray*/
+    width: 90%;
+    height: 40px;
+}
 /*** --  ***/
 .bar {
     background-color: #f2f2f1;
