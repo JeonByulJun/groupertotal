@@ -6,7 +6,6 @@ class CreateTasksUsers < ActiveRecord::Migration
     end
     add_index :tasks_users, :task_id
     add_index :tasks_users, :user_id
-    remove_column :tasks, :users
 
   end
 end

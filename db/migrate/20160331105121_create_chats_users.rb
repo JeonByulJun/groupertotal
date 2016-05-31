@@ -6,7 +6,6 @@ class CreateChatsUsers < ActiveRecord::Migration
     end
     add_index :chats_users, :chat_id
     add_index :chats_users, :user_id
-    remove_column :chats, :users
 
   end
 end
