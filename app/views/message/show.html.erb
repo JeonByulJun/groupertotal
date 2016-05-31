@@ -60,7 +60,7 @@
   <div class="col-sm-6">
     <div style="text-align:center">채팅창</div>
     <div style="overflow:scroll; overflow-x:hidden; word-wrap:break-word; word-break:break-all; width:auto; height:400px;" id="chatbox">
-
+      <div class="imagemessages"></div>
       <% @chat.messages.each do |message| %>
 
         <%= sync partial: "newmessages", resource: message, scope: @chat %>
