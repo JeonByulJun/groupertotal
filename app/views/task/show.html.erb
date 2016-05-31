@@ -172,27 +172,35 @@
                   });
                 </script>
                 <!-- My Profile -->
-                <div class="col-xs-3">
-                  <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
-                </div>
-                <div class="col-xs-6">
-                  <%=current_user.first_name%>
-                </div>
-                <div id="profile_me" class="col-xs-3 checkbox">
-                  <%= check_box_tag('user_ids[]', current_user.id) %><br />
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="col-xs-3">
+                      <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
+                    </div>
+                    <div class="col-xs-6">
+                      <%=current_user.first_name%>
+                    </div>
+                    <div id="profile_me" class="col-xs-3 checkbox">
+                      <%= check_box_tag('user_ids[]', current_user.id) %><br />
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Others Profile -->
                 <% temp.each_with_index do |t,idx| %>
                   <% if t.id != current_user.id %>
-                    <div class="col-xs-3">
-                      <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
-                    </div>
-                    <div class="col-xs-6">
-                      <%=t.first_name%>
-                    </div>
-                    <div id="profile_me" class="col-xs-3 checkbox">
-                      <%= check_box_tag('user_ids[]', t.id) %>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="col-xs-3">
+                          <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                        </div>
+                        <div class="col-xs-6">
+                          <%=t.first_name%>
+                        </div>
+                        <div id="profile_me" class="col-xs-3 checkbox">
+                          <%= check_box_tag('user_ids[]', t.id) %>
+                        </div>
+                      </div>
                     </div>
                   <% end %>
                 <% end %>
@@ -385,7 +393,10 @@
     			<br>
 
     			<div class="row" style="background-color: #F3F3F3;">
-          <!-- gantt head -->
+            <div class="row" style="padding-left: 100px; text-align: left;">
+            <h3 style="width: 600px;">마감일 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></h3>
+            </div>
+            <!-- gantt head -->
             <div class="bar2">
               <%for i in 0..10 %>
                 <% a = Date.today + i %>
