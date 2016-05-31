@@ -211,6 +211,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <hr />
+                <!-- 할 일 -->
                 <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
                   <% sender = User.find(b.sender)%>
                   <% if b.wansungdo < 100 %>
@@ -219,7 +220,7 @@
                     <% end %>
                     <% a = (b.duedate - (Date.today)).to_i %>
                     <% if a > 0 %>
-                      <div class="well well-sm">
+                      <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                         <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
                         <div style="text-align: right">
                           <small>from</small> <img src="<%=sender.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=sender.first_name%>" class="img img-circle" style="width: 20px;height: 20px;">
@@ -228,6 +229,26 @@
                     <% end %>
                   <% end %>
                 <% end %>
+                <hr />
+                <!-- 시킨 일 -->
+                <% Task.where(:team_id => @team.id, :sender => current_user.id).order(duedate: :asc).each_with_index do |b,i| %>
+
+                  <% if b.wansungdo < 100 %>
+                    <% if b.duedate == nil %>
+                      <% b.duedate = Date.today %>
+                    <% end %>
+                    <% a = (b.duedate - (Date.today)).to_i %>
+                    <% if a > 0 %>
+                      <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
+                        <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
+                        <div style="text-align: right">
+                          <small>to</small> <% b.users.each do |user| %><img src="<%=user.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=user.first_name%>" class="img img-circle" style="width: 20px;height: 20px;"><% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
               </div>
             </div>
           </div>
@@ -369,16 +390,7 @@
                     <div class="bar2-innertask_chat" data-task ="<%=b.taskname%>"></div>
                     <div id="<%=i%>th-gantt-each-<%=idx%>" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0;"></div>
                   </div>
-                  <!-- random color js, has problem -->
-                  <script>
-                    function ran_col(){
-                      var color = "#";
-                      var letters = {"4eb72a","00B0F0"};
-                      color += letters[Math.floor(Math.random() * letters.length)];
-                      document.getelementById('<%=i%>th-gantt-each-<%=idx%>').style.backgroundColor = color;
-                    }
-                    ran_col();
-                  </script>
+
                 <% end %>
               <% end %>
             <% end %>
