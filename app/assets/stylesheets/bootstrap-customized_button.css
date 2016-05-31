@@ -3,6 +3,11 @@
   color: white;
 }
 
+.btn-nil{
+  background-color: #B2B2B2;
+  color: white;
+}
+
 .btn-danger2{
   background-color: red;
   color: white;
