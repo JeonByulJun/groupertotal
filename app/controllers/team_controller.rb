@@ -76,7 +76,7 @@ class TeamController < ApplicationController
     team.users.delete(current_user)
     redirect_to :root
   end
-    
+
   def noteam
     if current_user.teams.first
       redirect_to :root
@@ -87,16 +87,15 @@ class TeamController < ApplicationController
     dd = Team.find(params[:team])
     dd.belong = params[:belong]
     dd.save
-    redirect_to :root
+    redirect_to action: 'show', controller: 'chat', team: params[:team]
   end
 
   def change_etc2
     dd = Team.find(params[:team])
     dd.location = params[:location]
     dd.save
-    redirect_to :root
+    redirect_to action: 'show', controller: 'chat', team: params[:team]
   end
-  
-  def search
-  end
+
+
 end
