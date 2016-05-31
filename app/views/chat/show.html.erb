@@ -1,34 +1,38 @@
 <div class="row">
-  <aside style="padding-left: 12px; padding-top: 12px;">
-  <img class="img-rounded" alt="profile" src="/favicon.ico" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 20px; margin-bottom: 20px;">
-  </aside>
-  <h2> <%=@team.teamname%></h2>
-
-  <h4 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 15px; text-decoration: none;"> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> <%=@team.belong%>
-  <button class="btn btn-bel btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#belong" aria-expanded="false" aria-controls="belong"><span class="glyphicon glyphicon-pencil"></span></button></h4>
-
-  <div class="collapse" id="belong">
-    <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-      <%= hidden_field_tag "team", @team.id %>
-      <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
-    </form>
+  <div class="col-sm-2">
+    <img class="img-rounded" alt="profile" src="/favicon.ico" style="width: 100%; height: auto;">
   </div>
-
-  <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
-  <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
   
-  <div class="collapse" id="location" style="margin-left: 125px;">
-    <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-      <%= hidden_field_tag "team", @team.id %>
-      <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" required>
-    </form>
+  <div class="col-sm-10">
+    <h2 style="margin-top: 0px;"><%=@team.teamname%></h2>
+  
+    <h4 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 15px; text-decoration: none;"> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> <%=@team.belong%>
+    <button class="btn btn-bel btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#belong" aria-expanded="false" aria-controls="belong"><span class="glyphicon glyphicon-pencil"></span></button></h4>
+  
+    <div class="collapse" id="belong">
+      <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+        <%= hidden_field_tag "team", @team.id %>
+        <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
+      </form>
+    </div>
+  
+    <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
+    <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
+    
+    <div class="collapse" id="location" style="margin-left: 125px;">
+      <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+        <%= hidden_field_tag "team", @team.id %>
+        <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" required>
+      </form>
+    </div>
   </div>
 </div>
 
 <!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist" style="padding-left: 70px; margin-top: 20px;">
+<br />
+<ul class="nav nav-tabs" role="tablist" style="">
   <!--<li role="presentation" class="active"><a href="#taskcalendar" aria-controls="home" role="tab" data-toggle="tab">Schedule</a></li>-->
   <li role="presentation" class="active"><a href="#tasklist" aria-controls="home" role="tab" data-toggle="tab">나의 할일</a></li>
   <li role="presentation"><a href="#taskindiv" aria-controls="home" role="tab" data-toggle="tab">팀 상황</a></li>

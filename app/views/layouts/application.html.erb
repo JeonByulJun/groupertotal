@@ -22,9 +22,7 @@
 </head>
 
 <body>
-
-
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default" style="margin-bottom: 5px;">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -123,7 +121,7 @@
   <% if current_user %>
     <% if current_page?(:controller => '/chat', :action => 'show') or current_page?(:controller => '/resumes', :action => 'index') or current_page?(:controller => '/task', :action => 'show') or current_page?(:controller => '/message', :action => 'show') %>
       <div class="row">
-      <div class="col-sm-2">
+        <div class="col-sm-2">
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingZero">
@@ -379,8 +377,10 @@
       </div>
     </div>
   </div>
-      <div class="col-sm-10">
-      <%= yield %>
+        <div class="col-sm-10">
+          <br>
+          <%= yield %>
+        </div>
       </div>
     <% else %>
       <%= yield %>
