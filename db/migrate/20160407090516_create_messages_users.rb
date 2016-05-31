@@ -7,6 +7,5 @@ class CreateMessagesUsers < ActiveRecord::Migration
     add_index :messages_users, :message_id
     add_index :messages_users, :user_id
 
-    remove_column :messages, :users
   end
 end

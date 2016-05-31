@@ -7,6 +7,5 @@ class CreateTeamsUsers < ActiveRecord::Migration
     add_index :teams_users, :team_id
     add_index :teams_users, :user_id
 
-    remove_column :teams, :users
   end
 end
