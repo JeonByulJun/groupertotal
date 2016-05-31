@@ -119,12 +119,10 @@
                         <input type="hidden" name="team" value="<%=@team.id%>">
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
                         <div class="row">
-                          <div class="col-sm-9">
+                          <div class="col-xs-12">
                             <% chat.users.each do |inchat| %>
                               <img class="img-circle" data-toggle="tooltip" data-placement="top" title="<%=inchat.first_name%>" src="<%=inchat.image%>" style="width: 20px; height: 20px;">
                             <% end %>
-                          </div>
-                          <div class="col-sm-3">
                             <button class="btn btn-danger btn-xs" type="submit" style="float:right;"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
                           </div>
                         </div>
