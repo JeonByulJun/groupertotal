@@ -1,10 +1,9 @@
-
 <div class="row">
-	<aside style="padding-left: 12px; padding-top: 12px;">
-		<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 13px;">
+	<aside style="padding-left: 12px;">
+		<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 1px;">
 	</aside>
-	<div style="margin-left: 15px; padding-top:10px;">
-		<h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%=current_user.first_name%><%=current_user.last_name%></h2>
+	<div style="margin-left: 15px;">
+		<h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%=current_user.first_name%></h2>
 		<h4 style="color: gray;"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=current_user.email%> </h4>
 	</div>
 </div>
@@ -210,7 +209,7 @@
 
   								<div class="col-md-4">
   									<div class="bar">
-  								  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" id="bar_disappear"data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
+  								  	<div class="bar-inner bar-<%=(taskdo.wansungdo).to_i %>" data-percent="<%=(taskdo.wansungdo).to_i %>%"></div>
   									</div>
   									<script> horild(); </script>
   								</div>
@@ -379,6 +378,6 @@
   				</div>
 			<% end %>
 		</div>
-	  <!-- Tab ends -->
+
   </div>
 </div>
