@@ -30,5 +30,6 @@ module ForHanbyul
         ENV[key.to_s] = value
       end if File.exists?(env_file)
     end
+    config.time_zone = 'Seoul'
   end
 end
