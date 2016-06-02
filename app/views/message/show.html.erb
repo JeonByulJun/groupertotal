@@ -209,13 +209,13 @@
 </form>
 
 <script>
+
   $(document).ready(function(){
     <%if @message %>
         $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
         $("#message<%=@message.id%>").append("-----------여기까지 읽었습니다-----------");
-        $('.imagemessages:last').load(function(){
-          $('#chatbox').animate({ scrollTop: $('#message<%=@message.id%>').offset().top -200});
-        });
+
+
     <% end %>
     $("#whiteboardsend").click(function(){
       $("#whiteboardform").submit();
