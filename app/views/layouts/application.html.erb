@@ -43,7 +43,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">팀 바꾸기 <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">팀 들어가기 <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <% current_user.teams.each do |team| %>
                 <li>
@@ -227,19 +227,13 @@
                         <input type="hidden" name="chat" value="<%=chat.id%>">
                         <input type="hidden" name="team" value="<%=@team.id%>">
                       </form>
-                      <form action="/chat/deletemember" method="post">
-                        <input type="hidden" name="chat" value="<%=chat.id%>">
-                        <input type="hidden" name="team" value="<%=@team.id%>">
-                        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-                        <div class="row">
-                          <div class="col-xs-12">
-                            <% chat.users.each do |inchat| %>
-                              <img class="img-circle" data-toggle="tooltip" data-placement="right" title="<%=inchat.first_name%>" src="<%=inchat.image%>" style="width: 20px; height: 20px;">
-                            <% end %>
-                            <button class="btn btn-danger btn-xs" type="submit" style="float:right;"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></button>
-                          </div>
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <% chat.users.each do |inchat| %>
+                            <img class="img-circle" data-toggle="tooltip" data-placement="right" title="<%=inchat.first_name%>" src="<%=inchat.image%>" style="width: 20px; height: 20px;">
+                          <% end %>
                         </div>
-                      </form>
+                      </div>
                     </div>
                   <% end %>
                 <% end %>

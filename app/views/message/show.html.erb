@@ -8,20 +8,15 @@
         <img class="img-circle" alt="profile" src="<%=inchat.image%>" data-toggle="tooltip" data-placement="bottom" title="<%=inchat.first_name%>" style="width: 25px; height: 25px;">
       <% end %>
       <span data-toggle="tooltip" data-placement="bottom" title="멤버 초대" ><button class="btn btn-new btn-xs" data-toggle="modal" data-target="#addmember2" type="button" type="button" ><span class="glyphicon glyphicon-plus"></span></button></span>
-
-
-
-
-
+      <span data-toggle="tooltip" data-placement="bottom" title="나가기" ><button class="btn btn-new btn-xs" data-toggle="modal" data-target="#leave" type="button" type="button" ><span class="glyphicon glyphicon-log-out"></span></button></span>
 
       <div id="addmember2" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm">
-
           <div class="modal-content">
             <div class="modal-header">
               멤버 초대
             </div>
-
+                
             <form action="/chat/addmember" method="post">
               <div class="modal-body row">
                 <input type="hidden" name="chat" value="<%=@chat.id%>">
@@ -49,9 +44,22 @@
           </div>
         </div>
       </div>
-
-
-
+      <div class="modal fade bs-example-modal-sm" id="leave" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <br>
+            <h4>정말 <%=@chat.title%>에서 나가겠습니까?</h4>
+            <p>다시 들어오려면 초대가 있어야 합니다</p>
+            <form action="/chat/deletemember" method="post">
+              <input type="hidden" name="chat" value="<%=@chat.id%>">
+              <input type="hidden" name="team" value="<%=@team.id%>">
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+              <button class="btn btn-new" type="submit">나가기</button>
+            </form>
+            <br>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
