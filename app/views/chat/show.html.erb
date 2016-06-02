@@ -20,7 +20,7 @@
     <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
     <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
     
-    <div class="collapse" id="location" style="margin-left: 125px;">
+    <div class="collapse" id="location">
       <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
         <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
         <%= hidden_field_tag "team", @team.id %>
