@@ -29,28 +29,29 @@ background-size: cover;
           <button class="btn btn-nil" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             로그인
           </button>
-            <div class="modal fade bs-example-modal-sm" id="email" tabindex="-1" role="dialog">
-              <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                  <div class="form-group">
-                    <h3>이메일 입력하고 시작하기</h3>
-                    <p>입력한 이메일로 가입 링크가 전송됩니다.</p>
-                    <form id="regmail" class="form-inline" action="/test/regmail" method="post">
-                      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-                      <div class="field">
-                        <input class="form-control" id="user_email" name="email" type="email" placeholder="이메일" required/>
-                        <input type="submit" class="btn btn-default" role="button" value="시작하기">
-                      </div>
-                    </form>
-                  </div>
+          <div class="modal fade bs-example-modal-sm" id="email" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <div class="form-group">
+                  <h3>이메일 입력하고 시작하기</h3>
+                  <p>입력한 이메일로 가입 링크가 전송됩니다.</p>
+                  <form id="regmail" class="form-inline" action="/test/regmail" method="post">
+                    <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+                    <div class="field">
+                      <input class="form-control" id="user_email" name="email" type="email" placeholder="이메일" required/>
+                      <input type="submit" class="btn btn-default" role="button" value="시작하기">
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
+          </div>
           <div class="collapse" id="collapseExample">
             <div style="text-align:center">
               <div class="row">
+                <hr />
                 <div class="col-xs-8 col-xs-offset-2">
-                  <h2>로그인</h2>
+                  <h2 style="margin-top: 0px;">로그인</h2>
                   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                   <div class="form-group">
                     <div class="field">
