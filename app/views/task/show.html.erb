@@ -1,21 +1,20 @@
 <div class="row">
-	<aside style="padding-left: 12px;">
-		<img class="img-rounded" alt="profile" src="<%=current_user.image%>" width="100px" height="100px" style="float: left; margin-right: 12px; margin-top: 1px;">
-	</aside>
-	<div style="margin-left: 15px;">
-		<h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%=current_user.first_name%></h2>
-		<h4 style="color: gray;"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=current_user.email%> </h4>
+  <div class="col-sm-2">
+    <img class="img-rounded" alt="profile" src="<%=current_user.image%>" style="width: 100%; height: auto;">
+  </div>
+  <div class="col-sm-10">
+    <h2 style="margin-top: 0px;"><%=current_user.first_name%></h2>
+    <h4 style="color: gray;"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <%=current_user.email%> </h4>
 	</div>
 </div>
 
 <div class="homebody_task">
 	<!-- Nav tabs -->
-	<ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
+	<ul class="nav nav-tabs" role="tablist" style="">
 		<li role="presentation" class="active"><a href="#contribution" aria-controls="contribution" role="tab" data-toggle="tab">기여도</a></li>
 		<li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">나의 할 일</a></li>
     <li role="presentation"><a href="#tasks_complete" aria-controls="tasks_complete" role="tab" data-toggle="tab">완료한 일</a></li>
 		<li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">내가 시킨 일</a></li>
-    
 	</ul>
 
   <!-- Tab panes -->
