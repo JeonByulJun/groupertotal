@@ -7,5 +7,5 @@ CarrierWave.configure do |config|
     aws_secret_access_key: 'bKu0Z+pT74O2dZuNYJqH3PdmRPLZjhlL2ckABv/K',                        # required
     region:                'ap-northeast-2',                  # optional, defaults to 'us-east-1'
   }
-  config.fog_directory  = 'grouperdev'                          # required
+  config.fog_directory  = 'grouperteam'                          # required
 end
