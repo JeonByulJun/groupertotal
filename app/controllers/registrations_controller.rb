@@ -2,6 +2,8 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     @email=params[:email]
     @auth=params[:auth]
+
+
     if true
       super
     else
@@ -10,7 +12,11 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super
+    if
+      super
+    else
+      redirect_to :root
+    end
   end
 
   def update

@@ -18,11 +18,11 @@ background-size: cover;
           <br>
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
             <%= devise_error_messages! %>
-          
+
             <div class="field">
               <%= f.email_field :email, autofocus: true, value: @email, hidden: true %>
             </div>
-            
+
             <div class="field">
               <%= f.text_field :last_name, required: true, value: "왜만듬?", hidden: true %>
             </div>
@@ -34,16 +34,15 @@ background-size: cover;
                 <% else %>
                   <%= f.password_field :password, class: "form-control", autocomplete: "off", required: true, placeholder: "비밀번호" %>
                 <% end %>
-                <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "off", required: true, placeholder: "비밀번호 확인" %>
                 <br>
                 <button type="submit" class="btn btn-new" style="width: 100%;">가입 완료</button>
               </div>
             </div>
-          
+
             <div class="actions">
             </div>
           <% end %>
-          
+
         </div>
       </div>
     </div>
