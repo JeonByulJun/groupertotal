@@ -16,7 +16,7 @@ class TestController < ApplicationController
     @new_user=User.where(:email => params[:email])
     new_user=@new_user
     @ment = ""
-    if current_user!=nil
+    if current_user
       redirect_to :root
     end
     if new_user[0]==nil
