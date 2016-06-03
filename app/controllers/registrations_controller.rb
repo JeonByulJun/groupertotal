@@ -2,6 +2,8 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     @email=params[:email]
     @auth=params[:auth]
+
+
     if @email.hash == @auth.to_i
       super
     else
@@ -17,3 +19,8 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 end
+#Rails.application.routes.draw do
+#  devise_for :users, controllers: {
+#    sessions: 'users/sessions'
+#  }
+#end
