@@ -54,7 +54,7 @@
               <li><a href="/team/newteam">새로운 팀 만들기</a></li>
             </ul>
           </li>
-          <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') and !current_page?(:controller => '/team', :action => 'profile') and !current_page?(:controller => '/team', :action => 'noteam') and  !current_page?(:controller => '/team', :action => 'search') %>
+          <% if !current_page?(:controller => '/team', :action => 'index') and !current_page?(:controller => '/team', :action => 'newteam') and !current_page?(:controller => '/team', :action => 'profile') and !current_page?(:controller => '/team', :action => 'noteam') and !current_page?(:controller => '/team', :action => 'search') and !current_page?(:controller => '/test', :action => 'regmail') %>
 
 
 
@@ -446,9 +446,17 @@
                             <% b.duedate = Date.current %>
                           <% end %>
                           <% a = (b.duedate - (Date.current)).to_i %>
-                          <% if a >= 0 %>
+                          <% if a > 0 %>
                             <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                               <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
+                              <div style="text-align: right">
+                                <small>from</small> <img src="<%=sender.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=sender.first_name%>" class="img img-circle" style="width: 20px;height: 20px;">
+                              </div>
+                            </div>
+                          <% end %>
+                          <% if a == 0 %>
+                            <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
+                              <p>[<strong>D - day</strong>] <%=b.taskname%></p>
                               <div style="text-align: right">
                                 <small>from</small> <img src="<%=sender.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=sender.first_name%>" class="img img-circle" style="width: 20px;height: 20px;">
                               </div>
@@ -464,9 +472,17 @@
                             <% b.duedate = Date.current %>
                           <% end %>
                           <% a = (b.duedate - (Date.current)).to_i %>
-                          <% if a >= 0 %>
+                          <% if a > 0 %>
                             <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                               <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
+                              <div style="text-align: right">
+                                <small>to</small> <% b.users.each do |user| %><img src="<%=user.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=user.first_name%>" class="img img-circle" style="width: 20px;height: 20px;"><% end %>
+                              </div>
+                            </div>
+                          <% end %>
+                          <% if a == 0 %>
+                            <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
+                              <p>[<strong>D - day</strong>] <%=b.taskname%></p>
                               <div style="text-align: right">
                                 <small>to</small> <% b.users.each do |user| %><img src="<%=user.image.url%>" data-toggle="tooltip" data-placement="left" title="<%=user.first_name%>" class="img img-circle" style="width: 20px;height: 20px;"><% end %>
                               </div>
