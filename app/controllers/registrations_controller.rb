@@ -12,7 +12,18 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super
+    if params[:user][:password] == params[:user][:password_confirmation] && params[:user][:password].length >= 8
+      super
+    elsif params[:user][:password] != params[:user][:password_confirmation] && params[:user][:password].length < 8
+      flash[:notice] ="password는 8자 이상이여야 되고, 비밀번호 확인이 다릅니다"
+      redirect_to action: 'new', email: params[:user][:email], auth: params[:user][:auth]
+    elsif params[:user][:password] != params[:user][:password_confirmation]
+      flash[:notice] ="비밀번호 확인이 다릅니다"
+      redirect_to action: 'new', email: params[:user][:email], auth: params[:user][:auth]
+    elsif params[:user][:password].length < 8
+      flash[:notice] ="password는 8자 이상이여야 됩니다"
+      redirect_to action: 'new', email: params[:user][:email], auth: params[:user][:auth]
+    end
   end
 
   def update
