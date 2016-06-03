@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   post '/chat/deletemember' => 'chat#deletemember'
   put '/message/updateall' => 'message#updateall'
   post '/test/regmail' => 'test#regmail'
+  get '/test/authfail' => 'test#authfail'
   get '/test/regmail' => 'team#index'
   get '/team/noteam' => 'team#noteam'
   get '/team/search' => 'team#search'

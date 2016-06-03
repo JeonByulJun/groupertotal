@@ -26,4 +26,7 @@ class TestController < ApplicationController
       @ment=params[:email]+"는 이미 가입되어있는 이메일 입니다."
     end
   end
+  
+  def authfail
+  end
 end

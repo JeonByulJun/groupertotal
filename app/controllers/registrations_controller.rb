@@ -2,10 +2,10 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     @email=params[:email]
     @auth=params[:auth]
-    if true
+    if @email.hash == @auth.to_i
       super
     else
-      redirect_to :root
+      redirect_to '/test/authfail'
     end
   end
 
