@@ -28,5 +28,6 @@ class TestController < ApplicationController
   end
   
   def authfail
+    @email=params[:email]
   end
 end

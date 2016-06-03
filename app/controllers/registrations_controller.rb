@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
     if @email.hash == @auth.to_i
       super
     else
-      redirect_to '/test/authfail'
+      redirect_to '/test/authfail?email='+@email
     end
   end
 
