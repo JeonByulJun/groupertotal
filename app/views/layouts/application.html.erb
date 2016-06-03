@@ -472,7 +472,7 @@
                             <% b.duedate = Date.current %>
                           <% end %>
                           <% a = (b.duedate - (Date.current)).to_i %>
-                          <% if a >= 0 %>
+                          <% if a > 0 %>
                             <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                               <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
                               <div style="text-align: right">
