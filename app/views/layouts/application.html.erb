@@ -176,11 +176,21 @@
                       <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
                       <%=current_user.first_name%>
                     </div>
+                    <% temp.each_with_index do |t,idx| %>
+                      <% if t.id != current_user.id %>
+                        <% if (Time.current - t.last_seen) <= 300 %>
+                          <div class="col-sm-12">
+                            <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                            <%=t.first_name%>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    <% end %>
                     <div class="col-sm-12">
                       <h4><small>오프라인</small></h4>
                     </div>
                     <% temp.each_with_index do |t,idx| %>
-                      <% if t.id != current_user.id %>
+                      <% if t.id != current_user.id and (Time.current - t.last_seen) > 300%>
                         <div class="col-sm-8">
                           <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
                           <%=t.first_name%>
@@ -188,9 +198,7 @@
                         <div id="profile_me" class="col-sm-4" style="text-align: right;">
                           <h6>
                             <small>
-                              <% if (Time.current - t.last_seen) <= 300 %>
-                                접속중
-                              <% elsif (Time.current - t.last_seen) <= 600 %>
+                              <% if (Time.current - t.last_seen) <= 600 %>
                                 5분 전
                               <% elsif (Time.current - t.last_seen) <= 1800 %>
                                 10분 전
