@@ -1,33 +1,32 @@
 <div class="row">
-  <div class="col-sm-2">
-    <img class="img-rounded" alt="profile" src="/favicon.ico" style="width: 100%; height: auto;">
-  </div>
-  
-  <div class="col-sm-10">
-    <h2 style="margin-top: 0px;"><%=@team.teamname%></h2>
-  
-    <h4 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 15px; text-decoration: none;"> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> <%=@team.belong%>
-    <button class="btn btn-bel btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#belong" aria-expanded="false" aria-controls="belong"><span class="glyphicon glyphicon-pencil"></span></button></h4>
-  
-    <div class="collapse" id="belong">
-      <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-        <%= hidden_field_tag "team", @team.id %>
-        <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
-      </form>
+    <div class="col-xs-3" style="width: 190px;">
+      <img class="img-rounded" alt="profile" src="/favicon.ico" width="160px" height="160px" style="float:right;">
     </div>
-  
-    <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
-    <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
-    
-    <div class="collapse" id="location">
-      <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-        <%= hidden_field_tag "team", @team.id %>
-        <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" required>
-      </form>
+    <div class="col-xs-9" style="vertical-align: middle; padding-top: 20px;">
+      <h2 style="margin-top: 0px; word-wrap:break-word; word-break:break-all;"> <%=@team.teamname%></h2>
+
+      <h4 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 15px; text-decoration: none; word-wrap:break-word; word-break:break-all;"> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> <%=@team.belong%>
+      <button class="btn btn-bel btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#belong" aria-expanded="false" aria-controls="belong"><span class="glyphicon glyphicon-pencil"></span></button></h4>
+
+      <div class="collapse" id="belong">
+        <form class="form-inline" action="/team/change_etc1" method="post" enctype="multipart/form-data">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          <%= hidden_field_tag "team", @team.id %>
+          <input class="form-control" type="text" name="belong" placeholder="팀 소속 입력 후 엔터" required>
+        </form>
+      </div>
+
+      <h5 data-toggle="collapse" aria-expanded="false" aria-controls="name" style="font-size: 13px; color: gray; word-wrap:break-word; word-break:break-all;"> <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <%=@team.location%>
+      <button class="btn btn-loc btn-xs" type="button" data-toggle="collapse" data-placement="bottom" data-target="#location" aria-expanded="false" aria-controls="location"><span class="glyphicon glyphicon-pencil"></span></button></h5>
+      
+      <div class="collapse" id="location" style="">
+        <form class="form-inline" action="/team/change_etc2" method="post" enctype="multipart/form-data">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+          <%= hidden_field_tag "team", @team.id %>
+          <input class="form-control" type="text" name="location" placeholder="지역 입력 후 엔터" required>
+        </form>
+      </div>
     </div>
-  </div>
 </div>
 
 <!-- Nav tabs -->
@@ -71,12 +70,13 @@
     </script>
   </div>-->
 
+
   <div role="tabpanel" class="tab-pane active" id="tasklist" style="background-color: #F3F3F3;">
     <!-- gantt head -->
     <div class="row" style="padding-left: 15px; border-radius: 5px;">
       <div class="bar2">
         <%for i in 0..10 %>
-          <% a = Date.today + i %>
+          <% a = Date.current + i %>
           <div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
         <% end %>
       </div>
@@ -85,19 +85,23 @@
     <% current_user.tasks.where(:team_id => @team.id).order(duedate: :asc).each_with_index do |b,i| %>
       <% if b.wansungdo < 100 %>
         <% if b.duedate == nil %>
-        <% b.duedate = Date.today %>
+        <% b.duedate = Date.current %>
         <% end %>
-        <% a = (b.duedate - (Date.today)).to_i %>
+        <% a = (b.duedate - (Date.current)).to_i %>
         <% if a >= 0 %>
         <div class="row" style="overflow:hidden;">
           <div class="col-xs-10">
             <div class="bar2">
             <div class="bar2-innertask_chat" data-task =""></div>
-              <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0; overflow:hidden;"></div>
+              <% if a == 0 %>
+              <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -day"></div>
+              <% else %>
+              <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+              <% end %>
             </div>
           </div>
           <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all; text-align: right;">
-            <h4 style="padding-right: 10px;"> <%=b.taskname %> </h4>
+            <h4 style="padding-right: 25px;"> <%=b.taskname %> </h4>
           </div>
         </div>
         <% end %>
@@ -113,7 +117,7 @@
     <div class="row" style="padding-left: 15px;">
       <div class="bar2">
         <%for i in 0..10 %>
-          <% a = Date.today + i %>
+          <% a = Date.current + i %>
           <div class="col-xs-1"><%=a.strftime("%m/%d") %></div>
         <% end %>
       </div>
@@ -127,7 +131,7 @@
       <% if @taskindiv.count != 0 %>
         <div class="row">
           <div id="profile_on_tasklist<%=idx%>" class="col-sm-12">
-            <aside >
+            <aside>
               <img id="img_setting" class="img-circle" alt="profile" style="width: 70px;height: 70px;float: left;margin-right: 8px;padding: 10px;" src="<%=t.image%>">
             </aside>
             <h5 style="padding-top: 15px;"><%=t.first_name%></h5>
@@ -136,19 +140,23 @@
         <% @taskindiv.each_with_index do |b,i| %>
           <% if b.wansungdo < 100 %>
             <% if b.duedate == nil %>
-              <% b.duedate = Date.today %>
+              <% b.duedate = Date.current %>
             <% end %>
-            <% a = (b.duedate - (Date.today)).to_i %>
+            <% a = (b.duedate - (Date.current)).to_i %>
             <% if a >= 0 %>
             <div class="row" style="overflow:hidden;">
               <div class="col-xs-10">
                 <div class="bar2">
                 <div class="bar2-innertask_chat" data-task =""></div>
-                  <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>" style="background-color: #00B0F0; overflow:hidden;"></div>
+                  <% if a == 0 %>
+                  <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -day"></div>
+                  <% else %>
+                  <div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+                  <% end %>
                 </div>
               </div>
-              <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all;">
-                <h4 style="padding-right: 10px;"> <%=b.taskname %> </h4>
+              <div class="col-xs-2" style="word-wrap:break-word; word-break:break-all; text-align: right;">
+                <h4 style="padding-right: 25px;"> <%=b.taskname %> </h4>
               </div>
             </div>
             <% end %>

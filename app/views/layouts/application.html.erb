@@ -140,46 +140,75 @@
               </div>
             </div>
             <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="headingOne">
-                <div class="row">
-                  <div class="col-xs-9">
-                    <h4 class="panel-title">
-                      
-                    <% temp = [] %>
-                    <% temp += @team.users.order(first_name: :asc) %>
-                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        멤버 <small><%=temp.count%>명</small></a>
-                    </h4>
-                  </div>
-                  <div class="col-xs-3" style="text-align: right;">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                  </div>
-                </div>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body" style="max-height: 300px;overflow: auto;">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <form action="/team/addmember" method="get">
-                        <input type="hidden" name="team" value="<%=@team.id%>"/>
-                        <button type="submit" class="btn btn-new btn-xs" style="width: 100%;" data-toggle="tooltip" data-placement="bottom" title="팀원 추가"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                      </form>
-                      <hr />
-                    </div>
-                    <div id="profile_me" class="col-sm-12">
-                      <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
-                      <%=current_user.first_name%>
-                      <% temp.each_with_index do |t,idx| %>
-                        <% if t.id != current_user.id %>
-                          <br><img style="width: 35px; height: 35px;" class="img-circle" alt="profile" src="<%=t.image%>">
-                          <%=t.first_name%>
-                        <% end %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+          <% temp = [] %>
+          <% temp += @team.users.order(first_name: :asc) %>
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              멤버 <small><%=temp.count%>명</small> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body" style="max-height: 300px;overflow: auto;">
+            <div class="row">
+              <div class="col-sm-12">
+                <form action="/team/addmember" method="get">
+                  <input type="hidden" name="team" value="<%=@team.id%>"/>
+                  <button type="submit" class="btn btn-new btn-xs" style="width: 100%;" data-toggle="tooltip" data-placement="bottom" title="팀원 추가"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                </form>
+                <hr />
               </div>
             </div>
+              
+            <div class="row">
+              <div class="col-sm-12">
+                <img class="img-circle" alt="profile" src="<%=current_user.image%>" style="width: 35px; height: 35px;">
+                <%=current_user.first_name%>
+              </div>
+            </div>
+
+            <% temp.each_with_index do |t,idx| %>
+              <% if t.id != current_user.id %>
+                <div id="profile_me" class="row">
+                  <div class="col-sm-12">
+                    <img class="img-circle" alt="profile" src="<%=t.image%>" style="width: 35px; height: 35px;">
+                    <%=t.first_name%>
+                  </div>
+                  <div id="profile_me" class="col-sm-12" style="text-align: right;">
+                    <% if (Time.now - t.last_seen) <= 300 %>
+                      접속중
+                    <% elsif (Time.now - t.last_seen) <= 600 %>
+                      5분 전
+                    <% elsif (Time.now - t.last_seen) <= 1800 %>
+                      10분 전
+                    <% elsif (Time.now - t.last_seen) <= 3600 %>
+                      30분 전
+                    <% elsif (Time.now - t.last_seen) <= 10800 %>
+                      1시간 전
+                    <% elsif (Time.now - t.last_seen) <= 21600 %>
+                      3시간 전
+                    <% elsif (Time.now - t.last_seen) <= 43200 %>
+                      6시간 전
+                    <% elsif (Time.now - t.last_seen) <= 86400 %>
+                      12시간 전
+                    <% elsif (Time.now - t.last_seen) <= 172800 %>
+                      1일 전
+                    <% elsif (Time.now - t.last_seen) <= 343600 %>
+                      2일 전
+                    <% elsif (Time.now - t.last_seen) <= 687200 %>
+                      4일 전
+                    <% else %>
+                      <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></h5>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
       
             <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="headingTwo">
@@ -359,9 +388,9 @@
                         <% sender = User.find(b.sender)%>
                         <% if b.wansungdo < 100 %>
                           <% if b.duedate == nil %>
-                            <% b.duedate = Date.today %>
+                            <% b.duedate = Date.current %>
                           <% end %>
-                          <% a = (b.duedate - (Date.today)).to_i %>
+                          <% a = (b.duedate - (Date.current)).to_i %>
                           <% if a >= 0 %>
                             <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                               <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
@@ -377,9 +406,9 @@
       
                         <% if b.wansungdo < 100 %>
                           <% if b.duedate == nil %>
-                            <% b.duedate = Date.today %>
+                            <% b.duedate = Date.current %>
                           <% end %>
-                          <% a = (b.duedate - (Date.today)).to_i %>
+                          <% a = (b.duedate - (Date.current)).to_i %>
                           <% if a > 0 %>
                             <div class="well well-sm" style="word-wrap:break-word; word-break:break-all;">
                               <p>[<strong>D - <%=a%></strong>] <%=b.taskname%></p>
