@@ -12,11 +12,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    if
-      super
-    else
-      redirect_to :root
-    end
+    super
   end
 
   def update
