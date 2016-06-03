@@ -4,10 +4,10 @@ class RegistrationsController < Devise::RegistrationsController
     @auth=params[:auth]
 
 
-    if true
+    if @email.hash == @auth.to_i
       super
     else
-      redirect_to :root
+      redirect_to '/test/authfail'
     end
   end
 
@@ -23,3 +23,8 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 end
+#Rails.application.routes.draw do
+#  devise_for :users, controllers: {
+#    sessions: 'users/sessions'
+#  }
+#end
