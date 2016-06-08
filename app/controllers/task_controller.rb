@@ -1,6 +1,8 @@
 class TaskController < ApplicationController
+  before_action :authenticate_user!
+
   def create
-    if params[:user_ids]
+    if custom_user_authentication_else(Team.find(params[:team])) && params[:user_ids]
       @task = Task.new(:taskname => params[:taskname], :duedate => params[:duedate])
       @task.users << User.where(:id => params[:user_ids])
       @task.sender = current_user.id
@@ -23,9 +25,8 @@ class TaskController < ApplicationController
     @tasklist = @taskdo.order(duedate: :asc)
     @tasklistdesc = @taskdo.order(duedate: :desc)
     @team = Team.find(params[:team])
-    if !@team.users.include?(current_user)
-      redirect_to :root
-    end
+    custom_user_authentication_show(@team)
+
     @chats = current_user.chats.where(:team => params[:team])
   end
 
@@ -34,9 +35,8 @@ class TaskController < ApplicationController
     @managelistdesc = Task.order(duedate: :desc)
     @team = Team.find(params[:team])
     @teamtask = Task.where(:team_id => params[:team])
-    if !@team.users.include?(current_user)
-      redirect_to :root
-    end
+    custom_user_authentication_show(@team)
+
   end
 
   def wansungdo_update
@@ -44,7 +44,7 @@ class TaskController < ApplicationController
     @task.wansungdo = params[:wansungdo]
     @comment = Comment.create(task_id: params[:task_id], wansungdo_log: params[:wansungdo], comment_log: params[:comment])
     @task.comments << @comment
-    if @task.save
+    if custom_user_authentication_else(@task.team) && @task.save
       redirect_to action: 'show', team: params[:team_id]
     end
   end

@@ -4,7 +4,7 @@ class WhiteboardController < ApplicationController
     @whiteboard.content = params[:content]
     @chat = @whiteboard.chat
     @whiteboard.edit = false
-    if @whiteboard.save
+    if custom_user_authentication_else(@chat) && @whiteboard.save
       @message = Message.new(:content => "[화이트보드를 수정하였습니다]")
       @message.sender_id = current_user.id
       @message.chat = @whiteboard.chat
@@ -23,7 +23,7 @@ class WhiteboardController < ApplicationController
   def update2
     @whiteboard = Whiteboard.find(params[:whiteboardid])
     @whiteboard.user = current_user
-    if @whiteboard.edit != true
+    if custom_user_authentication_else(@whiteboard.chat) && @whiteboard.edit != true
       @whiteboard.edit = true
       if @whiteboard.save
         sync_update @whiteboard, scope: @chat

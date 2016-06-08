@@ -1,13 +1,19 @@
 class MessageController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     @chat = Chat.find(params[:chat])
     @chats = current_user.chats.where(:team_id => params[:team])
     @whiteboard = @chat.whiteboard
     @message = current_user.messages.where(:chat_id => @chat.id).last
     @team = @chat.team
-    if !@chat.users.include?(current_user)
+    if !custom_user_authentication_else(Team.find(params[:team]))
       redirect_to :root
+      return
     end
+
+    custom_user_authentication_show(@chat)
+
   end
 
   def create
@@ -15,7 +21,8 @@ class MessageController < ApplicationController
     @message.sender_id = current_user.id
     @message.chat = Chat.find(params[:message][:chat_id])
     @chat = @message.chat
-    if @message.save
+
+    if custom_user_authentication_else(@chat) && @message.save
       sync_new @message, scope: @chat, partial: 'newmessages'
       respond_to do |format|
         format.js
@@ -25,9 +32,10 @@ class MessageController < ApplicationController
   def update
 
     @chat = Chat.find(params[:chat_id])
+
     @message = @chat.messages[params[:message_id].to_i]
     @user = User.find(params[:user_id])
-    if !@message.users.include?(@user)
+    if custom_user_authentication_else(@chat) && !@message.users.include?(@user)
       @message.users << @user
       if @message.save
 
@@ -47,10 +55,11 @@ class MessageController < ApplicationController
   def updateall
 
     @chat = Chat.find(params[:chat_id])
+
     @messages = Message.where(:chat_id => params[:chat_id])
     @check = params[:isupdate]
     @number = Message.last.id
-    if @check == "false"
+    if custom_user_authentication_else(@chat) && @check == "false"
       if !@lastmessage
 
         @unread = @messages.where(:id => 1..params[:message_id].to_i)
@@ -76,7 +85,8 @@ class MessageController < ApplicationController
     @message = Message.new(:messagetype => 1, :chat_id => params[:chat_id], :sender_id => current_user.id)
     @imagemessage = Imagemessage.new(:imagemessageupload => params[:image_file], :chat_id => params[:chat_id])
     @chat = Chat.find(params[:chat_id])
-    if @imagemessage.save
+
+    if custom_user_authentication_else(@chat) && @imagemessage.save
       @message.imagemessage = @imagemessage
       @message.save
       sync_new @message, scope: @chat, partial: 'newmessages'
@@ -92,7 +102,9 @@ class MessageController < ApplicationController
     @message = Message.new(:messagetype => 2, :chat_id => params[:chat_id], :sender_id => current_user.id)
     @filemessage = Filemessage.new(:filemessageupload => params[:file_file], :chat_id => params[:chat_id])
     @chat = Chat.find(params[:chat_id])
-    if @filemessage.filemessageupload.file && @filemessage.save
+    custom_user_authentication(@chat)
+
+    if custom_user_authentication_else(@chat) && @filemessage.filemessageupload.file && @filemessage.save
       @message.filemessage = @filemessage
       @message.save
       sync_new @message, scope: @chat, partial: 'newmessages'

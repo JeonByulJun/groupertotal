@@ -1,8 +1,11 @@
 class ResumesController < ApplicationController
+  before_action :authenticate_user!
+
    def index
       @resumes = Resume.where(:team_id => params[:team])
       @resumenew = Resume.new
       @team = Team.find(params[:team])
+      custom_user_authentication_show(@team)
       @chats = current_user.chats.where(:team => params[:team])
 
    end
@@ -13,11 +16,13 @@ class ResumesController < ApplicationController
 
    def create
       @resume = Resume.new(resume_params)
+      @team = Team.find(params[:resume][:team_id])
+
       @resume.name="noname"
-      if @resume.save
-         redirect_to action: 'index', team: params[:resume][:team_id], notice: "#{@resume.attachment.file.filename} 가 업로드 되었습니다."
+      if custom_user_authentication_else(@team) && @resume.save
+         redirect_to action: 'index', team: params[:resume][:team_id]
       else
-         redirect_to action: 'index', team: params[:resume][:team_id], notice: "파일을 올려주세요."
+         redirect_to action: 'index', team: params[:resume][:team_id]
       end
 
    end
