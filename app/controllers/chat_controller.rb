@@ -42,6 +42,7 @@ class ChatController < ApplicationController
       redirect_to :root
     end
   end
+
   def addmember
     @chat = Chat.find(params[:chat])
     @team = @chat.team
@@ -53,5 +54,6 @@ class ChatController < ApplicationController
       redirect_to action: 'show', controller: 'message', team: params[:team], chat: params[:chat]
     end
   end
+
 
 end
