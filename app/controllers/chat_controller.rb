@@ -23,9 +23,9 @@ class ChatController < ApplicationController
     @managelistdesc = Task.order(duedate: :desc)
     @teamtask = Task.where(:team_id => params[:team]).order(duedate: :asc)
 
-    if !@team.users.include?(current_user)
-      redirect_to :root
-    end
+    session[:my_previous_url] = URI(request.referer || '').path
+    
+    link_security()
   end
 
   def deletemember
@@ -33,6 +33,7 @@ class ChatController < ApplicationController
     chat.users.delete(current_user)
     redirect_to action: 'show', team: params[:team]
   end
+
   def addmember
     @chat = Chat.find(params[:chat])
     @chat.users << User.where(:id => params[:user_ids])
@@ -40,6 +41,12 @@ class ChatController < ApplicationController
       redirect_to action: 'show', controller: 'message', team: params[:team], chat: params[:chat]
     else
       redirect_to action: 'show', controller: 'message', team: params[:team], chat: params[:chat]
+    end
+  end
+
+  def link_security
+    if !@team.users.include?(current_user)
+      redirect_to :root
     end
   end
 
