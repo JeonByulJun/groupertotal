@@ -4,8 +4,13 @@
   </div>
   <div class="col-sm-11">
     <div id="message<%=message.id%>">
-      <div onmouseover="onmessage(this)" onmouseout="outmessage(this)">
-        <strong><%=User.find(message.sender_id).first_name%></strong><br>
+      <div onmouseover="onmessage(this)" onmouseout="outmessage(this)" data-toggle="tooltip" title="<%=message.created_at.strftime("%Y/%m/%d")%>">
+        <div class="row">
+          <div class="col-md-8"><strong><%=User.find(message.sender_id).first_name%></strong></div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2"><%=message.created_at.strftime("%p %l:%M")%></div>
+        </div>
+
 
 
         <% if message.messagetype == 0 %>
