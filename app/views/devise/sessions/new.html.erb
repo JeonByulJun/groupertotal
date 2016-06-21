@@ -27,19 +27,33 @@ background-size: cover;
             <h4><small>입력한 이메일로 가입 링크가 전송됩니다.
               <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">로그인하기</a>
             </small></h4>
-            
-            <div class="collapse" id="collapseExample">
+            <% if !flash[:notice].blank? %>
+              <div class="panel-collapse collapse in" id="collapseExample">
+
+            <% else %>
+              <div class="panel-collapse collapse" id="collapseExample">
+            <% end %>
               <div style="text-align:center">
                 <div class="row">
                   <hr />
                   <div class="col-xs-8 col-xs-offset-2">
                     <h2 style="margin-top: 0px;">로그인</h2>
+                    <% if !flash[:notice].blank? %>
+                      <div class="well well-sm">
+                        <%= flash[:notice] %>
+                      </div>
+                    <% end %>
+                    <div class="row">
+                      <div class="col-sm-8 col-sm-offset-2">
+
+                      </div>
+                    </div>
                     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                     <div class="form-group">
                       <div class="field">
                         <input class="form-control" id="user_email" name="user[email]" type="email" placeholder="이메일" autofocus/>
                       </div>
-            
+
                       <div class="field">
                         <input class="form-control" id="user_password" name="user[password]" type="password" placeholder="비밀번호" autocomplete="off"/>
                       </div>
@@ -62,7 +76,7 @@ background-size: cover;
           <% else %>
             <form class="form-inline" action="/test/index" method="post">
               <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-  
+
               <div class="form-group">
                 <input type="text" class="form-control" id="exampleInputName2" placeholder="팀 이름" required>
               </div>
@@ -72,10 +86,19 @@ background-size: cover;
             <p>누구나 효율적인 팀플을 원합니다. 여기 실시간 의사결정과 파일을 공유할 수 있는 서비스가 있습니다. 팀 이름을 적고 바로 이용해보세요!
             </p>
             <button class="btn btn-new" role="button" data-toggle="modal" data-target="#email">5초 만에 가입하기</button>
-            
+
             <button class="btn btn-nil" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               로그인
             </button>
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2">
+                <% if !flash[:notice].blank? %>
+                  <div class="well well-sm">
+                    <%= flash[:notice] %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
             <div class="modal fade bs-example-modal-sm" id="email" tabindex="-1" role="dialog">
               <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -94,7 +117,7 @@ background-size: cover;
               </div>
             </div>
           <% end %>
-          
+
         </div>
       </div>
     </div>
