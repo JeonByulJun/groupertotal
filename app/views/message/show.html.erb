@@ -113,7 +113,7 @@
     <form id="filefileupload" class="form-inline" action="/fileup" method="post" enctype="multipart/form-data" data-remote="true">
       <input type="hidden" name="chat_id" value=<%= @chat.id %>>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-      <input id="fileupload" type="file" name="file_file" style="visibility:hidden;position:absolute;top:0;left:0;">
+      <input id="fileupload" type="file" name="file_file" onchange="senddirect(this)" style="visibility:hidden;position:absolute;top:0;left:0;">
     </form>
 
     <button type="hidden" style="visibility:hidden;position:absolute;top:0;left:0;" class="btn btn-primary btn-lg" id="imshow" data-toggle="modal" data-target="#myModal"></button>
@@ -135,16 +135,13 @@
     </div>
 
     <script type="text/javascript">
-      $(document).ready(function(){
-        $("#fileupload").on('click',function(){
-          this.value=null;
-        });
-      })
-      $(function(){
-        $("#fileupload").on('change',function(){
-          $("#filefileupload").submit();
-        });
-      });
+
+      function senddirect(input){
+        $("#filefileupload").submit();
+        input.value = null;
+      }
+
+
       $(document).ready(function(){
         $("#imageupload").on('click',function(){
           this.value=null;
