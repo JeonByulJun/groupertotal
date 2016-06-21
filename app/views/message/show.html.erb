@@ -16,7 +16,7 @@
             <div class="modal-header">
               멤버 초대
             </div>
-                
+
             <form action="/chat/addmember" method="post">
               <div class="modal-body row">
                 <input type="hidden" name="chat" value="<%=@chat.id%>">
@@ -113,7 +113,7 @@
     <form id="filefileupload" class="form-inline" action="/fileup" method="post" enctype="multipart/form-data" data-remote="true">
       <input type="hidden" name="chat_id" value=<%= @chat.id %>>
       <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-
+      <input type="submit">
       <input id="fileupload" type="file" name="file_file" style="visibility:hidden;position:absolute;top:0;left:0;">
     </form>
 

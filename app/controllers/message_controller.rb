@@ -102,7 +102,7 @@ class MessageController < ApplicationController
     @message = Message.new(:messagetype => 2, :chat_id => params[:chat_id], :sender_id => current_user.id)
     @filemessage = Filemessage.new(:filemessageupload => params[:file_file], :chat_id => params[:chat_id])
     @chat = Chat.find(params[:chat_id])
-    custom_user_authentication(@chat)
+    custom_user_authentication_else(@chat)
 
     if custom_user_authentication_else(@chat) && @filemessage.filemessageupload.file && @filemessage.save
       @message.filemessage = @filemessage
