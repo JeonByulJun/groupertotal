@@ -90,8 +90,8 @@
                 +
               </span>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><a><label for="fileupload" style="cursor: pointer;"><span class="glyphicon glyphicon-file"></span> 파일업로드</label></a></li>
-                <li><a><label for="imageupload" style="cursor: pointer;"><span class="glyphicon glyphicon-picture"></span> 사진업로드</label></a></li>
+                <li onclick="document.getElementById('upload_file').click();"><a><label for="fileupload"  id="upload_file"style="cursor: pointer;"><span class="glyphicon glyphicon-file"></span> 파일업로드</label></a></li>
+                <li onclick="document.getElementById('upload_picture').click();"><a><label for="imageupload"  id="upload_picture" style="cursor: pointer;"><span class="glyphicon glyphicon-picture"></span> 사진업로드</label></a></li>
               </ul>
               <input type="text" name="message[content]" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status" autofocus required autocomplete="off">
             </div>
