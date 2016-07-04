@@ -39,8 +39,6 @@ class MessageController < ApplicationController
       @message.users << @user
       if @message.save
 
-
-
       end
     end
     respond_to do |format|
