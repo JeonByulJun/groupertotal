@@ -58,9 +58,9 @@ class MessageController < ApplicationController
 
     @messages = Message.where(:chat_id => params[:chat_id])
     @check = params[:isupdate]
-    @number = Message.last.id
+    @number = @messages.last.id
     if params[:lastread]
-      read = params[:lastread]
+      read = params[:lastread].to_i
     else
       read = 1
     end
