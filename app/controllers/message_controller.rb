@@ -59,10 +59,16 @@ class MessageController < ApplicationController
     @messages = Message.where(:chat_id => params[:chat_id])
     @check = params[:isupdate]
     @number = Message.last.id
+    if params[:lastread]
+      read = params[:lastread]
+    else
+      read = 1
+    end
+
     if custom_user_authentication_else(@chat) && @check == "false"
       if !@lastmessage
 
-        @unread = @messages.where(:id => 1..params[:message_id].to_i)
+        @unread = @messages.where(:id => read..params[:message_id].to_i)
         @unread.each do |message|
           message.users << current_user
           message.save
