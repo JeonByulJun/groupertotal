@@ -15,9 +15,11 @@ class TaskController < ApplicationController
     @tasksend = task1.where(:team_id => params[:team])
     task2 = current_user.tasks
     @taskdo = task2.where(:team_id => params[:team])
+    @task100 = @taskdo.where(:wansungdo => 100)
     @tasklist = @taskdo.order(duedate: :asc)
     @tasklistdesc = @taskdo.order(duedate: :desc)
     @team = Team.find(params[:team])
+
   end
   
   def entire

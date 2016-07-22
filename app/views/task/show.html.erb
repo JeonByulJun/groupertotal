@@ -1,37 +1,4 @@
-<style>
-	.homebody{
-		width: 82%;
-	}
-	.sidebar{
-	    height: 100%;
-	    width: 18%;
-	    max-width: 250px;
-	    position: absolute;
-	    z-index: 1;
-	    top: 51px;
-	    right: 0;
-	    background-color: #50D4C8;
-	    overflow-x: hidden;
-	    margin-left: 3px;
-	}
-	#task_pararell{
-		margin-top: 20px;
-	}
-	#task_taskdue{
-		padding-top: 6px;
-	}
-	#task_name{
-		padding-top: 3px;
-	}
-	#sidebar_name{
-		padding-top: 8px;
-		color: white;
-	}
-	#sidebar_status{
-		padding-top: 8px;
-		color: white;
-	}
-</style>
+
 <head>
 	<div class="row" style="padding-left: 20px;">
 		<aside style="padding-left: 12px;">
@@ -43,13 +10,12 @@
 		</div>
 	</div>
 	<br>
-	<!--</%= link_to "ENTIRE", action: 'entire', controller: 'task', team: @team.id%>-->
 </head>
 
 <body data-no-turbolink="true">
 	<% temp = [] %>
 	<% temp += @team.users %>
-	<section class="sidebar">
+	<section class="sidebar_task">
 		<br>
 		<% temp.each_with_index do |t,idx| %>
 		  	<div role="presentation" class="active" id="<%=idx%>" data-toggle="modal" data-target="#<%=idx%>info">
@@ -104,103 +70,45 @@
 	</section>
 	<% temp.each_with_index do |t,idx| %>
 		<div class="modal fade" id="<%=idx%>info" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-		  <div class="modal-dialog modal-lg">
-		    <div class="modal-content">
-		    	<style>
-					.bar2 {
-					    background-color: #F3F3F3; /*gray*/
-					    width: 90%;
-					    /*height: 30px;*/
-					    height: 40px;
-					    /*border-left-style: dotted;
-					    border-left-color: black;
-					    border-left-width: thin;
-					    border-top-style: dotted;
-					    border-top-color: black;
-					    border-top-width: thin;*/
-					}
-					.bar2-innertask:after{
-					    position: absolute;
-						right: 20%;
-						color: #0C0C0C;
-						content: attr(data-task);
-						font-size: 18px;
-						font-weight: 700;
-						line-height: 30px;
-					}
-					.bar-innerday {
-						background-color: #00B0F0; /*slight deep blue*/
-						width: 0%;
-						/*height: 100%;*/
-						height: 30px;
-						top: 5px;
-						position: relative;
-						transition: width 1250ms linear;
-					}
-					
-					.bar-innerday:after {
-						position: absolute;
-						right: 5.5%;
-						color: #fff; /*white*/
-						content: attr(data-display);
-						font-size: 18px;
-						font-weight: 700;
-						line-height: 30px;
-					}
-				</style>
-				<% ro = t.id %>
-				<% @taskindiv = t.tasks.where(:team_id => params[:team]) %>
-				<% @taskindiv.each_with_index do |b,i| %>
-					<!-- gantt head -->
-					<div class="bar2">
-						<% for j in 0..11 %>
-							<% a = Date.today + j %>
-							<div class="col-md-1"><%=a.strftime("%m/%d") %></div>
-						<% end %>
-					</div>
-					<% if b.duedate == nil %>
-						<% b.duedate = Date.today %>
-					<% end %>
-					<% a = (b.duedate - (Date.today)).to_i %>
-					<% if a > 0 %>
+			<div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+					<% ro = t.id %>
+					<% @taskindiv = t.tasks.where(:team_id => params[:team]) %>
+					<% @taskindiv.each_with_index do |b,i| %>
+						<!-- gantt head -->
 						<div class="bar2">
-							<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
-					  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+							<% for j in 0..11 %>
+								<% a = Date.today + j %>
+								<div class="col-md-1"><%=a.strftime("%m/%d") %></div>
+							<% end %>
 						</div>
+						<% if b.duedate == nil %>
+							<% b.duedate = Date.today %>
+						<% end %>
+						<% a = (b.duedate - (Date.today)).to_i %>
+						<% if a > 0 %>
+							<div class="bar2">
+								<div class="bar2-innertask" data-task ="<%=b.taskname%>"></div>
+						  		<div id="<%=i%>th-gantt" class="bar-innerday bar-<%=a%>" data-date="<%=a%>" data-display ="D -<%=a%>"></div>
+							</div>
+						<% end %>
 					<% end %>
-				<% end %>
-			<script>
-				    function ganttfn(){
-				        (function(document) {
-				          var _bars = [].slice.call(document.querySelectorAll('.bar-innerday'));
-				          _bars.map(function(bar, index) {
-				            setTimeout(function() {
-				              var b = bar.dataset.date * 100/12;
-				              if(b>=99){
-				              	b=99;
-				              }
-				              b+="%";
-				              bar.style.width = b;
-				            }, 1);
-				          });
-				        })(document)
-				    }
-				    ganttfn();
-			  	</script>
-	    </div>
-	  </div>
-	</div>
+					<script>
+					    ganttfn();
+				  	</script>
+			    </div>
+	  		</div>
+		</div>
 	<% end %>
 	
-<div class="homebody">
-	
-	
+<div class="homebody_task">
+
 	<!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
-    <li role="presentation" class="active"><a href="#contribution" aria-controls="contribution" role="tab" data-toggle="tab">Contribution</a></li>
-    <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">Tasklist</a></li>
-    <li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">Sended Tasks</a></li>
-  </ul>
+	<ul class="nav nav-tabs" role="tablist" style="padding-left: 70px;">
+		<li role="presentation" class="active"><a href="#contribution" aria-controls="contribution" role="tab" data-toggle="tab">Contribution</a></li>
+		<li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">Tasklist</a></li>
+		<li role="presentation"><a href="#sends" aria-controls="sends" role="tab" data-toggle="tab">Sended Tasks</a></li>
+	</ul>
 
 	<!-- Tab panes -->
   	<div class="tab-content">
@@ -210,20 +118,6 @@
 			<!--Average Completion-->
 				<div class="col-md-4">
 					<!--Circle Graph-->
-					<style>
-					  /*Centering the gauge*/
-					  .circlegraph{
-					    display: block;
-					    width: 300px;
-					    margin: 100px auto;
-					  }
-					  
-					  /*custiom font for numgers*/
-					  @font-face{
-					    font-family: "bebas";
-					    src: url("http://thecodeplayer.com/uploads/fonts/BebasNeue.otf");
-					  }
-					</style>
 					<canvas id="circlegraph" width="400px" height="400px"></canvas>
 					<% sum = 0 %>
 					<% cnt = @tasklist.count %>
@@ -234,97 +128,9 @@
 						<% sum += (t.wansungdo).to_i %>
 					<% end %>
 					<script>
-						function abc(){
-						    //canvas initialization
-						    var canvas = document.getElementById("circlegraph");
-						    var ctx = canvas.getContext("2d");
-						    //dimensions
-						    var W = canvas.width;
-						    var H = canvas.height;
-						    //lets draw a 200degree arc. we need to specify degrees in radians
-						    
-						    //variables
-						    var degrees = 0;
-						    var color = "lightgreen";
-						    var bgcolor = "#F3F3F3";
-						    var text;
-						    var difference = 0;
-						    var animation_loop, redraw_loop;
-						  
-						    function init(){
-						      //clear the canvas everytime a chart is drawn
-						      ctx.clearRect(0, 0, W, H);
-						      
-						      //Background 360 degree arc
-						      ctx.beginPath();
-						      ctx.strokeStyle= bgcolor;
-						      ctx.lineWidth=29;
-						      //ctx.arc(x,y,radius,start_angle,end_angle,clockwise?);//you can see the arc now
-						      ctx.arc(W/2,H/2,100,0,Math.PI*2,false);
-						      ctx.stroke();
-						      
-						      //gauge will be a simple arc
-						      
-						      //Angle in radians = angle in degrees*PI/180
-						      var radians = degrees*Math.PI/180;
-						      ctx.beginPath();
-						      ctx.strokeStyle = color;
-						      ctx.lineWidth=30;
-						      //ctx.arc(x,y,radius,start_angle,end_angle,clockwise?);//you can see the arc now
-						      
-						      //The arc starts from the right most end. If we deduct 90 degrees from the angles
-						      //the arc will start from the topmost end
-						      ctx.arc(W/2,H/2,100,0-90*Math.PI/180,radians-90*Math.PI/180,false);
-						      ctx.stroke();
-						      
-						      //Lets add the text
-						      ctx.fillStyle = color;
-						      ctx.font = "50px arial";//"50px arial"
-						      text = Math.floor(degrees/360*100)+ '%';
-						      //Lets center the text
-						      //deducting half of text width from postion x
-						      text_width = ctx.measureText(text).width;
-						      //adding manual value to position y since the height of the text cannot
-						      //be measured easily. there are hacks but we will keep it manual
-						      //ctx.fillText(the_text, x, y)
-						      ctx.fillText(text, W/2-text_width/2, H/2 + 15);
-						      ctx.font = "20px arial";
-						      text = 'Average Completion';
-						      text_width = ctx.measureText(text).width;
-						      ctx.fillText(text, W/2-text_width/2, 0.3*H/2);
-						    }
-						  
-						    function draw(arrival){
-						      //cancel any movement animation if a new chart is requested
-						      if(typeof animation_loop != undefined)
-						        clearInterval(animation_loop);
-						      //lets draw a 200 degree arc. we need to specify degrees in radians
-						      new_degrees = arrival*360/100;
-						      difference = new_degrees - degrees;
-						      //This will animate the gauge to new positions
-						      //The animation will take 1 second
-						      //
-						      setTimeout(function(){ },7000);
-						      animation_loop = setInterval(animate_to,1000/difference);
-						    }
-						    
-						    //function to make the chart move to new degrees
-						    function animate_to(){
-						      //if(degrees == new_degrees)  //clear animation loop if degrees reaches to new_degrees
-						      //  clearInterval(animation_loop);
-						      if(degrees < new_degrees)
-						        degrees++;
-						      else
-						        clearInterval(animation_loop);
-						      //else
-						      //  degrees--;
-						      
-						      init();
-						    }
-						    
-						    draw(<%=(sum/cnt)%>);
-						    //redraw_loop = setInterval(draw,2000); //Draw a new chart every 2seconds
-						}
+					    //canvas initialization
+					    var canvas = document.getElementById("circlegraph");
+					  	circle(canvas,<%=sum%>,<%=cnt%>);
 						/*function addLoadEvent(func) {
 						    var oldonload = window.onload;
 						      if(typeof window.onload != 'function') {
@@ -338,23 +144,75 @@
 							  }
 						}*/
 					  	//addLoadEvent(abc);
-					  	abc();
 					</script>
 				</div>
-				
+				<% cnt_given = [] %>
+				<% cnt_done = [] %>
+				<% cnt = 0 %>
+				<% @taskdo.each do |i| %>
+					<% if i.created_at.strftime("%m").to_i == Date.today.strftime("%m").to_i %>
+						<% cnt+=1 %>
+					<% end %>
+				<% end %>
+				<% cnt_given << cnt %>
+				<% cnt = 0 %>
+
+				<% @task100.each do |i| %>
+					<% if i.updated_at.strftime("%m").to_i == Date.today.strftime("%m").to_i %>
+						<% cnt+=1 %>
+					<% end %>
+				<% end %>
+				<% cnt_done << cnt %>
+				<% cnt = 0 %>
+
+				<% @taskdo.each do |i| %>
+					<% if i.created_at.strftime("%m").to_i == Date.today.strftime("%m").to_i-1 %>
+						<% cnt+=1 %>
+					<% end %>
+				<% end %>
+				<% cnt_given << cnt %>
+				<% cnt = 0 %>
+
+				<% @task100.each do |i| %>
+					<% if i.updated_at.strftime("%m").to_i == Date.today.strftime("%m").to_i-1 %>
+						<% cnt+=1 %>
+					<% end %>
+				<% end %>
+				<% cnt_done << cnt %>
+				<% cnt = 0 %>
+
+				<% @taskdo.each do |i| %>
+					<% if i.created_at.strftime("%m").to_i == Date.today.strftime("%m").to_i-2 %>
+						<% cnt+=1 %>
+					<% end %>
+				<% end %>
+				<% cnt_given << cnt %>
+				<% cnt = 0 %>
+
+				<% @task100.each do |i| %>
+					<% if i.updated_at.strftime("%m").to_i == Date.today.strftime("%m").to_i-1 %>
+						<% cnt+=1 %>
+					<% end %>
+				<% end %>
+				<% cnt_done << cnt %>
+				<% cnt = 0 %>
+
+				<% @task100.each do |g| %>
+					<li> <%=g.taskname%> <%=g.created_at%> </li>
+				<% end %>
+				<%=cnt_given%> <%=cnt_done%> <%=(Time.now - 1.month).strftime('%Y.%m')%>
 				<div class="col-md-8">
 					<canvas id="canvas" style="width: 700px; height: 450px;">
 					<script>
 						var labelString = new Array();
 						var dataString = new Array();
-						var barChartData = first(labelString, dataString);
+						var dataString2 = new Array();
+						var barChartData = first(labelString, dataString, dataString2);
 				
-						<% @tasklistdesc.each_with_index do |t,idx| %>
-							var displayday = <%=(t.wansungdo).to_i %>
-							if(displayday >= 0){
-							barChartData.labels.push("<%=((Date.today) - ( 5 - idx )).strftime("%m.%d")%>");
-								dataString.push(displayday);
-							}
+						<% for i in 0..2 %>
+							barChartData.labels.push("<%=(Time.now - (2-i).month).strftime("%Y.%m")%>");
+							dataString.push(<%=cnt_given[2-i]%>);
+							dataString2.push(<%=cnt_done[2-i]%>);
 						<% end %>
 						onld(barChartData);
 					</script>
@@ -365,48 +223,6 @@
 			<br>
 			
 			<div class="row" style="background-color: #F3F3F3; padding-left: 10px;">
-				<style>
-					.bar2 {
-					    background-color: #F3F3F3; /*gray*/
-					    width: 70%;
-					    /*height: 30px;*/
-					    height: 40px;
-					    /*border-left-style: dotted;
-					    border-left-color: black;
-					    border-left-width: thin;
-					    border-top-style: dotted;
-					    border-top-color: black;
-					    border-top-width: thin;*/
-					}
-					.bar2-innertask:after{
-					    position: absolute;
-						right: 20%;
-						color: #0C0C0C;
-						content: attr(data-task);
-						font-size: 18px;
-						font-weight: 700;
-						line-height: 30px;
-					}
-					.bar-innerday {
-						background-color: #00B0F0; /*slight deep blue*/
-						width: 0%;
-						/*height: 100%;*/
-						height: 30px;
-						top: 5px;
-						position: relative;
-						transition: width 1250ms linear;
-					}
-					
-					.bar-innerday:after {
-						position: absolute;
-						right: 5.5%;
-						color: #fff; /*white*/
-						content: attr(data-display);
-						font-size: 18px;
-						font-weight: 700;
-						line-height: 30px;
-					}
-				</style>
 				<!-- gantt head -->
 				<div class="bar2">
 					<%for i in 0..11 %>
@@ -429,52 +245,11 @@
 					<% end %>
 			  	<% end %>
 				<script>
-				    function ganttfn(){
-				        (function(document) {
-				          var _bars = [].slice.call(document.querySelectorAll('.bar-innerday'));
-				          _bars.map(function(bar, index) {
-				            setTimeout(function() {
-				              var b = bar.dataset.date * 100/12;
-				              if(b>=99){
-				              	b=99;
-				              }
-				              b+="%";
-				              bar.style.width = b;
-				            }, 1);
-				          });
-				        })(document)
-				    }
 				    ganttfn();
 			  	</script>
 			</div>
 	    </div>
     <!--tab-content contribution ends-->
-    
-	<style>
-		.bar {
-		    background-color: #f2f2f1;
-		    width: 80%;
-		    height: 30px;
-		    margin: 30px;
-		}
-		.bar-inner {
-		  background-color: #2ecc71;
-		  width: 0%;
-		  height: 100%;
-		  position: relative;
-		  transition: width 1250ms linear;
-		}
-		
-		.bar-inner:after {
-		  position: absolute;
-		  right: 5.5%;
-		  content: attr(data-percent);
-		  color: #fff;
-		  font-size: 18px;
-		  font-weight: 700;
-		  line-height: 30px;
-		}
-	</style>
     
     <!--tab-content tasks starts-->
     <div role="tabpanel" class="tab-pane" id="tasks" style="padding-left: 12px;">
